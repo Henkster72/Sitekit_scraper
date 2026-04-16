@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sitekit.local/specs/showit-to-sitekit-mapper-v1.schema.json",
+  "title": "Showit To SiteKit Mapper v1",
+  "description": "Intermediate mapping contract for translating Showit templates and patterns into SiteKit blocks before emitting canonical SiteKit project payloads.",
+  "type": "object",
+  "required": ["version", "source", "pages"],
+  "properties": {
+    "version": {
+      "const": "1.0"
+    },
+    "source": {
+      "type": "object",
+      "required": ["platform", "sourceUrls"],
+      "properties": {
+        "platform": {
+          "const": "showit"
+        },
+        "sourceUrls": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          }
+        },
+        "baseUrl": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "extractionMode": {
+          "type": "string",
+          "enum": ["live-dom", "divmagic-html", "hybrid"]
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["html", "screenshot", "notes"]
+              },
+              "path": {
+                "type": "string",
+                "maxLength": 4096
+              },
+              "url": {
+                "type": "string",
+                "maxLength": 4096
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "globals": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "$ref": "#/$defs/sectionMapping"
+        },
+        "footer": {
+          "$ref": "#/$defs/sectionMapping"
+        }
+      },
+      "additionalProperties": false
+    },
+    "pages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/pageMapping"
+      }
+    }
+  },
+  "$defs": {
+    "pageMapping": {
+      "type": "object",
+      "required": ["id", "title", "slug", "sections"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "slug": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "sourceUrl": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sectionMapping"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "sectionMapping": {
+      "type": "object",
+      "required": ["id", "kind", "role", "targetBlock"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "kind": {
+          "const": "section"
+        },
+        "role": {
+          "type": "string",
+          "maxLength": 120
+        },
+        "sourcePattern": {
+          "type": "object",
+          "properties": {
+            "family": {
+              "type": "string",
+              "maxLength": 160
+            },
+            "label": {
+              "type": "string",
+              "maxLength": 160
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "cues": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 240
+              }
+            }
+          },
+          "additionalProperties": true
+        },
+        "targetBlock": {
+          "type": "object",
+          "required": ["type"],
+          "properties": {
+            "type": {
+              "type": "string",
+              "maxLength": 60
+            },
+            "variant": {
+              "oneOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "layoutMode": {
+              "type": "string",
+              "maxLength": 120
+            }
+          },
+          "additionalProperties": true
+        },
+        "content": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "media": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "slot": {
+                "type": "string",
+                "maxLength": 120
+              },
+              "url": {
+                "type": "string",
+                "maxLength": 4096
+              },
+              "alt": {
+                "type": "string",
+                "maxLength": 512
+              },
+              "source": {
+                "type": "string",
+                "maxLength": 120
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "style": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 400
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

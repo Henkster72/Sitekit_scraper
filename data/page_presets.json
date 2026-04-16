@@ -1,0 +1,1891 @@
+{
+    "version": "1.0",
+    "presets": [
+        {
+            "id": "home",
+            "group": "Core",
+            "label": "Home",
+            "pageTitle": "Home",
+            "slug": "home",
+            "description": "Primary homepage with social proof and conversion path.",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "hero",
+                    "variant": 2
+                },
+                {
+                    "type": "truststrip",
+                    "variant": 1
+                },
+                {
+                    "type": "features",
+                    "variant": 1
+                },
+                {
+                    "type": "stats",
+                    "variant": 1
+                },
+                {
+                    "type": "testimonials",
+                    "variant": 1
+                },
+                {
+                    "type": "cta",
+                    "variant": 1
+                },
+                {
+                    "type": "contact",
+                    "variant": 1
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "about",
+            "group": "Core",
+            "label": "About",
+            "pageTitle": "About",
+            "slug": "about",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "hero",
+                    "variant": 1,
+                    "data": {
+                        "heading": "About our team"
+                    }
+                },
+                {
+                    "type": "content",
+                    "variant": 2
+                },
+                {
+                    "type": "stats",
+                    "variant": 2
+                },
+                {
+                    "type": "testimonials",
+                    "variant": 3
+                },
+                {
+                    "type": "cta",
+                    "variant": 2
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "contact",
+            "group": "Core",
+            "label": "Contact",
+            "pageTitle": "Contact",
+            "slug": "contact",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "hero",
+                    "variant": 4,
+                    "data": {
+                        "heading": "Let's talk"
+                    }
+                },
+                {
+                    "type": "contact",
+                    "variant": 2
+                },
+                {
+                    "type": "location",
+                    "variant": 2
+                },
+                {
+                    "type": "faq",
+                    "variant": 1
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "services",
+            "group": "Core",
+            "label": "Services",
+            "pageTitle": "Services",
+            "slug": "services",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "hero",
+                    "variant": 1,
+                    "data": {
+                        "heading": "Services designed for outcomes"
+                    }
+                },
+                {
+                    "type": "services",
+                    "variant": 2
+                },
+                {
+                    "type": "cards",
+                    "variant": 1
+                },
+                {
+                    "type": "faq",
+                    "variant": 2
+                },
+                {
+                    "type": "cta",
+                    "variant": 1
+                },
+                {
+                    "type": "contact",
+                    "variant": 1
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "portfolio-gallery",
+            "group": "Core",
+            "label": "Portfolio / Gallery",
+            "pageTitle": "Portfolio",
+            "slug": "portfolio",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "hero",
+                    "variant": 2,
+                    "data": {
+                        "heading": "Selected work"
+                    }
+                },
+                {
+                    "type": "gallery",
+                    "variant": 2
+                },
+                {
+                    "type": "cards",
+                    "variant": 2
+                },
+                {
+                    "type": "testimonials",
+                    "variant": 2
+                },
+                {
+                    "type": "cta",
+                    "variant": 2
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "faq-page",
+            "group": "Core",
+            "label": "FAQ",
+            "pageTitle": "FAQ",
+            "slug": "faq",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "hero",
+                    "variant": 1,
+                    "data": {
+                        "heading": "Answers before questions"
+                    }
+                },
+                {
+                    "type": "faq",
+                    "variant": 3
+                },
+                {
+                    "type": "contact",
+                    "variant": 4
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "pricing",
+            "group": "Core",
+            "label": "Pricing",
+            "pageTitle": "Pricing",
+            "slug": "pricing",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "hero",
+                    "variant": 3,
+                    "data": {
+                        "heading": "Simple pricing plans"
+                    }
+                },
+                {
+                    "type": "cards",
+                    "variant": 3
+                },
+                {
+                    "type": "stats",
+                    "variant": 1
+                },
+                {
+                    "type": "faq",
+                    "variant": 2
+                },
+                {
+                    "type": "cta",
+                    "variant": 1
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "testimonials-page",
+            "group": "Core",
+            "label": "Testimonials / Reviews",
+            "pageTitle": "Testimonials",
+            "slug": "testimonials",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "hero",
+                    "variant": 4,
+                    "data": {
+                        "heading": "What clients say"
+                    }
+                },
+                {
+                    "type": "testimonials",
+                    "variant": 4
+                },
+                {
+                    "type": "truststrip",
+                    "variant": 2
+                },
+                {
+                    "type": "cta",
+                    "variant": 2
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "blog-index",
+            "group": "Core",
+            "label": "Blog Index",
+            "pageTitle": "Blog",
+            "slug": "blog",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "hero",
+                    "variant": 1,
+                    "data": {
+                        "heading": "Latest insights"
+                    }
+                },
+                {
+                    "type": "cards",
+                    "variant": 1
+                },
+                {
+                    "type": "cta",
+                    "variant": 4
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "blog-post",
+            "group": "Core",
+            "label": "Blog Post",
+            "pageTitle": "Article",
+            "slug": "article",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "hero",
+                    "variant": 1,
+                    "data": {
+                        "heading": "Article headline"
+                    }
+                },
+                {
+                    "type": "content",
+                    "variant": 1
+                },
+                {
+                    "type": "content",
+                    "variant": 3
+                },
+                {
+                    "type": "cta",
+                    "variant": 4
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "landing-page",
+            "group": "Conversion",
+            "label": "Landing Page",
+            "pageTitle": "Landing",
+            "slug": "landing",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 2
+                },
+                {
+                    "type": "features",
+                    "variant": 2
+                },
+                {
+                    "type": "stats",
+                    "variant": 2
+                },
+                {
+                    "type": "faq",
+                    "variant": 2
+                },
+                {
+                    "type": "cta",
+                    "variant": 1
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "lead-magnet",
+            "group": "Conversion",
+            "label": "Lead Magnet / Download",
+            "pageTitle": "Download",
+            "slug": "download",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 2
+                },
+                {
+                    "type": "cards",
+                    "variant": 4
+                },
+                {
+                    "type": "contact",
+                    "variant": 4
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "booking-appointment",
+            "group": "Conversion",
+            "label": "Booking / Appointment",
+            "pageTitle": "Book",
+            "slug": "book",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "datepicker",
+                    "variant": 2
+                },
+                {
+                    "type": "contact",
+                    "variant": 2
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "quote-request",
+            "group": "Conversion",
+            "label": "Quote / Estimate Request",
+            "pageTitle": "Request a Quote",
+            "slug": "quote",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "services",
+                    "variant": 1
+                },
+                {
+                    "type": "contact",
+                    "variant": 3
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "thank-you",
+            "group": "Conversion",
+            "label": "Thank-you Page",
+            "pageTitle": "Thank You",
+            "slug": "thank-you",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 2
+                },
+                {
+                    "type": "content",
+                    "variant": 4
+                },
+                {
+                    "type": "cta",
+                    "variant": 2
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "case-study",
+            "group": "Conversion",
+            "label": "Case Study",
+            "pageTitle": "Case Study",
+            "slug": "case-study",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "content",
+                    "variant": 1
+                },
+                {
+                    "type": "stats",
+                    "variant": 3
+                },
+                {
+                    "type": "testimonials",
+                    "variant": 2
+                },
+                {
+                    "type": "cta",
+                    "variant": 1
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "product-page",
+            "group": "Conversion",
+            "label": "Product Page",
+            "pageTitle": "Product",
+            "slug": "product",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "features",
+                    "variant": 2
+                },
+                {
+                    "type": "cards",
+                    "variant": 3
+                },
+                {
+                    "type": "faq",
+                    "variant": 2
+                },
+                {
+                    "type": "cta",
+                    "variant": 1
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "comparison-page",
+            "group": "Conversion",
+            "label": "Comparison Page",
+            "pageTitle": "Comparison",
+            "slug": "comparison",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "cards",
+                    "variant": 2
+                },
+                {
+                    "type": "stats",
+                    "variant": 1
+                },
+                {
+                    "type": "faq",
+                    "variant": 1
+                },
+                {
+                    "type": "cta",
+                    "variant": 2
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "team-page",
+            "group": "Trust",
+            "label": "Team Page",
+            "pageTitle": "Team",
+            "slug": "team",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "cards",
+                    "variant": 1
+                },
+                {
+                    "type": "content",
+                    "variant": 2
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "credentials",
+            "group": "Trust",
+            "label": "Credentials / Certifications",
+            "pageTitle": "Credentials",
+            "slug": "credentials",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "truststrip",
+                    "variant": 1
+                },
+                {
+                    "type": "cards",
+                    "variant": 4
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "press-media-kit",
+            "group": "Trust",
+            "label": "Press / Media Kit",
+            "pageTitle": "Press",
+            "slug": "press",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "content",
+                    "variant": 1
+                },
+                {
+                    "type": "cards",
+                    "variant": 4
+                },
+                {
+                    "type": "contact",
+                    "variant": 4
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "partners",
+            "group": "Trust",
+            "label": "Partners",
+            "pageTitle": "Partners",
+            "slug": "partners",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "truststrip",
+                    "variant": 2
+                },
+                {
+                    "type": "cards",
+                    "variant": 2
+                },
+                {
+                    "type": "cta",
+                    "variant": 2
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "locations",
+            "group": "Trust",
+            "label": "Locations",
+            "pageTitle": "Locations",
+            "slug": "locations",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "location",
+                    "variant": 3
+                },
+                {
+                    "type": "contact",
+                    "variant": 1
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "careers",
+            "group": "Trust",
+            "label": "Careers",
+            "pageTitle": "Careers",
+            "slug": "careers",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "services",
+                    "variant": 3
+                },
+                {
+                    "type": "faq",
+                    "variant": 1
+                },
+                {
+                    "type": "contact",
+                    "variant": 4
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "support-help-center",
+            "group": "Utility",
+            "label": "Support / Help Center",
+            "pageTitle": "Support",
+            "slug": "support",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "faq",
+                    "variant": 3
+                },
+                {
+                    "type": "contact",
+                    "variant": 4
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "documentation",
+            "group": "Utility",
+            "label": "Documentation",
+            "pageTitle": "Documentation",
+            "slug": "docs",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "content",
+                    "variant": 1
+                },
+                {
+                    "type": "content",
+                    "variant": 3
+                },
+                {
+                    "type": "faq",
+                    "variant": 1
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "changelog-updates",
+            "group": "Utility",
+            "label": "Changelog / Updates",
+            "pageTitle": "Changelog",
+            "slug": "changelog",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "cards",
+                    "variant": 4
+                },
+                {
+                    "type": "content",
+                    "variant": 4
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "status-page",
+            "group": "Utility",
+            "label": "Status Page",
+            "pageTitle": "Status",
+            "slug": "status",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 2
+                },
+                {
+                    "type": "banner",
+                    "variant": 3
+                },
+                {
+                    "type": "stats",
+                    "variant": 1
+                },
+                {
+                    "type": "content",
+                    "variant": 4
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "sitemap-index",
+            "group": "Utility",
+            "label": "Sitemap / Index",
+            "pageTitle": "Sitemap",
+            "slug": "sitemap",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "cards",
+                    "variant": 4
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "privacy-policy",
+            "group": "Legal",
+            "label": "Privacy Policy",
+            "pageTitle": "Privacy Policy",
+            "slug": "privacy",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "content",
+                    "variant": 1,
+                    "data": {
+                        "sectionTitle": "Privacy policy"
+                    }
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "terms",
+            "group": "Legal",
+            "label": "Terms",
+            "pageTitle": "Terms",
+            "slug": "terms",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "content",
+                    "variant": 1,
+                    "data": {
+                        "sectionTitle": "Terms and conditions"
+                    }
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "cookie-policy",
+            "group": "Legal",
+            "label": "Cookie Policy",
+            "pageTitle": "Cookie Policy",
+            "slug": "cookies",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "content",
+                    "variant": 1,
+                    "data": {
+                        "sectionTitle": "Cookie policy"
+                    }
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "imprint-company-info",
+            "group": "Legal",
+            "label": "Imprint / Company Info",
+            "pageTitle": "Imprint",
+            "slug": "imprint",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "content",
+                    "variant": 2,
+                    "data": {
+                        "sectionTitle": "Company information"
+                    }
+                },
+                {
+                    "type": "location",
+                    "variant": 1
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "event-page",
+            "group": "Niche",
+            "label": "Event Page",
+            "pageTitle": "Event",
+            "slug": "event",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "datepicker",
+                    "variant": 4
+                },
+                {
+                    "type": "content",
+                    "variant": 2
+                },
+                {
+                    "type": "location",
+                    "variant": 4
+                },
+                {
+                    "type": "cta",
+                    "variant": 1
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "restaurant-menu",
+            "group": "Niche",
+            "label": "Restaurant Menu",
+            "pageTitle": "Menu",
+            "slug": "menu",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 3
+                },
+                {
+                    "type": "services",
+                    "variant": 2
+                },
+                {
+                    "type": "gallery",
+                    "variant": 1
+                },
+                {
+                    "type": "location",
+                    "variant": 1
+                },
+                {
+                    "type": "footer",
+                    "variant": 3
+                }
+            ]
+        },
+        {
+            "id": "real-estate-listing",
+            "group": "Niche",
+            "label": "Real Estate Listing",
+            "pageTitle": "Listing",
+            "slug": "listing",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "gallery",
+                    "variant": 2
+                },
+                {
+                    "type": "stats",
+                    "variant": 1
+                },
+                {
+                    "type": "location",
+                    "variant": 2
+                },
+                {
+                    "type": "contact",
+                    "variant": 2
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "photography-shoot",
+            "group": "Niche",
+            "label": "Photography Shoot",
+            "pageTitle": "Photography",
+            "slug": "photography",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "gallery",
+                    "variant": 3
+                },
+                {
+                    "type": "cards",
+                    "variant": 2
+                },
+                {
+                    "type": "datepicker",
+                    "variant": 2
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "course-workshop",
+            "group": "Niche",
+            "label": "Course / Workshop",
+            "pageTitle": "Workshop",
+            "slug": "workshop",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "features",
+                    "variant": 1
+                },
+                {
+                    "type": "content",
+                    "variant": 3
+                },
+                {
+                    "type": "cards",
+                    "variant": 3
+                },
+                {
+                    "type": "faq",
+                    "variant": 2
+                },
+                {
+                    "type": "cta",
+                    "variant": 1
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "features-page",
+            "group": "Niche",
+            "label": "Features Page",
+            "pageTitle": "Features",
+            "slug": "features",
+            "description": "Feature-focused product page with supporting detail and CTA.",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "hero",
+                    "variant": 1,
+                    "data": {
+                        "heading": "Features built for real teams"
+                    }
+                },
+                {
+                    "type": "features",
+                    "variant": 2
+                },
+                {
+                    "type": "cards",
+                    "variant": 3
+                },
+                {
+                    "type": "faq",
+                    "variant": 2
+                },
+                {
+                    "type": "cta",
+                    "variant": 1
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "rooms",
+            "group": "Niche",
+            "label": "Rooms",
+            "pageTitle": "Rooms",
+            "slug": "rooms",
+            "description": "Hospitality rooms page with gallery, highlights and trust sections.",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "hero",
+                    "variant": 2,
+                    "data": {
+                        "heading": "Rooms and suites designed for comfort"
+                    }
+                },
+                {
+                    "type": "gallery",
+                    "variant": 2
+                },
+                {
+                    "type": "cards",
+                    "variant": 2
+                },
+                {
+                    "type": "testimonials",
+                    "variant": 2
+                },
+                {
+                    "type": "cta",
+                    "variant": 2
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "menu",
+            "group": "Niche",
+            "label": "Menu",
+            "pageTitle": "Menu",
+            "slug": "menu",
+            "description": "Food and drinks menu page with visual support.",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 3
+                },
+                {
+                    "type": "services",
+                    "variant": 2
+                },
+                {
+                    "type": "gallery",
+                    "variant": 1
+                },
+                {
+                    "type": "location",
+                    "variant": 1
+                },
+                {
+                    "type": "footer",
+                    "variant": 3
+                }
+            ]
+        },
+        {
+            "id": "destinations",
+            "group": "Niche",
+            "label": "Destinations",
+            "pageTitle": "Destinations",
+            "slug": "destinations",
+            "description": "Travel showcase page with destination highlights and gallery.",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "hero",
+                    "variant": 2,
+                    "data": {
+                        "heading": "Explore memorable destinations"
+                    }
+                },
+                {
+                    "type": "gallery",
+                    "variant": 2
+                },
+                {
+                    "type": "cards",
+                    "variant": 2
+                },
+                {
+                    "type": "testimonials",
+                    "variant": 2
+                },
+                {
+                    "type": "cta",
+                    "variant": 2
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "events",
+            "group": "Niche",
+            "label": "Events",
+            "pageTitle": "Events",
+            "slug": "events",
+            "description": "Events page with schedule, venue context and CTA.",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "datepicker",
+                    "variant": 4
+                },
+                {
+                    "type": "content",
+                    "variant": 2
+                },
+                {
+                    "type": "location",
+                    "variant": 4
+                },
+                {
+                    "type": "cta",
+                    "variant": 1
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "properties",
+            "group": "Niche",
+            "label": "Properties",
+            "pageTitle": "Properties",
+            "slug": "properties",
+            "description": "Property listing page with gallery, stats and inquiry flow.",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "gallery",
+                    "variant": 2
+                },
+                {
+                    "type": "stats",
+                    "variant": 1
+                },
+                {
+                    "type": "location",
+                    "variant": 2
+                },
+                {
+                    "type": "contact",
+                    "variant": 2
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "projects",
+            "group": "Niche",
+            "label": "Projects",
+            "pageTitle": "Projects",
+            "slug": "projects",
+            "description": "Project showcase page with visuals and supporting proof.",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "hero",
+                    "variant": 2,
+                    "data": {
+                        "heading": "Selected projects"
+                    }
+                },
+                {
+                    "type": "gallery",
+                    "variant": 2
+                },
+                {
+                    "type": "cards",
+                    "variant": 2
+                },
+                {
+                    "type": "testimonials",
+                    "variant": 2
+                },
+                {
+                    "type": "cta",
+                    "variant": 2
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "programs",
+            "group": "Niche",
+            "label": "Programs",
+            "pageTitle": "Programs",
+            "slug": "programs",
+            "description": "Programs or classes page with structure, benefits and FAQ.",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "features",
+                    "variant": 1
+                },
+                {
+                    "type": "content",
+                    "variant": 3
+                },
+                {
+                    "type": "cards",
+                    "variant": 3
+                },
+                {
+                    "type": "faq",
+                    "variant": 2
+                },
+                {
+                    "type": "cta",
+                    "variant": 1
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "treatments",
+            "group": "Niche",
+            "label": "Treatments",
+            "pageTitle": "Treatments",
+            "slug": "treatments",
+            "description": "Treatment page with services, FAQs and conversion path.",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "hero",
+                    "variant": 1,
+                    "data": {
+                        "heading": "Treatments tailored to your needs"
+                    }
+                },
+                {
+                    "type": "services",
+                    "variant": 2
+                },
+                {
+                    "type": "cards",
+                    "variant": 1
+                },
+                {
+                    "type": "faq",
+                    "variant": 2
+                },
+                {
+                    "type": "contact",
+                    "variant": 1
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "resources",
+            "group": "Niche",
+            "label": "Resources",
+            "pageTitle": "Resources",
+            "slug": "resources",
+            "description": "Resource hub page for guides, downloads and articles.",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "hero",
+                    "variant": 1,
+                    "data": {
+                        "heading": "Resources and guides"
+                    }
+                },
+                {
+                    "type": "cards",
+                    "variant": 1
+                },
+                {
+                    "type": "content",
+                    "variant": 1
+                },
+                {
+                    "type": "cta",
+                    "variant": 4
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "donate",
+            "group": "Niche",
+            "label": "Donate",
+            "pageTitle": "Donate",
+            "slug": "donate",
+            "description": "Donation-focused page for mission-driven organizations.",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "hero",
+                    "variant": 3,
+                    "data": {
+                        "heading": "Support our mission"
+                    }
+                },
+                {
+                    "type": "stats",
+                    "variant": 1
+                },
+                {
+                    "type": "cards",
+                    "variant": 4
+                },
+                {
+                    "type": "cta",
+                    "variant": 1
+                },
+                {
+                    "type": "contact",
+                    "variant": 4
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "team",
+            "group": "Niche",
+            "label": "Team",
+            "pageTitle": "Team",
+            "slug": "team",
+            "description": "Team page with people cards and company story.",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "cards",
+                    "variant": 1
+                },
+                {
+                    "type": "content",
+                    "variant": 2
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "cards",
+            "group": "Niche",
+            "label": "Cards / Catalog",
+            "pageTitle": "Catalog",
+            "slug": "catalog",
+            "description": "Generic catalog page for collections, inventory or featured items.",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "hero",
+                    "variant": 1,
+                    "data": {
+                        "heading": "Browse the collection"
+                    }
+                },
+                {
+                    "type": "cards",
+                    "variant": 2
+                },
+                {
+                    "type": "testimonials",
+                    "variant": 2
+                },
+                {
+                    "type": "cta",
+                    "variant": 2
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "newsletter-signup",
+            "group": "Niche",
+            "label": "Newsletter Signup",
+            "pageTitle": "Newsletter",
+            "slug": "newsletter",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 2
+                },
+                {
+                    "type": "cta",
+                    "variant": 1
+                },
+                {
+                    "type": "contact",
+                    "variant": 4
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "links-page",
+            "group": "Niche",
+            "label": "Links Page",
+            "pageTitle": "Links",
+            "slug": "links",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 2
+                },
+                {
+                    "type": "cards",
+                    "variant": 4
+                },
+                {
+                    "type": "footer",
+                    "variant": 4
+                }
+            ]
+        },
+        {
+            "id": "recipe-small-business-site",
+            "group": "Recipes",
+            "label": "Recipe: Small Business Site",
+            "pageTitle": "Small Business Starter",
+            "slug": "recipe-small-business",
+            "description": "Home, services, about, reviews, and contact style stack.",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "services",
+                    "variant": 1
+                },
+                {
+                    "type": "content",
+                    "variant": 2
+                },
+                {
+                    "type": "testimonials",
+                    "variant": 1
+                },
+                {
+                    "type": "faq",
+                    "variant": 1
+                },
+                {
+                    "type": "contact",
+                    "variant": 1
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "recipe-portfolio-site",
+            "group": "Recipes",
+            "label": "Recipe: Portfolio Site",
+            "pageTitle": "Portfolio Starter",
+            "slug": "recipe-portfolio",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "gallery",
+                    "variant": 2
+                },
+                {
+                    "type": "cards",
+                    "variant": 2
+                },
+                {
+                    "type": "content",
+                    "variant": 1
+                },
+                {
+                    "type": "contact",
+                    "variant": 4
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "recipe-landing-funnel",
+            "group": "Recipes",
+            "label": "Recipe: Landing Funnel",
+            "pageTitle": "Landing Funnel",
+            "slug": "recipe-funnel",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 2
+                },
+                {
+                    "type": "features",
+                    "variant": 2
+                },
+                {
+                    "type": "stats",
+                    "variant": 1
+                },
+                {
+                    "type": "faq",
+                    "variant": 2
+                },
+                {
+                    "type": "cta",
+                    "variant": 1
+                },
+                {
+                    "type": "content",
+                    "variant": 4,
+                    "data": {
+                        "sectionTitle": "Thank-you page copy block"
+                    }
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "recipe-local-business-multi-location",
+            "group": "Recipes",
+            "label": "Recipe: Local Business Multi-location",
+            "pageTitle": "Local Multi-location",
+            "slug": "recipe-multi-location",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "services",
+                    "variant": 2
+                },
+                {
+                    "type": "location",
+                    "variant": 3
+                },
+                {
+                    "type": "testimonials",
+                    "variant": 1
+                },
+                {
+                    "type": "faq",
+                    "variant": 3
+                },
+                {
+                    "type": "contact",
+                    "variant": 2
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        },
+        {
+            "id": "recipe-saas-lite",
+            "group": "Recipes",
+            "label": "Recipe: SaaS Lite",
+            "pageTitle": "SaaS Lite Starter",
+            "slug": "recipe-saas-lite",
+            "blocks": [
+                {
+                    "type": "header",
+                    "variant": 1
+                },
+                {
+                    "type": "features",
+                    "variant": 1
+                },
+                {
+                    "type": "cards",
+                    "variant": 3
+                },
+                {
+                    "type": "faq",
+                    "variant": 2
+                },
+                {
+                    "type": "content",
+                    "variant": 1,
+                    "data": {
+                        "sectionTitle": "Docs and blog placeholders"
+                    }
+                },
+                {
+                    "type": "cta",
+                    "variant": 1
+                },
+                {
+                    "type": "contact",
+                    "variant": 4
+                },
+                {
+                    "type": "footer",
+                    "variant": 1
+                }
+            ]
+        }
+    ]
+}

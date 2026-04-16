@@ -1,0 +1,507 @@
+{
+    "version": "2.0",
+    "defaultSiteTypeId": "wellness-coach",
+    "siteTypes": [
+        {
+            "id": "wellness-coach",
+            "label": "Wellness Coach",
+            "description": "Warm, trust-based coaching site with services and contact flow.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "services", "label": "Services" },
+                { "presetId": "blog-index", "label": "Blog" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "business-consultant",
+            "label": "Business Consultant",
+            "description": "Consulting flow with proof and editorial pages.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "services", "label": "Services" },
+                { "presetId": "case-study", "label": "Success Stories", "slug": "success-stories", "pageTitle": "Success Stories" },
+                { "presetId": "blog-index", "label": "Blog" },
+                { "presetId": "testimonials-page", "label": "Testimonials" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "hotel",
+            "label": "Hotel",
+            "description": "Hospitality structure with rooms and booking pages.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "rooms", "label": "Rooms", "slug": "rooms", "pageTitle": "Rooms" },
+                { "presetId": "services", "label": "Services" },
+                { "presetId": "booking-appointment", "label": "Book Now", "slug": "book-now", "pageTitle": "Book Now" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "restaurant",
+            "label": "Restaurant",
+            "description": "Menu-forward restaurant structure with reservations.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "menu", "label": "Menu", "slug": "menu", "pageTitle": "Menu" },
+                { "presetId": "portfolio-gallery", "label": "Gallery" },
+                { "presetId": "booking-appointment", "label": "Reservations", "slug": "reservations", "pageTitle": "Reservations" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "photography",
+            "label": "Photography",
+            "description": "Portfolio-heavy photography site with packages and testimonials.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "portfolio-gallery", "label": "Portfolio", "slug": "portfolio", "pageTitle": "Portfolio" },
+                { "presetId": "pricing", "label": "Packages", "slug": "packages", "pageTitle": "Packages" },
+                { "presetId": "testimonials-page", "label": "Testimonials" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "travel-agency",
+            "label": "Travel Agency",
+            "description": "Travel pages with editorial and social-proof sections.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "destinations", "label": "Destinations", "slug": "destinations", "pageTitle": "Destinations" },
+                { "presetId": "portfolio-gallery", "label": "Trips Gallery", "slug": "trips-gallery", "pageTitle": "Trips Gallery" },
+                { "presetId": "blog-index", "label": "Blog" },
+                { "presetId": "testimonials-page", "label": "Testimonials" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "cafe",
+            "label": "Cafe",
+            "description": "Friendly local cafe site focused on menu, vibe and location.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "menu", "label": "Menu", "slug": "menu", "pageTitle": "Menu" },
+                { "presetId": "portfolio-gallery", "label": "Gallery" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "bar",
+            "label": "Bar",
+            "description": "Event-oriented bar site with nightlife feel.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "menu", "label": "Drinks", "slug": "drinks", "pageTitle": "Drinks" },
+                { "presetId": "events", "label": "Events", "slug": "events", "pageTitle": "Events" },
+                { "presetId": "portfolio-gallery", "label": "Gallery" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "resort",
+            "label": "Resort",
+            "description": "Luxury hospitality site with rooms, experiences and booking.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "rooms", "label": "Rooms", "slug": "rooms", "pageTitle": "Rooms" },
+                { "presetId": "services", "label": "Experiences", "slug": "experiences", "pageTitle": "Experiences" },
+                { "presetId": "services", "label": "Services", "slug": "services", "pageTitle": "Services" },
+                { "presetId": "booking-appointment", "label": "Book Now", "slug": "book-now", "pageTitle": "Book Now" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "real-estate-agent",
+            "label": "Real Estate Agent",
+            "description": "Lead-generation real estate site with listings and trust pages.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "properties", "label": "Properties", "slug": "properties", "pageTitle": "Properties" },
+                { "presetId": "case-study", "label": "Success Stories", "slug": "success-stories", "pageTitle": "Success Stories" },
+                { "presetId": "testimonials-page", "label": "Testimonials" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "architect",
+            "label": "Architect",
+            "description": "Minimal, credibility-focused studio site.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "projects", "label": "Projects", "slug": "projects", "pageTitle": "Projects" },
+                { "presetId": "services", "label": "Services" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "interior-designer",
+            "label": "Interior Designer",
+            "description": "Elegant lead-generation site with project visuals.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "projects", "label": "Projects", "slug": "projects", "pageTitle": "Projects" },
+                { "presetId": "services", "label": "Services" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "wedding-planner",
+            "label": "Wedding Planner",
+            "description": "Emotion-led lead-generation site with proof and gallery.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "services", "label": "Services" },
+                { "presetId": "portfolio-gallery", "label": "Gallery" },
+                { "presetId": "testimonials-page", "label": "Testimonials" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "yoga-studio",
+            "label": "Yoga Studio",
+            "description": "Calm booking-oriented studio site with classes and blog.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "programs", "label": "Classes", "slug": "classes", "pageTitle": "Classes" },
+                { "presetId": "booking-appointment", "label": "Schedule", "slug": "schedule", "pageTitle": "Schedule" },
+                { "presetId": "blog-index", "label": "Blog" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "fitness-trainer",
+            "label": "Fitness Trainer",
+            "description": "Lead-focused trainer site with programs and pricing.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "programs", "label": "Programs", "slug": "programs", "pageTitle": "Programs" },
+                { "presetId": "case-study", "label": "Results", "slug": "results", "pageTitle": "Results" },
+                { "presetId": "pricing", "label": "Pricing" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "spa",
+            "label": "Spa",
+            "description": "Luxury treatments site with booking flow.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "treatments", "label": "Treatments", "slug": "treatments", "pageTitle": "Treatments" },
+                { "presetId": "portfolio-gallery", "label": "Gallery" },
+                { "presetId": "booking-appointment", "label": "Book Now", "slug": "book-now", "pageTitle": "Book Now" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "dentist",
+            "label": "Dentist",
+            "description": "Trust-first clinic site with treatments and FAQ.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "treatments", "label": "Treatments", "slug": "treatments", "pageTitle": "Treatments" },
+                { "presetId": "testimonials-page", "label": "Testimonials" },
+                { "presetId": "faq-page", "label": "FAQ", "slug": "faq", "pageTitle": "FAQ" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "lawyer",
+            "label": "Lawyer",
+            "description": "Authoritative legal site with services and proof.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "services", "label": "Services" },
+                { "presetId": "case-study", "label": "Success Stories", "slug": "success-stories", "pageTitle": "Success Stories" },
+                { "presetId": "faq-page", "label": "FAQ", "slug": "faq", "pageTitle": "FAQ" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "accountant",
+            "label": "Accountant",
+            "description": "Practical service site with resources and FAQ.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "services", "label": "Services" },
+                { "presetId": "resources", "label": "Resources", "slug": "resources", "pageTitle": "Resources" },
+                { "presetId": "faq-page", "label": "FAQ", "slug": "faq", "pageTitle": "FAQ" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "marketing-agency",
+            "label": "Marketing Agency",
+            "description": "Credibility-led agency site with work and insight pages.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "services", "label": "Services" },
+                { "presetId": "portfolio-gallery", "label": "Work", "slug": "work", "pageTitle": "Work" },
+                { "presetId": "case-study", "label": "Success Stories", "slug": "success-stories", "pageTitle": "Success Stories" },
+                { "presetId": "blog-index", "label": "Blog" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "creative-agency",
+            "label": "Creative Agency",
+            "description": "Showcase-oriented agency site with bold work pages.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "portfolio-gallery", "label": "Work", "slug": "work", "pageTitle": "Work" },
+                { "presetId": "services", "label": "Services" },
+                { "presetId": "testimonials-page", "label": "Testimonials" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "saas",
+            "label": "SaaS",
+            "description": "Conversion-focused software site with features, pricing and proof.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "features-page", "label": "Features", "slug": "features", "pageTitle": "Features" },
+                { "presetId": "pricing", "label": "Pricing" },
+                { "presetId": "case-study", "label": "Success Stories", "slug": "success-stories", "pageTitle": "Success Stories" },
+                { "presetId": "blog-index", "label": "Blog" },
+                { "presetId": "faq-page", "label": "FAQ", "slug": "faq", "pageTitle": "FAQ" },
+                { "presetId": "testimonials-page", "label": "Testimonials" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "general-practitioner",
+            "label": "General Practitioner",
+            "description": "Local clinic site with service clarity and appointment path.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "services", "label": "Services" },
+                { "presetId": "faq-page", "label": "FAQ", "slug": "faq", "pageTitle": "FAQ" },
+                { "presetId": "booking-appointment", "label": "Book Appointment", "slug": "book-appointment", "pageTitle": "Book Appointment" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "event-venue",
+            "label": "Event Venue",
+            "description": "Venue showcase site with gallery and booking call-to-action.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "portfolio-gallery", "label": "Venue", "slug": "venue", "pageTitle": "Venue" },
+                { "presetId": "portfolio-gallery", "label": "Gallery", "slug": "gallery", "pageTitle": "Gallery" },
+                { "presetId": "booking-appointment", "label": "Book Now", "slug": "book-now", "pageTitle": "Book Now" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "hair-salon",
+            "label": "Hair Salon",
+            "description": "Beauty service site with gallery and booking.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "services", "label": "Services" },
+                { "presetId": "portfolio-gallery", "label": "Gallery" },
+                { "presetId": "booking-appointment", "label": "Book Now", "slug": "book-now", "pageTitle": "Book Now" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "beauty-salon",
+            "label": "Beauty Salon",
+            "description": "Treatment-focused beauty site with soft luxury tone.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "treatments", "label": "Treatments", "slug": "treatments", "pageTitle": "Treatments" },
+                { "presetId": "portfolio-gallery", "label": "Gallery" },
+                { "presetId": "booking-appointment", "label": "Book Now", "slug": "book-now", "pageTitle": "Book Now" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "chiropractor",
+            "label": "Chiropractor",
+            "description": "Trust-based practitioner site with treatment and FAQ pages.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "treatments", "label": "Treatments", "slug": "treatments", "pageTitle": "Treatments" },
+                { "presetId": "faq-page", "label": "FAQ", "slug": "faq", "pageTitle": "FAQ" },
+                { "presetId": "testimonials-page", "label": "Testimonials" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "massage-therapist",
+            "label": "Massage Therapist",
+            "description": "Calm local booking site with treatments and contact flow.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "treatments", "label": "Treatments", "slug": "treatments", "pageTitle": "Treatments" },
+                { "presetId": "booking-appointment", "label": "Book Now", "slug": "book-now", "pageTitle": "Book Now" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "plumber",
+            "label": "Plumber",
+            "description": "Practical local service site focused on calls and emergency help.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "services", "label": "Services" },
+                { "presetId": "services", "label": "Emergency", "slug": "emergency", "pageTitle": "Emergency" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "electrician",
+            "label": "Electrician",
+            "description": "Clear service business site with trust and project pages.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "services", "label": "Services" },
+                { "presetId": "projects", "label": "Projects", "slug": "projects", "pageTitle": "Projects" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "cleaning-service",
+            "label": "Cleaning Service",
+            "description": "Simple lead-generation local service site with pricing.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "services", "label": "Services" },
+                { "presetId": "pricing", "label": "Pricing" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "landscaping",
+            "label": "Landscaping",
+            "description": "Project-driven outdoor services site with visuals.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "services", "label": "Services" },
+                { "presetId": "projects", "label": "Projects", "slug": "projects", "pageTitle": "Projects" },
+                { "presetId": "portfolio-gallery", "label": "Gallery" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "florist",
+            "label": "Florist",
+            "description": "Visual flower shop site with collections and gallery.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "cards", "label": "Collections", "slug": "collections", "pageTitle": "Collections" },
+                { "presetId": "portfolio-gallery", "label": "Gallery" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "bakery",
+            "label": "Bakery",
+            "description": "Warm local bakery site with menu and gallery.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "menu", "label": "Menu", "slug": "menu", "pageTitle": "Menu" },
+                { "presetId": "portfolio-gallery", "label": "Gallery" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "car-dealer",
+            "label": "Car Dealer",
+            "description": "Inventory-led dealership site with financing and trust.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "cards", "label": "Vehicles", "slug": "vehicles", "pageTitle": "Vehicles" },
+                { "presetId": "pricing", "label": "Financing", "slug": "financing", "pageTitle": "Financing" },
+                { "presetId": "testimonials-page", "label": "Testimonials" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "ngo-charity",
+            "label": "NGO / Charity",
+            "description": "Mission-led site with projects, stories and donations.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "projects", "label": "Projects", "slug": "projects", "pageTitle": "Projects" },
+                { "presetId": "case-study", "label": "Success Stories", "slug": "success-stories", "pageTitle": "Success Stories" },
+                { "presetId": "blog-index", "label": "Blog" },
+                { "presetId": "donate", "label": "Donate", "slug": "donate", "pageTitle": "Donate" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "school-academy",
+            "label": "School / Academy",
+            "description": "Information-rich education site with programs and inquiry flow.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "programs", "label": "Programs", "slug": "programs", "pageTitle": "Programs" },
+                { "presetId": "team", "label": "Team", "slug": "team", "pageTitle": "Team" },
+                { "presetId": "blog-index", "label": "Blog" },
+                { "presetId": "faq-page", "label": "FAQ", "slug": "faq", "pageTitle": "FAQ" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "music-band",
+            "label": "Music Band",
+            "description": "Fan-facing band site with events and media.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "about", "label": "About" },
+                { "presetId": "events", "label": "Events", "slug": "events", "pageTitle": "Events" },
+                { "presetId": "portfolio-gallery", "label": "Gallery" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        },
+        {
+            "id": "dj",
+            "label": "DJ",
+            "description": "Compact booking-oriented DJ site with media and events.",
+            "pages": [
+                { "presetId": "home", "label": "Home" },
+                { "presetId": "events", "label": "Events", "slug": "events", "pageTitle": "Events" },
+                { "presetId": "portfolio-gallery", "label": "Gallery" },
+                { "presetId": "contact", "label": "Contact" }
+            ]
+        }
+    ]
+}

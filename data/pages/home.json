@@ -1,0 +1,2495 @@
+{
+    "version": "2.0",
+    "theme": {
+        "theme": {
+            "id": "candy",
+            "name": "Candy",
+            "colors": {
+                "background": "#FFFFFF",
+                "surface": "var(--lighter)",
+                "primary": "var(--base)",
+                "secondary": "var(--darker)",
+                "text": "#000000",
+                "textMuted": "var(--darker)",
+                "border": "var(--lighter)"
+            },
+            "effects": {
+                "shadow": "none"
+            },
+            "picsumId": "74"
+        },
+        "palette": {
+            "base": "#e5219d",
+            "lighter": "#FF85E1",
+            "darker": "#91005A",
+            "complementary": "#8EA9DE",
+            "splitComplementary": "#8ED1DE",
+            "triadic": "#8EDEC3",
+            "background": "#ffffff"
+        },
+        "gradient": {
+            "accent": "var(--complementary)",
+            "angle": 0,
+            "glow": 0,
+            "gradStart": "var(--background)",
+            "gradEnd": "var(--background)"
+        },
+        "typography": {
+            "mode": "theme",
+            "heading": {
+                "family": "\"Playfair Display\", serif",
+                "size": 68,
+                "weight": 900,
+                "lineHeight": 1.28,
+                "letterSpacing": 1.4,
+                "color": "var(--background)",
+                "h2Color": "var(--base)",
+                "h3PlusColor": "var(--darker)"
+            },
+            "body": {
+                "family": "\"Montserrat\", sans-serif",
+                "size": 16,
+                "weight": 400,
+                "lineHeight": 1.6,
+                "letterSpacing": 0,
+                "color": "#000000"
+            },
+            "link": {
+                "color": "#000000"
+            },
+            "fontFamily": "\"Montserrat\", sans-serif",
+            "headingFont": "\"Playfair Display\", serif",
+            "bodyFont": "\"Montserrat\", sans-serif",
+            "fontSizeBase": "16px"
+        },
+        "images": [
+            {
+                "id": "74",
+                "source": "picsum",
+                "url": "https://picsum.photos/id/74/1200/480"
+            }
+        ],
+        "metadata": {
+            "createdAt": "2026-03-14"
+        },
+        "elements": {
+            "card": {
+                "opacity": 0.08,
+                "radius": 12,
+                "color": "var(--lighter)",
+                "shadow": "var(--theme-shadow)",
+                "hoverShadow": "var(--theme-shadow)"
+            },
+            "button": {
+                "color": "var(--lighter)",
+                "opacity": 1,
+                "borderColor": "#FAD7ED",
+                "secondaryBackground": "var(--background)",
+                "radius": 12,
+                "shadow": "none",
+                "hoverShadow": "none"
+            },
+            "input": {
+                "background": "#FCE7F3"
+            },
+            "hr": {
+                "color": "var(--splitComplementary)"
+            },
+            "borderWidth": 1
+        }
+    },
+    "site": {
+        "name": "string",
+        "typeId": "general-practitioner",
+        "activePageId": "home",
+        "canvas": {
+            "lineHeightScale": 100,
+            "spacingXScale": 100,
+            "spacingYScale": 100,
+            "elementSpacingScale": 100,
+            "gradientOpacity": 100,
+            "linkAnimation": "none"
+        },
+        "pages": [
+            {
+                "id": "home",
+                "title": "Home",
+                "menuLabel": "Home",
+                "slug": "home",
+                "locale": "nl",
+                "showInHeaderNav": true,
+                "showInFooterNav": true,
+                "sharedContact": {
+                    "email": "hello@naomidongelmans.com",
+                    "phone": "",
+                    "address": "Rua de bem parece",
+                    "locationLabel": "Naomi Dongelmans",
+                    "locationNote": "Albufeira, Portugal",
+                    "latitude": "",
+                    "longitude": ""
+                },
+                "presetId": "home",
+                "canvas": {
+                    "lineHeightScale": 100,
+                    "spacingXScale": 100,
+                    "spacingYScale": 100,
+                    "elementSpacingScale": 100,
+                    "gradientOpacity": 100,
+                    "linkAnimation": "none"
+                },
+                "blocks": [
+                    {
+                        "uid": "5aac5f1d-f449-4b3c-9b5a-974390ed901d",
+                        "type": "header",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 100,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 0,
+                        "data": {
+                            "brand": "string",
+                            "tagline": "Een krachtige slogan",
+                            "sticky": true,
+                            "ctaLabel": "De label voor de call-to-action knop",
+                            "ctaUrl": "#booking",
+                            "links": [
+                                {
+                                    "label": "Home",
+                                    "url": "#home",
+                                    "pageId": "home",
+                                    "pageSlug": "home"
+                                },
+                                {
+                                    "label": "Over",
+                                    "url": "#about",
+                                    "pageId": "about",
+                                    "pageSlug": "about"
+                                },
+                                {
+                                    "label": "Diensten",
+                                    "url": "#services",
+                                    "pageId": "services",
+                                    "pageSlug": "services"
+                                },
+                                {
+                                    "label": "FAQ",
+                                    "url": "#faq",
+                                    "pageId": "faq",
+                                    "pageSlug": "faq"
+                                },
+                                {
+                                    "label": "Afspraak boeken",
+                                    "url": "#book-appointment",
+                                    "pageId": "book-appointment",
+                                    "pageSlug": "book-appointment"
+                                },
+                                {
+                                    "label": "Contact",
+                                    "url": "#contact",
+                                    "pageId": "contact",
+                                    "pageSlug": "contact"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "d92b80f5-5de9-46f8-8f3e-999e74380a56",
+                        "type": "hero",
+                        "variant": 2,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "heading": "De hooftiteling van de website.",
+                            "subheading": "Een ondertitel voor de hooftiteling.",
+                            "ctaLabel": "De label voor de call-to-action knop",
+                            "ctaUrl": "#booking",
+                            "secondaryLabel": "Explore services",
+                            "secondaryUrl": "#services",
+                            "imageMode": "themeRandom",
+                            "imageUrl": "https://picsum.photos/id/74/1200/480",
+                            "resolvedImageUrl": "https://picsum.photos/id/74/1200/480",
+                            "bullets": [
+                                {
+                                    "text": "Lokale klinieksite met duidelijke diensten en een afspraakflow."
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "0bbdd512-0e4d-4275-9a4b-77410b030baf",
+                        "type": "truststrip",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "heading": "De hooftiteling van de website.",
+                            "headingLevel": "h2",
+                            "ratingLabel": "Gemiddelde beoordeling 4,9",
+                            "columns": 4,
+                            "logos": [
+                                {
+                                    "name": "Hands General Practitioner Showing Results Phone Medicine Consultation Healthcare",
+                                    "imageMode": "manual",
+                                    "imageUrl": "/static/images/hands-general-practitioner-showing-results-phone-medicine-consultation-healthcare.webp",
+                                    "resolvedImageUrl": "/static/images/hands-general-practitioner-showing-results-phone-medicine-consultation-healthcare.webp",
+                                    "url": "#"
+                                },
+                                {
+                                    "name": "Womens Health Nominated Smoothie Celery Straw Hand Ok Drink",
+                                    "imageMode": "manual",
+                                    "imageUrl": "/static/images/womens-health-nominated-smoothie-celery-straw-hand-ok-drink.webp",
+                                    "resolvedImageUrl": "/static/images/womens-health-nominated-smoothie-celery-straw-hand-ok-drink.webp",
+                                    "url": "#"
+                                },
+                                {
+                                    "name": "Office Team Meeting Conference Desk Computer Monitor Professional Collaboration",
+                                    "imageMode": "manual",
+                                    "imageUrl": "/static/images/office-team-meeting-conference-desk-computer-monitor-professional-collaboration.webp",
+                                    "resolvedImageUrl": "/static/images/office-team-meeting-conference-desk-computer-monitor-professional-collaboration.webp",
+                                    "url": "#"
+                                },
+                                {
+                                    "name": "Atlas",
+                                    "imageMode": "manual",
+                                    "imageUrl": "",
+                                    "resolvedImageUrl": "",
+                                    "url": "#"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "c0977be2-4ef6-437a-8662-d92752221a21",
+                        "type": "features",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "sectionTitle": "De hooftiteling van de website.",
+                            "headingLevel": "h2",
+                            "sectionSubtitle": "Een ondertitel voor de hooftiteling.",
+                            "columns": 3,
+                            "cards": [
+                                {
+                                    "title": "Lokale klinieksite met duidelijke diensten en een afspraakflow.",
+                                    "text": "Turn Lokale klinieksite met duidelijke diensten en een afspraakflow into a concrete visitor benefit with a clearer explanation of the outcome.",
+                                    "icon": "CFG",
+                                    "linkUrl": "#booking",
+                                    "imageMode": "manual",
+                                    "imageUrl": "/static/images/women-weight-management-counseling-measurement-dress-assistant-client-tailor-fitting-consultation.webp",
+                                    "resolvedImageUrl": "/static/images/women-weight-management-counseling-measurement-dress-assistant-client-tailor-fitting-consultation.webp"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "168d33a1-cdfa-499a-8c53-bc01ae57c707",
+                        "type": "stats",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "sectionTitle": "Proof at a glance",
+                            "headingLevel": "h2",
+                            "columns": 4,
+                            "animate": true,
+                            "trigger": "onView",
+                            "stats": [
+                                {
+                                    "value": 12,
+                                    "suffix": "+",
+                                    "label": "Years of experience"
+                                },
+                                {
+                                    "value": 48,
+                                    "suffix": "+",
+                                    "label": "Projects delivered"
+                                },
+                                {
+                                    "value": 24,
+                                    "suffix": "h",
+                                    "label": "Response speed"
+                                },
+                                {
+                                    "value": 98,
+                                    "suffix": "%",
+                                    "label": "Client satisfaction"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "092e2983-f811-4ce9-8503-a5c7ac1afe02",
+                        "type": "testimonials",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "sectionTitle": "What clients say",
+                            "headingLevel": "h2",
+                            "sectionSubtitle": "Placeholder social proof matched to the questionnaire.",
+                            "columns": 3,
+                            "items": [
+                                {
+                                    "quote": "string made the process clear from the first conversation.",
+                                    "name": "Alex Martin",
+                                    "role": "Client",
+                                    "rating": 5,
+                                    "imageMode": "manual",
+                                    "imageUrl": "",
+                                    "resolvedImageUrl": ""
+                                },
+                                {
+                                    "quote": "The messaging felt sharper and the next steps were obvious.",
+                                    "name": "Samira Lee",
+                                    "role": "Founder",
+                                    "rating": 5,
+                                    "imageMode": "manual",
+                                    "imageUrl": "",
+                                    "resolvedImageUrl": ""
+                                },
+                                {
+                                    "quote": "Fast turnaround, strong communication, and a better first impression.",
+                                    "name": "Jordan Kim",
+                                    "role": "Operations Lead",
+                                    "rating": 4,
+                                    "imageMode": "manual",
+                                    "imageUrl": "",
+                                    "resolvedImageUrl": ""
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "0c83d3c8-216b-4870-b759-d9cca9ba54af",
+                        "type": "cta",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "heading": "Ready to take the next step?",
+                            "headingLevel": "h2",
+                            "text": "If Functional medicine, Gut health testing, and Caregiver coaching feels like the right fit, use the main CTA to de label voor de call-to-action knop and start the conversation.",
+                            "buttonLabel": "De label voor de call-to-action knop",
+                            "buttonUrl": "#booking",
+                            "secondaryLabel": "Bekijk documentatie",
+                            "secondaryUrl": "#"
+                        }
+                    },
+                    {
+                        "uid": "6479ba5e-2503-4e12-8152-ae04d1bd99e2",
+                        "type": "contact",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "headline": "Talk to string",
+                            "headingLevel": "h2",
+                            "text": "Questions about Functional medicine, Gut health testing, and Caregiver coaching? Send a message and get a clearer sense of the right next step.",
+                            "imageMode": "manual",
+                            "imageUrl": "/static/images/dreamcatcher-feathers-sunlight-sky-beads-circle-string-ornament.webp",
+                            "resolvedImageUrl": "/static/images/dreamcatcher-feathers-sunlight-sky-beads-circle-string-ornament.webp",
+                            "email": "hello@naomidongelmans.com",
+                            "phone": "",
+                            "address": "Rua de bem parece",
+                            "formEnabled": true,
+                            "buttonLabel": "De label voor de call-to-action knop",
+                            "mapUrl": ""
+                        }
+                    },
+                    {
+                        "uid": "bb8dd913-6f4b-4ac3-bcca-e29a3a949b61",
+                        "type": "footer",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 100,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 0,
+                        "data": {
+                            "brand": "string",
+                            "tagline": "Een krachtige slogan",
+                            "address": "Rua de bem parece",
+                            "contactLine": "",
+                            "blurb": "Tekst die beschrijft wat de website doet.",
+                            "legalLine": "Replace this line with privacy, licensing, or regulatory details before publishing.",
+                            "ctaLabel": "De label voor de call-to-action knop",
+                            "ctaUrl": "#booking",
+                            "links": [
+                                {
+                                    "label": "Home",
+                                    "url": "#home",
+                                    "pageId": "home",
+                                    "pageSlug": "home"
+                                },
+                                {
+                                    "label": "Over",
+                                    "url": "#about",
+                                    "pageId": "about",
+                                    "pageSlug": "about"
+                                },
+                                {
+                                    "label": "Diensten",
+                                    "url": "#services",
+                                    "pageId": "services",
+                                    "pageSlug": "services"
+                                },
+                                {
+                                    "label": "FAQ",
+                                    "url": "#faq",
+                                    "pageId": "faq",
+                                    "pageSlug": "faq"
+                                },
+                                {
+                                    "label": "Afspraak boeken",
+                                    "url": "#book-appointment",
+                                    "pageId": "book-appointment",
+                                    "pageSlug": "book-appointment"
+                                },
+                                {
+                                    "label": "Contact",
+                                    "url": "#contact",
+                                    "pageId": "contact",
+                                    "pageSlug": "contact"
+                                }
+                            ],
+                            "columns": [
+                                {
+                                    "title": "Product",
+                                    "links": [
+                                        {
+                                            "label": "Functies",
+                                            "url": "#features"
+                                        },
+                                        {
+                                            "label": "Prijzen",
+                                            "url": "#pricing"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "title": "Bedrijf",
+                                    "links": [
+                                        {
+                                            "label": "Over",
+                                            "url": "#"
+                                        },
+                                        {
+                                            "label": "Contact",
+                                            "url": "#contact"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "copyright": "(c) 2026 SiteKit. All rights reserved."
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "about",
+                "title": "Over",
+                "menuLabel": "Over",
+                "slug": "about",
+                "locale": "nl",
+                "showInHeaderNav": true,
+                "showInFooterNav": true,
+                "sharedContact": {
+                    "email": "hello@naomidongelmans.com",
+                    "phone": "",
+                    "address": "Rua de bem parece",
+                    "locationLabel": "Naomi Dongelmans",
+                    "locationNote": "Albufeira, Portugal",
+                    "latitude": "",
+                    "longitude": ""
+                },
+                "presetId": "about",
+                "canvas": {
+                    "lineHeightScale": 100,
+                    "spacingXScale": 100,
+                    "spacingYScale": 100,
+                    "elementSpacingScale": 100,
+                    "gradientOpacity": 100,
+                    "linkAnimation": "none"
+                },
+                "blocks": [
+                    {
+                        "uid": "7b122e76-50a0-45d4-8a64-72ab865b6b7b",
+                        "type": "header",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 100,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 0,
+                        "data": {
+                            "brand": "string",
+                            "tagline": "Een krachtige slogan",
+                            "sticky": true,
+                            "ctaLabel": "De label voor de call-to-action knop",
+                            "ctaUrl": "#booking",
+                            "links": [
+                                {
+                                    "label": "Home",
+                                    "url": "#home",
+                                    "pageId": "home",
+                                    "pageSlug": "home"
+                                },
+                                {
+                                    "label": "Over",
+                                    "url": "#about",
+                                    "pageId": "about",
+                                    "pageSlug": "about"
+                                },
+                                {
+                                    "label": "Diensten",
+                                    "url": "#services",
+                                    "pageId": "services",
+                                    "pageSlug": "services"
+                                },
+                                {
+                                    "label": "FAQ",
+                                    "url": "#faq",
+                                    "pageId": "faq",
+                                    "pageSlug": "faq"
+                                },
+                                {
+                                    "label": "Afspraak boeken",
+                                    "url": "#book-appointment",
+                                    "pageId": "book-appointment",
+                                    "pageSlug": "book-appointment"
+                                },
+                                {
+                                    "label": "Contact",
+                                    "url": "#contact",
+                                    "pageId": "contact",
+                                    "pageSlug": "contact"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "7652a8fd-1dcf-4066-b274-16e61183139c",
+                        "type": "hero",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "heading": "De hooftiteling van de website.",
+                            "subheading": "Een ondertitel voor de hooftiteling.",
+                            "ctaLabel": "De label voor de call-to-action knop",
+                            "ctaUrl": "#booking",
+                            "secondaryLabel": "Explore services",
+                            "secondaryUrl": "#services",
+                            "imageMode": "themeRandom",
+                            "imageUrl": "https://picsum.photos/id/74/1200/480",
+                            "resolvedImageUrl": "https://picsum.photos/id/74/1200/480",
+                            "bullets": [
+                                {
+                                    "text": "Lokale klinieksite met duidelijke diensten en een afspraakflow."
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "594021b0-728d-4c86-bd6f-0ef35a986139",
+                        "type": "content",
+                        "variant": 2,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "sectionTitle": "About string",
+                            "headingLevel": "h2",
+                            "items": [
+                                {
+                                    "title": "Functional medicine",
+                                    "text": "Tekst die beschrijft wat de website doet.",
+                                    "align": "right",
+                                    "imageMode": "manual",
+                                    "imageUrl": "",
+                                    "resolvedImageUrl": ""
+                                },
+                                {
+                                    "title": "Gut health testing",
+                                    "text": "Explain what Gut health testing looks like in practice, who it is for, and how it supports Health-frustrated professional women (core client).",
+                                    "align": "left",
+                                    "imageMode": "manual",
+                                    "imageUrl": "",
+                                    "resolvedImageUrl": ""
+                                },
+                                {
+                                    "title": "Caregiver coaching",
+                                    "text": "Explain what Caregiver coaching looks like in practice, who it is for, and how it supports Health-frustrated professional women (core client)."
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "71a674aa-5ddc-41c1-aabd-a7cb64e070b8",
+                        "type": "stats",
+                        "variant": 2,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "sectionTitle": "Proof at a glance",
+                            "headingLevel": "h2",
+                            "columns": 4,
+                            "animate": true,
+                            "trigger": "onView",
+                            "stats": [
+                                {
+                                    "value": 12,
+                                    "suffix": "+",
+                                    "label": "Years of experience"
+                                },
+                                {
+                                    "value": 48,
+                                    "suffix": "+",
+                                    "label": "Projects delivered"
+                                },
+                                {
+                                    "value": 24,
+                                    "suffix": "h",
+                                    "label": "Response speed"
+                                },
+                                {
+                                    "value": 98,
+                                    "suffix": "%",
+                                    "label": "Client satisfaction"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "8fd6181f-2ba0-4802-a489-1f76507a2f90",
+                        "type": "testimonials",
+                        "variant": 3,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "sectionTitle": "What clients say",
+                            "headingLevel": "h2",
+                            "sectionSubtitle": "Placeholder social proof matched to the questionnaire.",
+                            "columns": 3,
+                            "items": [
+                                {
+                                    "quote": "string made the process clear from the first conversation.",
+                                    "name": "Alex Martin",
+                                    "role": "Client",
+                                    "rating": 5,
+                                    "imageMode": "manual",
+                                    "imageUrl": "",
+                                    "resolvedImageUrl": ""
+                                },
+                                {
+                                    "quote": "The messaging felt sharper and the next steps were obvious.",
+                                    "name": "Samira Lee",
+                                    "role": "Founder",
+                                    "rating": 5,
+                                    "imageMode": "manual",
+                                    "imageUrl": "",
+                                    "resolvedImageUrl": ""
+                                },
+                                {
+                                    "quote": "Fast turnaround, strong communication, and a better first impression.",
+                                    "name": "Jordan Kim",
+                                    "role": "Operations Lead",
+                                    "rating": 4,
+                                    "imageMode": "manual",
+                                    "imageUrl": "",
+                                    "resolvedImageUrl": ""
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "2fdfe254-7299-4caf-b9c8-05d66958b468",
+                        "type": "cta",
+                        "variant": 2,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "heading": "Ready to take the next step?",
+                            "headingLevel": "h2",
+                            "text": "If Functional medicine, Gut health testing, and Caregiver coaching feels like the right fit, use the main CTA to de label voor de call-to-action knop and start the conversation.",
+                            "buttonLabel": "De label voor de call-to-action knop",
+                            "buttonUrl": "#booking",
+                            "secondaryLabel": "Bekijk documentatie",
+                            "secondaryUrl": "#"
+                        }
+                    },
+                    {
+                        "uid": "3bc877f5-3174-4ab5-91cf-abee44eccc9c",
+                        "type": "footer",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 100,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 0,
+                        "data": {
+                            "brand": "string",
+                            "tagline": "Een krachtige slogan",
+                            "address": "Rua de bem parece",
+                            "contactLine": "",
+                            "blurb": "Tekst die beschrijft wat de website doet.",
+                            "legalLine": "Replace this line with privacy, licensing, or regulatory details before publishing.",
+                            "ctaLabel": "De label voor de call-to-action knop",
+                            "ctaUrl": "#booking",
+                            "links": [
+                                {
+                                    "label": "Home",
+                                    "url": "#home",
+                                    "pageId": "home",
+                                    "pageSlug": "home"
+                                },
+                                {
+                                    "label": "Over",
+                                    "url": "#about",
+                                    "pageId": "about",
+                                    "pageSlug": "about"
+                                },
+                                {
+                                    "label": "Diensten",
+                                    "url": "#services",
+                                    "pageId": "services",
+                                    "pageSlug": "services"
+                                },
+                                {
+                                    "label": "FAQ",
+                                    "url": "#faq",
+                                    "pageId": "faq",
+                                    "pageSlug": "faq"
+                                },
+                                {
+                                    "label": "Afspraak boeken",
+                                    "url": "#book-appointment",
+                                    "pageId": "book-appointment",
+                                    "pageSlug": "book-appointment"
+                                },
+                                {
+                                    "label": "Contact",
+                                    "url": "#contact",
+                                    "pageId": "contact",
+                                    "pageSlug": "contact"
+                                }
+                            ],
+                            "columns": [
+                                {
+                                    "title": "Product",
+                                    "links": [
+                                        {
+                                            "label": "Functies",
+                                            "url": "#features"
+                                        },
+                                        {
+                                            "label": "Prijzen",
+                                            "url": "#pricing"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "title": "Bedrijf",
+                                    "links": [
+                                        {
+                                            "label": "Over",
+                                            "url": "#"
+                                        },
+                                        {
+                                            "label": "Contact",
+                                            "url": "#contact"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "copyright": "(c) 2026 SiteKit. All rights reserved."
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "services",
+                "title": "Diensten",
+                "menuLabel": "Diensten",
+                "slug": "services",
+                "locale": "nl",
+                "showInHeaderNav": true,
+                "showInFooterNav": true,
+                "sharedContact": {
+                    "email": "hello@naomidongelmans.com",
+                    "phone": "",
+                    "address": "Rua de bem parece",
+                    "locationLabel": "Naomi Dongelmans",
+                    "locationNote": "Albufeira, Portugal",
+                    "latitude": "",
+                    "longitude": ""
+                },
+                "presetId": "services",
+                "canvas": {
+                    "lineHeightScale": 100,
+                    "spacingXScale": 100,
+                    "spacingYScale": 100,
+                    "elementSpacingScale": 100,
+                    "gradientOpacity": 100,
+                    "linkAnimation": "none"
+                },
+                "blocks": [
+                    {
+                        "uid": "03c10555-8c9d-4983-aa72-15cf6a96f7a4",
+                        "type": "header",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 100,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 0,
+                        "data": {
+                            "brand": "string",
+                            "tagline": "Een krachtige slogan",
+                            "sticky": true,
+                            "ctaLabel": "De label voor de call-to-action knop",
+                            "ctaUrl": "#booking",
+                            "links": [
+                                {
+                                    "label": "Home",
+                                    "url": "#home",
+                                    "pageId": "home",
+                                    "pageSlug": "home"
+                                },
+                                {
+                                    "label": "Over",
+                                    "url": "#about",
+                                    "pageId": "about",
+                                    "pageSlug": "about"
+                                },
+                                {
+                                    "label": "Diensten",
+                                    "url": "#services",
+                                    "pageId": "services",
+                                    "pageSlug": "services"
+                                },
+                                {
+                                    "label": "FAQ",
+                                    "url": "#faq",
+                                    "pageId": "faq",
+                                    "pageSlug": "faq"
+                                },
+                                {
+                                    "label": "Afspraak boeken",
+                                    "url": "#book-appointment",
+                                    "pageId": "book-appointment",
+                                    "pageSlug": "book-appointment"
+                                },
+                                {
+                                    "label": "Contact",
+                                    "url": "#contact",
+                                    "pageId": "contact",
+                                    "pageSlug": "contact"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "a422cd10-4d11-408b-9934-c8f6e296c4ce",
+                        "type": "hero",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "heading": "De hooftiteling van de website.",
+                            "subheading": "Een ondertitel voor de hooftiteling.",
+                            "ctaLabel": "De label voor de call-to-action knop",
+                            "ctaUrl": "#booking",
+                            "secondaryLabel": "Explore services",
+                            "secondaryUrl": "#services",
+                            "imageMode": "themeRandom",
+                            "imageUrl": "https://picsum.photos/id/74/1200/480",
+                            "resolvedImageUrl": "https://picsum.photos/id/74/1200/480",
+                            "bullets": [
+                                {
+                                    "text": "Lokale klinieksite met duidelijke diensten en een afspraakflow."
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "f3fa51ac-417a-4a7e-a5c5-6b89b7c3f6de",
+                        "type": "services",
+                        "variant": 2,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "sectionTitle": "Diensten tailored to your goals",
+                            "headingLevel": "h2",
+                            "sectionSubtitle": "Explore Functional medicine, Gut health testing, Caregiver coaching with a clear path to action.",
+                            "columns": 2,
+                            "items": [
+                                {
+                                    "title": "Functional medicine",
+                                    "text": "A focused Functional medicine offer explained in plain language, including who it helps, what is included, and the next step.",
+                                    "price": "$399",
+                                    "icon": "OK",
+                                    "linkUrl": "#booking",
+                                    "imageMode": "manual",
+                                    "imageUrl": "/static/images/health-food-woman-laptop-sofa-window-book-alarm-plant.webp",
+                                    "resolvedImageUrl": "/static/images/health-food-woman-laptop-sofa-window-book-alarm-plant.webp"
+                                },
+                                {
+                                    "title": "Gut health testing",
+                                    "text": "A focused Gut health testing offer explained in plain language, including who it helps, what is included, and the next step.",
+                                    "price": "$249",
+                                    "icon": "OK",
+                                    "linkUrl": "#booking",
+                                    "imageMode": "manual",
+                                    "imageUrl": "/static/images/man-woman-running-fitness-outdoors-smiling-urban-exercise-health-nature.webp",
+                                    "resolvedImageUrl": "/static/images/man-woman-running-fitness-outdoors-smiling-urban-exercise-health-nature.webp"
+                                },
+                                {
+                                    "title": "Caregiver coaching",
+                                    "text": "A focused Caregiver coaching offer explained in plain language, including who it helps, what is included, and the next step.",
+                                    "price": "$149",
+                                    "icon": "OK",
+                                    "linkUrl": "#booking",
+                                    "imageMode": "manual",
+                                    "imageUrl": "/static/images/woman-exercising-in-health-club-yoga-pose-studio-ball.webp",
+                                    "resolvedImageUrl": "/static/images/woman-exercising-in-health-club-yoga-pose-studio-ball.webp"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "4eef874c-ad6b-42c2-8f82-b2eab1be75f0",
+                        "type": "cards",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "sectionTitle": "Diensten tailored to your goals",
+                            "headingLevel": "h2",
+                            "sectionSubtitle": "Explore Functional medicine, Gut health testing, Caregiver coaching with a clear path to action.",
+                            "columns": 3,
+                            "cards": [
+                                {
+                                    "badge": "Highlights",
+                                    "title": "Functional medicine",
+                                    "text": "Clarify why Functional medicine matters for Health-frustrated professional women (core client) and what kind of result or reassurance it leads to.",
+                                    "linkUrl": "#booking",
+                                    "imageMode": "manual",
+                                    "imageUrl": "/static/images/health-smoothie-with-cranberries-jars-thyme-ribbon-metal-net.webp",
+                                    "resolvedImageUrl": "/static/images/health-smoothie-with-cranberries-jars-thyme-ribbon-metal-net.webp"
+                                },
+                                {
+                                    "badge": "Highlights",
+                                    "title": "Gut health testing",
+                                    "text": "Clarify why Gut health testing matters for Health-frustrated professional women (core client) and what kind of result or reassurance it leads to.",
+                                    "linkUrl": "#booking",
+                                    "imageMode": "manual",
+                                    "imageUrl": "/static/images/photographer-camera-sweater-field-black-and-white-focus-outdoor-nature.webp",
+                                    "resolvedImageUrl": "/static/images/photographer-camera-sweater-field-black-and-white-focus-outdoor-nature.webp"
+                                },
+                                {
+                                    "badge": "Highlights",
+                                    "title": "Caregiver coaching",
+                                    "text": "Clarify why Caregiver coaching matters for Health-frustrated professional women (core client) and what kind of result or reassurance it leads to.",
+                                    "linkUrl": "#booking",
+                                    "imageMode": "manual",
+                                    "imageUrl": "/static/images/portugal-sunset-ocean-sand-cliffs-waves-clouds-beach-rock.webp",
+                                    "resolvedImageUrl": "/static/images/portugal-sunset-ocean-sand-cliffs-waves-clouds-beach-rock.webp"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "37449ed2-221c-4997-8dd4-c1b4a4d5d826",
+                        "type": "faq",
+                        "variant": 2,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "sectionTitle": "Common questions",
+                            "headingLevel": "h2",
+                            "sectionSubtitle": "Start with the questions people usually ask first.",
+                            "openFirst": true,
+                            "supportLabel": "Meer hulp nodig? Neem contact op met support",
+                            "supportUrl": "#contact",
+                            "items": [
+                                {
+                                    "question": "What is included in functional medicine?",
+                                    "answer": "Each engagement is scoped around your goals, timing, and context in Albufeira, Portugal.",
+                                    "icon": "pi-question"
+                                },
+                                {
+                                    "question": "How quickly can we get started?",
+                                    "answer": "You can usually start with an introductory conversation and a clear next-step plan.",
+                                    "icon": "pi-checkmark"
+                                },
+                                {
+                                    "question": "Is this tailored or fixed?",
+                                    "answer": "The structure is proven, but the exact scope is adapted to the business and audience.",
+                                    "icon": "pi-download"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "352473d2-79bc-4db9-a4e6-166104628e45",
+                        "type": "cta",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "heading": "Ready to take the next step?",
+                            "headingLevel": "h2",
+                            "text": "If Functional medicine, Gut health testing, and Caregiver coaching feels like the right fit, use the main CTA to de label voor de call-to-action knop and start the conversation.",
+                            "buttonLabel": "De label voor de call-to-action knop",
+                            "buttonUrl": "#booking",
+                            "secondaryLabel": "Bekijk documentatie",
+                            "secondaryUrl": "#"
+                        }
+                    },
+                    {
+                        "uid": "3e0f0fdc-c2fe-41c2-a70b-9c56518c03f0",
+                        "type": "contact",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "headline": "Talk to string",
+                            "headingLevel": "h2",
+                            "text": "Questions about Functional medicine, Gut health testing, and Caregiver coaching? Send a message and get a clearer sense of the right next step.",
+                            "imageMode": "manual",
+                            "imageUrl": "/static/images/boardroom-businessman-documents-suit-conference-office-desk-meeting.webp",
+                            "resolvedImageUrl": "/static/images/boardroom-businessman-documents-suit-conference-office-desk-meeting.webp",
+                            "email": "hello@naomidongelmans.com",
+                            "phone": "",
+                            "address": "Rua de bem parece",
+                            "formEnabled": true,
+                            "buttonLabel": "De label voor de call-to-action knop",
+                            "mapUrl": ""
+                        }
+                    },
+                    {
+                        "uid": "410f49fd-95c3-47f3-be74-c442172f4a5a",
+                        "type": "footer",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 100,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 0,
+                        "data": {
+                            "brand": "string",
+                            "tagline": "Een krachtige slogan",
+                            "address": "Rua de bem parece",
+                            "contactLine": "",
+                            "blurb": "Tekst die beschrijft wat de website doet.",
+                            "legalLine": "Replace this line with privacy, licensing, or regulatory details before publishing.",
+                            "ctaLabel": "De label voor de call-to-action knop",
+                            "ctaUrl": "#booking",
+                            "links": [
+                                {
+                                    "label": "Home",
+                                    "url": "#home",
+                                    "pageId": "home",
+                                    "pageSlug": "home"
+                                },
+                                {
+                                    "label": "Over",
+                                    "url": "#about",
+                                    "pageId": "about",
+                                    "pageSlug": "about"
+                                },
+                                {
+                                    "label": "Diensten",
+                                    "url": "#services",
+                                    "pageId": "services",
+                                    "pageSlug": "services"
+                                },
+                                {
+                                    "label": "FAQ",
+                                    "url": "#faq",
+                                    "pageId": "faq",
+                                    "pageSlug": "faq"
+                                },
+                                {
+                                    "label": "Afspraak boeken",
+                                    "url": "#book-appointment",
+                                    "pageId": "book-appointment",
+                                    "pageSlug": "book-appointment"
+                                },
+                                {
+                                    "label": "Contact",
+                                    "url": "#contact",
+                                    "pageId": "contact",
+                                    "pageSlug": "contact"
+                                }
+                            ],
+                            "columns": [
+                                {
+                                    "title": "Product",
+                                    "links": [
+                                        {
+                                            "label": "Functies",
+                                            "url": "#features"
+                                        },
+                                        {
+                                            "label": "Prijzen",
+                                            "url": "#pricing"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "title": "Bedrijf",
+                                    "links": [
+                                        {
+                                            "label": "Over",
+                                            "url": "#"
+                                        },
+                                        {
+                                            "label": "Contact",
+                                            "url": "#contact"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "copyright": "(c) 2026 SiteKit. All rights reserved."
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "faq",
+                "title": "FAQ",
+                "menuLabel": "FAQ",
+                "slug": "faq",
+                "locale": "nl",
+                "showInHeaderNav": true,
+                "showInFooterNav": true,
+                "sharedContact": {
+                    "email": "hello@naomidongelmans.com",
+                    "phone": "",
+                    "address": "Rua de bem parece",
+                    "locationLabel": "Naomi Dongelmans",
+                    "locationNote": "Albufeira, Portugal",
+                    "latitude": "",
+                    "longitude": ""
+                },
+                "presetId": "faq-page",
+                "canvas": {
+                    "lineHeightScale": 100,
+                    "spacingXScale": 100,
+                    "spacingYScale": 100,
+                    "elementSpacingScale": 100,
+                    "gradientOpacity": 100,
+                    "linkAnimation": "none"
+                },
+                "blocks": [
+                    {
+                        "uid": "31347df2-9998-4f80-a4ae-9a3e48533dc7",
+                        "type": "header",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 100,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 0,
+                        "data": {
+                            "brand": "string",
+                            "tagline": "Een krachtige slogan",
+                            "sticky": true,
+                            "ctaLabel": "De label voor de call-to-action knop",
+                            "ctaUrl": "#booking",
+                            "links": [
+                                {
+                                    "label": "Home",
+                                    "url": "#home",
+                                    "pageId": "home",
+                                    "pageSlug": "home"
+                                },
+                                {
+                                    "label": "Over",
+                                    "url": "#about",
+                                    "pageId": "about",
+                                    "pageSlug": "about"
+                                },
+                                {
+                                    "label": "Diensten",
+                                    "url": "#services",
+                                    "pageId": "services",
+                                    "pageSlug": "services"
+                                },
+                                {
+                                    "label": "FAQ",
+                                    "url": "#faq",
+                                    "pageId": "faq",
+                                    "pageSlug": "faq"
+                                },
+                                {
+                                    "label": "Afspraak boeken",
+                                    "url": "#book-appointment",
+                                    "pageId": "book-appointment",
+                                    "pageSlug": "book-appointment"
+                                },
+                                {
+                                    "label": "Contact",
+                                    "url": "#contact",
+                                    "pageId": "contact",
+                                    "pageSlug": "contact"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "838a8bfc-cf7a-4bc6-967b-49c330a4ff0f",
+                        "type": "hero",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "heading": "De hooftiteling van de website.",
+                            "subheading": "Een ondertitel voor de hooftiteling.",
+                            "ctaLabel": "De label voor de call-to-action knop",
+                            "ctaUrl": "#booking",
+                            "secondaryLabel": "Explore services",
+                            "secondaryUrl": "#services",
+                            "imageMode": "themeRandom",
+                            "imageUrl": "https://picsum.photos/id/74/1200/480",
+                            "resolvedImageUrl": "https://picsum.photos/id/74/1200/480",
+                            "bullets": [
+                                {
+                                    "text": "Lokale klinieksite met duidelijke diensten en een afspraakflow."
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "a358d8c0-7c58-4fd3-8478-f93cfc624aa4",
+                        "type": "faq",
+                        "variant": 3,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "sectionTitle": "Common questions",
+                            "headingLevel": "h2",
+                            "sectionSubtitle": "Start with the questions people usually ask first.",
+                            "openFirst": true,
+                            "supportLabel": "Meer hulp nodig? Neem contact op met support",
+                            "supportUrl": "#contact",
+                            "items": [
+                                {
+                                    "question": "What is included in functional medicine?",
+                                    "answer": "Each engagement is scoped around your goals, timing, and context in Albufeira, Portugal.",
+                                    "icon": "pi-question"
+                                },
+                                {
+                                    "question": "How quickly can we get started?",
+                                    "answer": "You can usually start with an introductory conversation and a clear next-step plan.",
+                                    "icon": "pi-checkmark"
+                                },
+                                {
+                                    "question": "Is this tailored or fixed?",
+                                    "answer": "The structure is proven, but the exact scope is adapted to the business and audience.",
+                                    "icon": "pi-download"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "2d295d13-d6d2-45e1-8ff5-7ace68196492",
+                        "type": "contact",
+                        "variant": 4,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "headline": "Talk to string",
+                            "headingLevel": "h2",
+                            "text": "Questions about Functional medicine, Gut health testing, and Caregiver coaching? Send a message and get a clearer sense of the right next step.",
+                            "imageMode": "manual",
+                            "imageUrl": "/static/images/office-meeting-collaboration-laptops-documents-writing-plants-desk.webp",
+                            "resolvedImageUrl": "/static/images/office-meeting-collaboration-laptops-documents-writing-plants-desk.webp",
+                            "email": "hello@naomidongelmans.com",
+                            "phone": "",
+                            "address": "Rua de bem parece",
+                            "formEnabled": true,
+                            "buttonLabel": "De label voor de call-to-action knop",
+                            "mapUrl": ""
+                        }
+                    },
+                    {
+                        "uid": "216b579e-dfec-4869-b436-4b11079b4519",
+                        "type": "footer",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 100,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 0,
+                        "data": {
+                            "brand": "string",
+                            "tagline": "Een krachtige slogan",
+                            "address": "Rua de bem parece",
+                            "contactLine": "",
+                            "blurb": "Tekst die beschrijft wat de website doet.",
+                            "legalLine": "Replace this line with privacy, licensing, or regulatory details before publishing.",
+                            "ctaLabel": "De label voor de call-to-action knop",
+                            "ctaUrl": "#booking",
+                            "links": [
+                                {
+                                    "label": "Home",
+                                    "url": "#home",
+                                    "pageId": "home",
+                                    "pageSlug": "home"
+                                },
+                                {
+                                    "label": "Over",
+                                    "url": "#about",
+                                    "pageId": "about",
+                                    "pageSlug": "about"
+                                },
+                                {
+                                    "label": "Diensten",
+                                    "url": "#services",
+                                    "pageId": "services",
+                                    "pageSlug": "services"
+                                },
+                                {
+                                    "label": "FAQ",
+                                    "url": "#faq",
+                                    "pageId": "faq",
+                                    "pageSlug": "faq"
+                                },
+                                {
+                                    "label": "Afspraak boeken",
+                                    "url": "#book-appointment",
+                                    "pageId": "book-appointment",
+                                    "pageSlug": "book-appointment"
+                                },
+                                {
+                                    "label": "Contact",
+                                    "url": "#contact",
+                                    "pageId": "contact",
+                                    "pageSlug": "contact"
+                                }
+                            ],
+                            "columns": [
+                                {
+                                    "title": "Product",
+                                    "links": [
+                                        {
+                                            "label": "Functies",
+                                            "url": "#features"
+                                        },
+                                        {
+                                            "label": "Prijzen",
+                                            "url": "#pricing"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "title": "Bedrijf",
+                                    "links": [
+                                        {
+                                            "label": "Over",
+                                            "url": "#"
+                                        },
+                                        {
+                                            "label": "Contact",
+                                            "url": "#contact"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "copyright": "(c) 2026 SiteKit. All rights reserved."
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "book-appointment",
+                "title": "Afspraak boeken",
+                "menuLabel": "Afspraak boeken",
+                "slug": "book-appointment",
+                "locale": "nl",
+                "showInHeaderNav": true,
+                "showInFooterNav": true,
+                "sharedContact": {
+                    "email": "hello@naomidongelmans.com",
+                    "phone": "",
+                    "address": "Rua de bem parece",
+                    "locationLabel": "Naomi Dongelmans",
+                    "locationNote": "Albufeira, Portugal",
+                    "latitude": "",
+                    "longitude": ""
+                },
+                "presetId": "booking-appointment",
+                "canvas": {
+                    "lineHeightScale": 100,
+                    "spacingXScale": 100,
+                    "spacingYScale": 100,
+                    "elementSpacingScale": 100,
+                    "gradientOpacity": 100,
+                    "linkAnimation": "none"
+                },
+                "blocks": [
+                    {
+                        "uid": "797e2049-de44-4577-88b9-f8389a436753",
+                        "type": "header",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 100,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 0,
+                        "data": {
+                            "brand": "string",
+                            "tagline": "Een krachtige slogan",
+                            "sticky": true,
+                            "ctaLabel": "De label voor de call-to-action knop",
+                            "ctaUrl": "#booking",
+                            "links": [
+                                {
+                                    "label": "Home",
+                                    "url": "#home",
+                                    "pageId": "home",
+                                    "pageSlug": "home"
+                                },
+                                {
+                                    "label": "Over",
+                                    "url": "#about",
+                                    "pageId": "about",
+                                    "pageSlug": "about"
+                                },
+                                {
+                                    "label": "Diensten",
+                                    "url": "#services",
+                                    "pageId": "services",
+                                    "pageSlug": "services"
+                                },
+                                {
+                                    "label": "FAQ",
+                                    "url": "#faq",
+                                    "pageId": "faq",
+                                    "pageSlug": "faq"
+                                },
+                                {
+                                    "label": "Afspraak boeken",
+                                    "url": "#book-appointment",
+                                    "pageId": "book-appointment",
+                                    "pageSlug": "book-appointment"
+                                },
+                                {
+                                    "label": "Contact",
+                                    "url": "#contact",
+                                    "pageId": "contact",
+                                    "pageSlug": "contact"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "b351e391-0493-4c46-a713-e0ffbfec3a01",
+                        "type": "datepicker",
+                        "variant": 2,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "sectionTitle": "Plan je komende data",
+                            "headingLevel": "h2",
+                            "sectionSubtitle": "Gebruik maandweergave en weekoverzicht samen zodat bezoekers snel een moment kunnen kiezen.",
+                            "monthStart": "2026-04-01",
+                            "selectedDate": "2026-04-16",
+                            "viewMode": "both",
+                            "buttonLabel": "Boek geselecteerde datum",
+                            "buttonUrl": "#contact",
+                            "events": [
+                                {
+                                    "date": "2026-04-03",
+                                    "title": "Demo with Berlin team",
+                                    "time": "10:00",
+                                    "location": "Berlin",
+                                    "icon": "pi-calendar"
+                                },
+                                {
+                                    "date": "2026-04-10",
+                                    "title": "Product workshop",
+                                    "time": "14:00",
+                                    "location": "Amsterdam",
+                                    "icon": "pi-clock"
+                                },
+                                {
+                                    "date": "2026-04-16",
+                                    "title": "Launch review",
+                                    "time": "09:30",
+                                    "location": "Prague",
+                                    "icon": "pi-star"
+                                },
+                                {
+                                    "date": "2026-04-22",
+                                    "title": "Customer interview",
+                                    "time": "11:30",
+                                    "location": "Op afstand",
+                                    "icon": "pi-contact"
+                                },
+                                {
+                                    "date": "2026-04-29",
+                                    "title": "Quarter planning",
+                                    "time": "15:00",
+                                    "location": "Vienna",
+                                    "icon": "pi-calendar"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "ea5cfa48-b7b2-4ebe-b32f-3bdad1c33099",
+                        "type": "contact",
+                        "variant": 2,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "headline": "Talk to string",
+                            "headingLevel": "h2",
+                            "text": "Questions about Functional medicine, Gut health testing, and Caregiver coaching? Send a message and get a clearer sense of the right next step.",
+                            "imageMode": "manual",
+                            "imageUrl": "/static/images/questioning-client-thoughts-computer-desk-chair-cartoon-question-monitor-thought-bubbles.webp",
+                            "resolvedImageUrl": "/static/images/questioning-client-thoughts-computer-desk-chair-cartoon-question-monitor-thought-bubbles.webp",
+                            "email": "hello@naomidongelmans.com",
+                            "phone": "",
+                            "address": "Rua de bem parece",
+                            "formEnabled": true,
+                            "buttonLabel": "De label voor de call-to-action knop",
+                            "mapUrl": ""
+                        }
+                    },
+                    {
+                        "uid": "6f29ad44-75c1-4e8f-993f-9f63c24c0e92",
+                        "type": "footer",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 100,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 0,
+                        "data": {
+                            "brand": "string",
+                            "tagline": "Een krachtige slogan",
+                            "address": "Rua de bem parece",
+                            "contactLine": "",
+                            "blurb": "Tekst die beschrijft wat de website doet.",
+                            "legalLine": "Replace this line with privacy, licensing, or regulatory details before publishing.",
+                            "ctaLabel": "De label voor de call-to-action knop",
+                            "ctaUrl": "#booking",
+                            "links": [
+                                {
+                                    "label": "Home",
+                                    "url": "#home",
+                                    "pageId": "home",
+                                    "pageSlug": "home"
+                                },
+                                {
+                                    "label": "Over",
+                                    "url": "#about",
+                                    "pageId": "about",
+                                    "pageSlug": "about"
+                                },
+                                {
+                                    "label": "Diensten",
+                                    "url": "#services",
+                                    "pageId": "services",
+                                    "pageSlug": "services"
+                                },
+                                {
+                                    "label": "FAQ",
+                                    "url": "#faq",
+                                    "pageId": "faq",
+                                    "pageSlug": "faq"
+                                },
+                                {
+                                    "label": "Afspraak boeken",
+                                    "url": "#book-appointment",
+                                    "pageId": "book-appointment",
+                                    "pageSlug": "book-appointment"
+                                },
+                                {
+                                    "label": "Contact",
+                                    "url": "#contact",
+                                    "pageId": "contact",
+                                    "pageSlug": "contact"
+                                }
+                            ],
+                            "columns": [
+                                {
+                                    "title": "Product",
+                                    "links": [
+                                        {
+                                            "label": "Functies",
+                                            "url": "#features"
+                                        },
+                                        {
+                                            "label": "Prijzen",
+                                            "url": "#pricing"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "title": "Bedrijf",
+                                    "links": [
+                                        {
+                                            "label": "Over",
+                                            "url": "#"
+                                        },
+                                        {
+                                            "label": "Contact",
+                                            "url": "#contact"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "copyright": "(c) 2026 SiteKit. All rights reserved."
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "contact",
+                "title": "Contact",
+                "menuLabel": "Contact",
+                "slug": "contact",
+                "locale": "nl",
+                "showInHeaderNav": true,
+                "showInFooterNav": true,
+                "sharedContact": {
+                    "email": "hello@naomidongelmans.com",
+                    "phone": "",
+                    "address": "Rua de bem parece",
+                    "locationLabel": "Naomi Dongelmans",
+                    "locationNote": "Albufeira, Portugal",
+                    "latitude": "",
+                    "longitude": ""
+                },
+                "presetId": "contact",
+                "canvas": {
+                    "lineHeightScale": 100,
+                    "spacingXScale": 100,
+                    "spacingYScale": 100,
+                    "elementSpacingScale": 100,
+                    "gradientOpacity": 100,
+                    "linkAnimation": "none"
+                },
+                "blocks": [
+                    {
+                        "uid": "d48dffdb-af39-4f64-9ba1-323a6c7e63cb",
+                        "type": "header",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 100,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 0,
+                        "data": {
+                            "brand": "string",
+                            "tagline": "Een krachtige slogan",
+                            "sticky": true,
+                            "ctaLabel": "De label voor de call-to-action knop",
+                            "ctaUrl": "#booking",
+                            "links": [
+                                {
+                                    "label": "Home",
+                                    "url": "#home",
+                                    "pageId": "home",
+                                    "pageSlug": "home"
+                                },
+                                {
+                                    "label": "Over",
+                                    "url": "#about",
+                                    "pageId": "about",
+                                    "pageSlug": "about"
+                                },
+                                {
+                                    "label": "Diensten",
+                                    "url": "#services",
+                                    "pageId": "services",
+                                    "pageSlug": "services"
+                                },
+                                {
+                                    "label": "FAQ",
+                                    "url": "#faq",
+                                    "pageId": "faq",
+                                    "pageSlug": "faq"
+                                },
+                                {
+                                    "label": "Afspraak boeken",
+                                    "url": "#book-appointment",
+                                    "pageId": "book-appointment",
+                                    "pageSlug": "book-appointment"
+                                },
+                                {
+                                    "label": "Contact",
+                                    "url": "#contact",
+                                    "pageId": "contact",
+                                    "pageSlug": "contact"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "9717788b-773a-45de-9a2b-3439f30b39cf",
+                        "type": "hero",
+                        "variant": 4,
+                        "hidden": false,
+                        "widthPercent": 100,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "heading": "De hooftiteling van de website.",
+                            "subheading": "Een ondertitel voor de hooftiteling.",
+                            "ctaLabel": "De label voor de call-to-action knop",
+                            "ctaUrl": "#booking",
+                            "secondaryLabel": "Explore services",
+                            "secondaryUrl": "#services",
+                            "imageMode": "themeRandom",
+                            "imageUrl": "https://picsum.photos/id/74/1200/480",
+                            "resolvedImageUrl": "https://picsum.photos/id/74/1200/480",
+                            "bullets": [
+                                {
+                                    "text": "Lokale klinieksite met duidelijke diensten en een afspraakflow."
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "8a4fe1b4-4498-4297-bfbf-84e18c7c3042",
+                        "type": "contact",
+                        "variant": 2,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "headline": "Talk to string",
+                            "headingLevel": "h2",
+                            "text": "Questions about Functional medicine, Gut health testing, and Caregiver coaching? Send a message and get a clearer sense of the right next step.",
+                            "imageMode": "manual",
+                            "imageUrl": "/static/images/contact-field-dinner-friends-sunset-grass-table-chairs-nature-relaxation.webp",
+                            "resolvedImageUrl": "/static/images/contact-field-dinner-friends-sunset-grass-table-chairs-nature-relaxation.webp",
+                            "email": "hello@naomidongelmans.com",
+                            "phone": "",
+                            "address": "Rua de bem parece",
+                            "formEnabled": true,
+                            "buttonLabel": "De label voor de call-to-action knop",
+                            "mapUrl": ""
+                        }
+                    },
+                    {
+                        "uid": "8e7ad87d-14f1-4536-b6b9-6467b4beafb7",
+                        "type": "location",
+                        "variant": 2,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "sectionTitle": "Where to find us",
+                            "headingLevel": "h2",
+                            "sectionSubtitle": "Use the address and map together so visitors know where to go and what to expect.",
+                            "mapUrl": "",
+                            "mapLink": "",
+                            "legendPosition": "right",
+                            "locations": [
+                                {
+                                    "label": "string",
+                                    "address": "Rua de bem parece",
+                                    "note": "Albufeira, Portugal",
+                                    "icon": "pi-local"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "13b7a944-b553-49b5-9dd0-95c3f7f8bdce",
+                        "type": "faq",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 75,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 100,
+                        "data": {
+                            "sectionTitle": "Common questions",
+                            "headingLevel": "h2",
+                            "sectionSubtitle": "Start with the questions people usually ask first.",
+                            "openFirst": true,
+                            "supportLabel": "Meer hulp nodig? Neem contact op met support",
+                            "supportUrl": "#contact",
+                            "items": [
+                                {
+                                    "question": "What is included in functional medicine?",
+                                    "answer": "Each engagement is scoped around your goals, timing, and context in Albufeira, Portugal.",
+                                    "icon": "pi-question"
+                                },
+                                {
+                                    "question": "How quickly can we get started?",
+                                    "answer": "You can usually start with an introductory conversation and a clear next-step plan.",
+                                    "icon": "pi-checkmark"
+                                },
+                                {
+                                    "question": "Is this tailored or fixed?",
+                                    "answer": "The structure is proven, but the exact scope is adapted to the business and audience.",
+                                    "icon": "pi-download"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "uid": "e3887dbd-cfce-4628-aa3f-6e35e642c0dc",
+                        "type": "footer",
+                        "variant": 1,
+                        "hidden": false,
+                        "widthPercent": 100,
+                        "backgroundOpacity": 100,
+                        "cardBackgroundOpacity": 8,
+                        "foregroundOpacity": 100,
+                        "fontScale": 100,
+                        "verticalPaddingScale": 0,
+                        "data": {
+                            "brand": "string",
+                            "tagline": "Een krachtige slogan",
+                            "address": "Rua de bem parece",
+                            "contactLine": "",
+                            "blurb": "Tekst die beschrijft wat de website doet.",
+                            "legalLine": "Replace this line with privacy, licensing, or regulatory details before publishing.",
+                            "ctaLabel": "De label voor de call-to-action knop",
+                            "ctaUrl": "#booking",
+                            "links": [
+                                {
+                                    "label": "Home",
+                                    "url": "#home",
+                                    "pageId": "home",
+                                    "pageSlug": "home"
+                                },
+                                {
+                                    "label": "Over",
+                                    "url": "#about",
+                                    "pageId": "about",
+                                    "pageSlug": "about"
+                                },
+                                {
+                                    "label": "Diensten",
+                                    "url": "#services",
+                                    "pageId": "services",
+                                    "pageSlug": "services"
+                                },
+                                {
+                                    "label": "FAQ",
+                                    "url": "#faq",
+                                    "pageId": "faq",
+                                    "pageSlug": "faq"
+                                },
+                                {
+                                    "label": "Afspraak boeken",
+                                    "url": "#book-appointment",
+                                    "pageId": "book-appointment",
+                                    "pageSlug": "book-appointment"
+                                },
+                                {
+                                    "label": "Contact",
+                                    "url": "#contact",
+                                    "pageId": "contact",
+                                    "pageSlug": "contact"
+                                }
+                            ],
+                            "columns": [
+                                {
+                                    "title": "Product",
+                                    "links": [
+                                        {
+                                            "label": "Functies",
+                                            "url": "#features"
+                                        },
+                                        {
+                                            "label": "Prijzen",
+                                            "url": "#pricing"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "title": "Bedrijf",
+                                    "links": [
+                                        {
+                                            "label": "Over",
+                                            "url": "#"
+                                        },
+                                        {
+                                            "label": "Contact",
+                                            "url": "#contact"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "copyright": "(c) 2026 SiteKit. All rights reserved."
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "page": {
+        "title": "Home",
+        "slug": "home",
+        "locale": "nl",
+        "sharedContact": {
+            "email": "hello@naomidongelmans.com",
+            "phone": "",
+            "address": "Rua de bem parece",
+            "locationLabel": "Naomi Dongelmans",
+            "locationNote": "Albufeira, Portugal",
+            "latitude": "",
+            "longitude": ""
+        },
+        "canvas": {
+            "lineHeightScale": 100,
+            "spacingXScale": 100,
+            "spacingYScale": 100,
+            "elementSpacingScale": 100,
+            "gradientOpacity": 100,
+            "linkAnimation": "none"
+        },
+        "blocks": [
+            {
+                "uid": "5aac5f1d-f449-4b3c-9b5a-974390ed901d",
+                "type": "header",
+                "variant": 1,
+                "hidden": false,
+                "widthPercent": 100,
+                "backgroundOpacity": 100,
+                "cardBackgroundOpacity": 8,
+                "foregroundOpacity": 100,
+                "fontScale": 100,
+                "verticalPaddingScale": 0,
+                "data": {
+                    "brand": "string",
+                    "tagline": "Een krachtige slogan",
+                    "sticky": true,
+                    "ctaLabel": "De label voor de call-to-action knop",
+                    "ctaUrl": "#booking",
+                    "links": [
+                        {
+                            "label": "Home",
+                            "url": "#home",
+                            "pageId": "home",
+                            "pageSlug": "home"
+                        },
+                        {
+                            "label": "Over",
+                            "url": "#about",
+                            "pageId": "about",
+                            "pageSlug": "about"
+                        },
+                        {
+                            "label": "Diensten",
+                            "url": "#services",
+                            "pageId": "services",
+                            "pageSlug": "services"
+                        },
+                        {
+                            "label": "FAQ",
+                            "url": "#faq",
+                            "pageId": "faq",
+                            "pageSlug": "faq"
+                        },
+                        {
+                            "label": "Afspraak boeken",
+                            "url": "#book-appointment",
+                            "pageId": "book-appointment",
+                            "pageSlug": "book-appointment"
+                        },
+                        {
+                            "label": "Contact",
+                            "url": "#contact",
+                            "pageId": "contact",
+                            "pageSlug": "contact"
+                        }
+                    ]
+                }
+            },
+            {
+                "uid": "d92b80f5-5de9-46f8-8f3e-999e74380a56",
+                "type": "hero",
+                "variant": 2,
+                "hidden": false,
+                "widthPercent": 75,
+                "backgroundOpacity": 100,
+                "cardBackgroundOpacity": 8,
+                "foregroundOpacity": 100,
+                "fontScale": 100,
+                "verticalPaddingScale": 100,
+                "data": {
+                    "heading": "De hooftiteling van de website.",
+                    "subheading": "Een ondertitel voor de hooftiteling.",
+                    "ctaLabel": "De label voor de call-to-action knop",
+                    "ctaUrl": "#booking",
+                    "secondaryLabel": "Explore services",
+                    "secondaryUrl": "#services",
+                    "imageMode": "themeRandom",
+                    "imageUrl": "https://picsum.photos/id/74/1200/480",
+                    "resolvedImageUrl": "https://picsum.photos/id/74/1200/480",
+                    "bullets": [
+                        {
+                            "text": "Lokale klinieksite met duidelijke diensten en een afspraakflow."
+                        }
+                    ]
+                }
+            },
+            {
+                "uid": "0bbdd512-0e4d-4275-9a4b-77410b030baf",
+                "type": "truststrip",
+                "variant": 1,
+                "hidden": false,
+                "widthPercent": 75,
+                "backgroundOpacity": 100,
+                "cardBackgroundOpacity": 8,
+                "foregroundOpacity": 100,
+                "fontScale": 100,
+                "verticalPaddingScale": 100,
+                "data": {
+                    "heading": "De hooftiteling van de website.",
+                    "headingLevel": "h2",
+                    "ratingLabel": "Gemiddelde beoordeling 4,9",
+                    "columns": 4,
+                    "logos": [
+                        {
+                            "name": "Hands General Practitioner Showing Results Phone Medicine Consultation Healthcare",
+                            "imageMode": "manual",
+                            "imageUrl": "/static/images/hands-general-practitioner-showing-results-phone-medicine-consultation-healthcare.webp",
+                            "resolvedImageUrl": "/static/images/hands-general-practitioner-showing-results-phone-medicine-consultation-healthcare.webp",
+                            "url": "#"
+                        },
+                        {
+                            "name": "Womens Health Nominated Smoothie Celery Straw Hand Ok Drink",
+                            "imageMode": "manual",
+                            "imageUrl": "/static/images/womens-health-nominated-smoothie-celery-straw-hand-ok-drink.webp",
+                            "resolvedImageUrl": "/static/images/womens-health-nominated-smoothie-celery-straw-hand-ok-drink.webp",
+                            "url": "#"
+                        },
+                        {
+                            "name": "Office Team Meeting Conference Desk Computer Monitor Professional Collaboration",
+                            "imageMode": "manual",
+                            "imageUrl": "/static/images/office-team-meeting-conference-desk-computer-monitor-professional-collaboration.webp",
+                            "resolvedImageUrl": "/static/images/office-team-meeting-conference-desk-computer-monitor-professional-collaboration.webp",
+                            "url": "#"
+                        },
+                        {
+                            "name": "Atlas",
+                            "imageMode": "manual",
+                            "imageUrl": "",
+                            "resolvedImageUrl": "",
+                            "url": "#"
+                        }
+                    ]
+                }
+            },
+            {
+                "uid": "c0977be2-4ef6-437a-8662-d92752221a21",
+                "type": "features",
+                "variant": 1,
+                "hidden": false,
+                "widthPercent": 75,
+                "backgroundOpacity": 100,
+                "cardBackgroundOpacity": 8,
+                "foregroundOpacity": 100,
+                "fontScale": 100,
+                "verticalPaddingScale": 100,
+                "data": {
+                    "sectionTitle": "De hooftiteling van de website.",
+                    "headingLevel": "h2",
+                    "sectionSubtitle": "Een ondertitel voor de hooftiteling.",
+                    "columns": 3,
+                    "cards": [
+                        {
+                            "title": "Lokale klinieksite met duidelijke diensten en een afspraakflow.",
+                            "text": "Turn Lokale klinieksite met duidelijke diensten en een afspraakflow into a concrete visitor benefit with a clearer explanation of the outcome.",
+                            "icon": "CFG",
+                            "linkUrl": "#booking",
+                            "imageMode": "manual",
+                            "imageUrl": "/static/images/women-weight-management-counseling-measurement-dress-assistant-client-tailor-fitting-consultation.webp",
+                            "resolvedImageUrl": "/static/images/women-weight-management-counseling-measurement-dress-assistant-client-tailor-fitting-consultation.webp"
+                        }
+                    ]
+                }
+            },
+            {
+                "uid": "168d33a1-cdfa-499a-8c53-bc01ae57c707",
+                "type": "stats",
+                "variant": 1,
+                "hidden": false,
+                "widthPercent": 75,
+                "backgroundOpacity": 100,
+                "cardBackgroundOpacity": 8,
+                "foregroundOpacity": 100,
+                "fontScale": 100,
+                "verticalPaddingScale": 100,
+                "data": {
+                    "sectionTitle": "Proof at a glance",
+                    "headingLevel": "h2",
+                    "columns": 4,
+                    "animate": true,
+                    "trigger": "onView",
+                    "stats": [
+                        {
+                            "value": 12,
+                            "suffix": "+",
+                            "label": "Years of experience"
+                        },
+                        {
+                            "value": 48,
+                            "suffix": "+",
+                            "label": "Projects delivered"
+                        },
+                        {
+                            "value": 24,
+                            "suffix": "h",
+                            "label": "Response speed"
+                        },
+                        {
+                            "value": 98,
+                            "suffix": "%",
+                            "label": "Client satisfaction"
+                        }
+                    ]
+                }
+            },
+            {
+                "uid": "092e2983-f811-4ce9-8503-a5c7ac1afe02",
+                "type": "testimonials",
+                "variant": 1,
+                "hidden": false,
+                "widthPercent": 75,
+                "backgroundOpacity": 100,
+                "cardBackgroundOpacity": 8,
+                "foregroundOpacity": 100,
+                "fontScale": 100,
+                "verticalPaddingScale": 100,
+                "data": {
+                    "sectionTitle": "What clients say",
+                    "headingLevel": "h2",
+                    "sectionSubtitle": "Placeholder social proof matched to the questionnaire.",
+                    "columns": 3,
+                    "items": [
+                        {
+                            "quote": "string made the process clear from the first conversation.",
+                            "name": "Alex Martin",
+                            "role": "Client",
+                            "rating": 5,
+                            "imageMode": "manual",
+                            "imageUrl": "",
+                            "resolvedImageUrl": ""
+                        },
+                        {
+                            "quote": "The messaging felt sharper and the next steps were obvious.",
+                            "name": "Samira Lee",
+                            "role": "Founder",
+                            "rating": 5,
+                            "imageMode": "manual",
+                            "imageUrl": "",
+                            "resolvedImageUrl": ""
+                        },
+                        {
+                            "quote": "Fast turnaround, strong communication, and a better first impression.",
+                            "name": "Jordan Kim",
+                            "role": "Operations Lead",
+                            "rating": 4,
+                            "imageMode": "manual",
+                            "imageUrl": "",
+                            "resolvedImageUrl": ""
+                        }
+                    ]
+                }
+            },
+            {
+                "uid": "0c83d3c8-216b-4870-b759-d9cca9ba54af",
+                "type": "cta",
+                "variant": 1,
+                "hidden": false,
+                "widthPercent": 75,
+                "backgroundOpacity": 100,
+                "cardBackgroundOpacity": 8,
+                "foregroundOpacity": 100,
+                "fontScale": 100,
+                "verticalPaddingScale": 100,
+                "data": {
+                    "heading": "Ready to take the next step?",
+                    "headingLevel": "h2",
+                    "text": "If Functional medicine, Gut health testing, and Caregiver coaching feels like the right fit, use the main CTA to de label voor de call-to-action knop and start the conversation.",
+                    "buttonLabel": "De label voor de call-to-action knop",
+                    "buttonUrl": "#booking",
+                    "secondaryLabel": "Bekijk documentatie",
+                    "secondaryUrl": "#"
+                }
+            },
+            {
+                "uid": "6479ba5e-2503-4e12-8152-ae04d1bd99e2",
+                "type": "contact",
+                "variant": 1,
+                "hidden": false,
+                "widthPercent": 75,
+                "backgroundOpacity": 100,
+                "cardBackgroundOpacity": 8,
+                "foregroundOpacity": 100,
+                "fontScale": 100,
+                "verticalPaddingScale": 100,
+                "data": {
+                    "headline": "Talk to string",
+                    "headingLevel": "h2",
+                    "text": "Questions about Functional medicine, Gut health testing, and Caregiver coaching? Send a message and get a clearer sense of the right next step.",
+                    "imageMode": "manual",
+                    "imageUrl": "/static/images/dreamcatcher-feathers-sunlight-sky-beads-circle-string-ornament.webp",
+                    "resolvedImageUrl": "/static/images/dreamcatcher-feathers-sunlight-sky-beads-circle-string-ornament.webp",
+                    "email": "hello@naomidongelmans.com",
+                    "phone": "",
+                    "address": "Rua de bem parece",
+                    "formEnabled": true,
+                    "buttonLabel": "De label voor de call-to-action knop",
+                    "mapUrl": ""
+                }
+            },
+            {
+                "uid": "bb8dd913-6f4b-4ac3-bcca-e29a3a949b61",
+                "type": "footer",
+                "variant": 1,
+                "hidden": false,
+                "widthPercent": 100,
+                "backgroundOpacity": 100,
+                "cardBackgroundOpacity": 8,
+                "foregroundOpacity": 100,
+                "fontScale": 100,
+                "verticalPaddingScale": 0,
+                "data": {
+                    "brand": "string",
+                    "tagline": "Een krachtige slogan",
+                    "address": "Rua de bem parece",
+                    "contactLine": "",
+                    "blurb": "Tekst die beschrijft wat de website doet.",
+                    "legalLine": "Replace this line with privacy, licensing, or regulatory details before publishing.",
+                    "ctaLabel": "De label voor de call-to-action knop",
+                    "ctaUrl": "#booking",
+                    "links": [
+                        {
+                            "label": "Home",
+                            "url": "#home",
+                            "pageId": "home",
+                            "pageSlug": "home"
+                        },
+                        {
+                            "label": "Over",
+                            "url": "#about",
+                            "pageId": "about",
+                            "pageSlug": "about"
+                        },
+                        {
+                            "label": "Diensten",
+                            "url": "#services",
+                            "pageId": "services",
+                            "pageSlug": "services"
+                        },
+                        {
+                            "label": "FAQ",
+                            "url": "#faq",
+                            "pageId": "faq",
+                            "pageSlug": "faq"
+                        },
+                        {
+                            "label": "Afspraak boeken",
+                            "url": "#book-appointment",
+                            "pageId": "book-appointment",
+                            "pageSlug": "book-appointment"
+                        },
+                        {
+                            "label": "Contact",
+                            "url": "#contact",
+                            "pageId": "contact",
+                            "pageSlug": "contact"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "Product",
+                            "links": [
+                                {
+                                    "label": "Functies",
+                                    "url": "#features"
+                                },
+                                {
+                                    "label": "Prijzen",
+                                    "url": "#pricing"
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Bedrijf",
+                            "links": [
+                                {
+                                    "label": "Over",
+                                    "url": "#"
+                                },
+                                {
+                                    "label": "Contact",
+                                    "url": "#contact"
+                                }
+                            ]
+                        }
+                    ],
+                    "copyright": "(c) 2026 SiteKit. All rights reserved."
+                }
+            }
+        ]
+    }
+}

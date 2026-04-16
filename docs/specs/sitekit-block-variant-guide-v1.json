@@ -1,0 +1,281 @@
+{
+  "version": "1.0",
+  "description": "Machine-readable guide for SiteKit block variant matching and new-variant decisions.",
+  "decisionRules": {
+    "patternExistsWhen": [
+      "type exists in the SiteKit block registry",
+      "variant exists for that block type",
+      "required layoutMode or navLayout exists when specified",
+      "the source structure matches the renderer composition, not just the styling"
+    ],
+    "needsNewVariantWhen": [
+      "the source needs a fundamentally different composition",
+      "the source needs interaction or behavior not present in the current renderer",
+      "the source needs a new tile topology, stage pattern, or information architecture",
+      "the source cannot be described honestly by any existing type/variant/layoutMode combination"
+    ],
+    "doesNotNeedNewVariantWhen": [
+      "only colors change",
+      "only border, radius, or shadow changes",
+      "copy density changes but the composition stays the same",
+      "left-right emphasis can already be handled by the current block"
+    ]
+  },
+  "blocks": {
+    "header": {
+      "builderEditable": true,
+      "layoutKeys": ["navLayout"],
+      "variants": [
+        {"id": 1, "summary": "classic horizontal nav", "useWhen": ["brand left", "links right", "standard site navigation"], "builderEditable": true},
+        {"id": 2, "summary": "center-weighted nav with softer CTA", "useWhen": ["centered feel", "quiet CTA", "balanced nav bar"], "builderEditable": true},
+        {"id": 3, "summary": "brand plus tagline emphasis", "useWhen": ["tagline visible under brand", "brand voice matters"], "builderEditable": true},
+        {"id": 4, "summary": "centered desktop navigation", "useWhen": ["centered nav set", "menu-first desktop header"], "builderEditable": true},
+        {"id": 5, "summary": "framed pill navigation", "useWhen": ["pill links", "framed navigation rail"], "builderEditable": true},
+        {"id": 6, "summary": "centered editorial masthead with split navigation", "useWhen": ["split nav around brand", "editorial masthead"], "builderEditable": true, "navLayout": ["split-brand-center"]},
+        {"id": 7, "summary": "centered masthead with menu and action below brand", "useWhen": ["centered brand", "brand image", "split nav option"], "builderEditable": true, "navLayout": ["default", "split-brand-center"]},
+        {"id": 8, "summary": "compact utility ribbon with dense uppercase nav", "useWhen": ["utility ribbon", "compact uppercase links", "brand left links center"], "builderEditable": true, "navLayout": ["default", "brand-left-center-links"]}
+      ]
+    },
+    "banner": {
+      "builderEditable": true,
+      "layoutKeys": ["layoutMode"],
+      "variants": [
+        {"id": 1, "summary": "inline badge plus link strip", "useWhen": ["simple announcement bar", "badge plus text plus link"], "builderEditable": true},
+        {"id": 2, "summary": "highlighted centered announcement", "useWhen": ["centered promo bar"], "builderEditable": true},
+        {"id": 3, "summary": "compact copy-only strip", "useWhen": ["minimal strip", "caption stack"], "builderEditable": true, "layoutMode": ["default", "caption-stack"]},
+        {"id": 4, "summary": "dismiss-style utility bar", "useWhen": ["dismissible utility or promo bar"], "builderEditable": true},
+        {"id": 5, "summary": "editorial ribbon", "useWhen": ["editorial announcement"], "builderEditable": true},
+        {"id": 6, "summary": "split ticket rail", "useWhen": ["ticket-like split promo strip"], "builderEditable": true},
+        {"id": 7, "summary": "rounded capsule ticker", "useWhen": ["playful ticker", "capsule marquee"], "builderEditable": true},
+        {"id": 8, "summary": "stacked mini-headline utility strip", "useWhen": ["stacked small headline promo"], "builderEditable": true}
+      ]
+    },
+    "hero": {
+      "builderEditable": true,
+      "layoutKeys": ["layoutMode"],
+      "variants": [
+        {"id": 1, "summary": "balanced split with media right", "useWhen": ["standard split hero"], "builderEditable": true},
+        {"id": 2, "summary": "larger headline and media-first emphasis", "useWhen": ["image stronger than copy", "hero media dominant"], "builderEditable": true},
+        {"id": 3, "summary": "centered content over full image background", "useWhen": ["full-bleed background image", "centered overlay hero"], "builderEditable": true, "layoutMode": ["default", "title-overlay"]},
+        {"id": 4, "summary": "media left with crossing text card", "useWhen": ["overlap card into image area"], "builderEditable": true},
+        {"id": 5, "summary": "full-bleed editorial hero with centered overlay copy", "useWhen": ["cover-style hero"], "builderEditable": true},
+        {"id": 6, "summary": "cinematic background hero with anchored glass copy", "useWhen": ["glass copy card over background media"], "builderEditable": true},
+        {"id": 7, "summary": "image hero with centered caption below", "useWhen": ["image first", "caption below image"], "builderEditable": true},
+        {"id": 8, "summary": "editorial split with tall media and stacked actions", "useWhen": ["tall media column", "stacked action cluster"], "builderEditable": true}
+      ]
+    },
+    "divider": {
+      "builderEditable": true,
+      "variants": [
+        {"id": 1, "summary": "standard solid rule", "builderEditable": true},
+        {"id": 2, "summary": "stronger accent divider", "builderEditable": true},
+        {"id": 3, "summary": "badge-led separator", "builderEditable": true},
+        {"id": 4, "summary": "subtle spacer or wave feel", "builderEditable": true},
+        {"id": 5, "summary": "dashed accent rule with tinted badge", "builderEditable": true},
+        {"id": 6, "summary": "ribbon divider with bolder center tag", "builderEditable": true},
+        {"id": 7, "summary": "dotted cadence with decorative wave dots", "builderEditable": true},
+        {"id": 8, "summary": "bold editorial break with taller wave", "builderEditable": true}
+      ]
+    },
+    "truststrip": {
+      "builderEditable": true,
+      "layoutKeys": ["layoutMode"],
+      "variants": [
+        {"id": 1, "summary": "balanced proof grid", "useWhen": ["static logo grid"], "builderEditable": true},
+        {"id": 2, "summary": "stronger expert ribbon", "useWhen": ["more emphatic proof ribbon"], "builderEditable": true},
+        {"id": 3, "summary": "marquee right to left", "useWhen": ["scrolling logo marquee rtl"], "builderEditable": true},
+        {"id": 4, "summary": "marquee left to right", "useWhen": ["scrolling logo marquee ltr"], "builderEditable": true},
+        {"id": 5, "summary": "editorial credentials board", "useWhen": ["curated proof board"], "builderEditable": true},
+        {"id": 6, "summary": "expert rail", "useWhen": ["single-row static proof rail"], "builderEditable": true},
+        {"id": 7, "summary": "compact expert matrix", "useWhen": ["compact proof board", "press bar"], "builderEditable": true, "layoutMode": ["default", "press-bar"]},
+        {"id": 8, "summary": "premium seal board", "useWhen": ["premium credential board"], "builderEditable": true}
+      ]
+    },
+    "features": {
+      "builderEditable": true,
+      "variants": [
+        {"id": 1, "summary": "tilted deck of cards", "builderEditable": true},
+        {"id": 2, "summary": "dense mosaic with featured lead card", "builderEditable": true},
+        {"id": 3, "summary": "glass editorial cards", "builderEditable": true},
+        {"id": 4, "summary": "folded editorial strips", "builderEditable": true},
+        {"id": 5, "summary": "offset gallery bands", "builderEditable": true},
+        {"id": 6, "summary": "polaroid wall", "builderEditable": true},
+        {"id": 7, "summary": "dark stage spotlight layout", "builderEditable": true},
+        {"id": 8, "summary": "full-width ticket list", "builderEditable": true}
+      ]
+    },
+    "services": {
+      "builderEditable": true,
+      "variants": [
+        {"id": 1, "summary": "tilted menu cards", "builderEditable": true},
+        {"id": 2, "summary": "horizontal brochure panels", "builderEditable": true},
+        {"id": 3, "summary": "dark premium showcase", "builderEditable": true},
+        {"id": 4, "summary": "folded paper notes", "builderEditable": true},
+        {"id": 5, "summary": "pricing board", "builderEditable": true},
+        {"id": 6, "summary": "image-forward brochure cards", "builderEditable": true},
+        {"id": 7, "summary": "sticky-note board", "builderEditable": true},
+        {"id": 8, "summary": "ticket strip list", "builderEditable": true}
+      ]
+    },
+    "cards": {
+      "builderEditable": true,
+      "variants": [
+        {"id": 1, "summary": "balanced default layout", "builderEditable": true},
+        {"id": 2, "summary": "larger more expressive rhythm", "builderEditable": true},
+        {"id": 3, "summary": "editorial style with softer framing", "builderEditable": true},
+        {"id": 4, "summary": "compact utility layout", "builderEditable": true},
+        {"id": 5, "summary": "playful magazine cards", "builderEditable": true},
+        {"id": 6, "summary": "product shelf cards", "builderEditable": true},
+        {"id": 7, "summary": "bento-style resource board", "builderEditable": true},
+        {"id": 8, "summary": "lead story plus supporting cards", "builderEditable": true}
+      ]
+    },
+    "stats": {
+      "builderEditable": true,
+      "variants": [
+        {"id": 1, "summary": "balanced default layout", "builderEditable": true},
+        {"id": 2, "summary": "larger expressive rhythm", "builderEditable": true},
+        {"id": 3, "summary": "editorial style with softer framing", "builderEditable": true},
+        {"id": 4, "summary": "compact utility layout", "builderEditable": true},
+        {"id": 5, "summary": "bold dark counters", "builderEditable": true},
+        {"id": 6, "summary": "benchmark cards with accent rails", "builderEditable": true},
+        {"id": 7, "summary": "centered chip counters", "builderEditable": true},
+        {"id": 8, "summary": "ribbon counters with lead highlight", "builderEditable": true}
+      ]
+    },
+    "gallery": {
+      "builderEditable": true,
+      "layoutKeys": ["layoutMode"],
+      "variants": [
+        {"id": 1, "summary": "even grid tiles", "builderEditable": true},
+        {"id": 2, "summary": "tighter crop with masonry rhythm", "builderEditable": true},
+        {"id": 3, "summary": "caption-emphasis gallery", "builderEditable": true},
+        {"id": 4, "summary": "lead image first", "builderEditable": true},
+        {"id": 5, "summary": "playful polaroid board", "builderEditable": true},
+        {"id": 6, "summary": "quilted mosaic with hero tiles", "useWhen": ["editorial collage", "mosaic grid"], "builderEditable": true, "layoutMode": ["default", "editorial-collage"]},
+        {"id": 7, "summary": "cinematic tiles with caption overlays", "useWhen": ["category cards", "overlay captions"], "builderEditable": true, "layoutMode": ["default", "category-cards"]},
+        {"id": 8, "summary": "framed studio grid with taller portrait rhythm", "useWhen": ["social grid", "portrait rhythm"], "builderEditable": true, "layoutMode": ["default", "social-grid"]}
+      ]
+    },
+    "carousel": {
+      "builderEditable": true,
+      "variants": [
+        {"id": 1, "summary": "one-band cinematic filmstrip", "builderEditable": true},
+        {"id": 2, "summary": "two-band filmstrip with centered overlay", "builderEditable": true},
+        {"id": 3, "summary": "scroll strip with edge fade", "builderEditable": true},
+        {"id": 4, "summary": "image-forward no-card style", "builderEditable": true},
+        {"id": 5, "summary": "image-only gallery strip", "builderEditable": true},
+        {"id": 6, "summary": "tilted photo cards", "builderEditable": true},
+        {"id": 7, "summary": "focus slider with clickable dots", "builderEditable": true},
+        {"id": 8, "summary": "full-slide feature with side carets", "builderEditable": true}
+      ]
+    },
+    "datepicker": {
+      "builderEditable": true,
+      "variants": [
+        {"id": 1, "summary": "balanced month plus upcoming weeks", "builderEditable": true},
+        {"id": 2, "summary": "stronger month focus", "builderEditable": true},
+        {"id": 3, "summary": "week overview first", "builderEditable": true},
+        {"id": 4, "summary": "board layout for upcoming weeks", "builderEditable": true},
+        {"id": 5, "summary": "concierge planner", "builderEditable": true},
+        {"id": 6, "summary": "agenda-first timeline", "builderEditable": true},
+        {"id": 7, "summary": "playful chip planner", "builderEditable": true},
+        {"id": 8, "summary": "studio scheduler", "builderEditable": true}
+      ]
+    },
+    "faq": {
+      "builderEditable": true,
+      "variants": [
+        {"id": 1, "summary": "straightforward accordion stack", "builderEditable": true},
+        {"id": 2, "summary": "two-column question cards", "builderEditable": true},
+        {"id": 3, "summary": "support card beside accordion", "builderEditable": true},
+        {"id": 4, "summary": "compact support-first knowledge block", "builderEditable": true},
+        {"id": 5, "summary": "glassy support rail with answer cards", "builderEditable": true},
+        {"id": 6, "summary": "playful answer board", "builderEditable": true},
+        {"id": 7, "summary": "support banner plus accordion stack", "builderEditable": true},
+        {"id": 8, "summary": "editorial split FAQ", "builderEditable": true}
+      ]
+    },
+    "testimonials": {
+      "builderEditable": true,
+      "layoutKeys": ["layoutMode"],
+      "variants": [
+        {"id": 1, "summary": "fanned cards", "builderEditable": true},
+        {"id": 2, "summary": "giant editorial pull quotes", "builderEditable": true},
+        {"id": 3, "summary": "dark spotlight quotes", "builderEditable": true},
+        {"id": 4, "summary": "story cards with label", "builderEditable": true},
+        {"id": 5, "summary": "centered praise stage", "builderEditable": true},
+        {"id": 6, "summary": "polaroid wall", "builderEditable": true},
+        {"id": 7, "summary": "speech bubbles", "builderEditable": true},
+        {"id": 8, "summary": "review strip list and review stage family", "useWhen": ["review stage", "review stage thumbnails", "review strip"], "builderEditable": true, "layoutMode": ["default", "review-stage", "review-stage-thumbnails"]}
+      ]
+    },
+    "content": {
+      "builderEditable": true,
+      "layoutKeys": ["layoutMode"],
+      "variants": [
+        {"id": 1, "summary": "alternating image plus text rows", "builderEditable": true},
+        {"id": 2, "summary": "editorial three-column split", "useWhen": ["triptych links", "image link image editorial split"], "builderEditable": true, "layoutMode": ["default", "triptych-link-stack"]},
+        {"id": 3, "summary": "media-heavy emphasis", "builderEditable": true},
+        {"id": 4, "summary": "timeline-like card rows", "builderEditable": true},
+        {"id": 5, "summary": "editorial slabs with warm color shifts", "builderEditable": true},
+        {"id": 6, "summary": "floating media cards with playful tilt", "builderEditable": true},
+        {"id": 7, "summary": "stacked story cards with media banners", "builderEditable": true},
+        {"id": 8, "summary": "spotlight alternating rows with accent rails", "builderEditable": true}
+      ]
+    },
+    "cta": {
+      "builderEditable": true,
+      "layoutKeys": ["layoutMode"],
+      "variants": [
+        {"id": 1, "summary": "classic gradient banner", "builderEditable": true},
+        {"id": 2, "summary": "split headline and actions", "builderEditable": true},
+        {"id": 3, "summary": "centered minimal callout", "builderEditable": true},
+        {"id": 4, "summary": "concise utility CTA strip", "builderEditable": true},
+        {"id": 5, "summary": "colorful split banner with strong action rail", "builderEditable": true},
+        {"id": 6, "summary": "centered launch card with full-width buttons", "useWhen": ["newsletter split", "overlay card", "centered launch card"], "builderEditable": true, "layoutMode": ["default", "newsletter-split", "overlay-card"]},
+        {"id": 7, "summary": "dashed utility banner", "builderEditable": true},
+        {"id": 8, "summary": "editorial two-panel callout", "builderEditable": true}
+      ]
+    },
+    "contact": {
+      "builderEditable": true,
+      "variants": [
+        {"id": 1, "summary": "clean concierge split", "builderEditable": true},
+        {"id": 2, "summary": "form first details second", "builderEditable": true},
+        {"id": 3, "summary": "editorial sidebar composition", "builderEditable": true},
+        {"id": 4, "summary": "compact stacked support section", "builderEditable": true},
+        {"id": 5, "summary": "offset poster composition", "builderEditable": true},
+        {"id": 6, "summary": "form-first with sticker-like detail chips", "builderEditable": true},
+        {"id": 7, "summary": "stacked editorial layout with airy form", "builderEditable": true},
+        {"id": 8, "summary": "speech-bubble split with accent form", "builderEditable": true}
+      ]
+    },
+    "socialbar": {
+      "builderEditable": true,
+      "variants": [
+        {"id": 1, "summary": "compact balanced pills", "builderEditable": true},
+        {"id": 2, "summary": "card grid with icon on top", "builderEditable": true},
+        {"id": 3, "summary": "minimal inline text links", "builderEditable": true},
+        {"id": 4, "summary": "circular icon rail plus labels below", "builderEditable": true},
+        {"id": 5, "summary": "colorful social tiles", "builderEditable": true},
+        {"id": 6, "summary": "icon dock with stronger button blocks", "builderEditable": true},
+        {"id": 7, "summary": "sticker-like cards with mixed rotation", "builderEditable": true},
+        {"id": 8, "summary": "centered footer-social rail", "builderEditable": true}
+      ]
+    },
+    "footer": {
+      "builderEditable": true,
+      "variants": [
+        {"id": 1, "summary": "classic horizontal footer nav", "builderEditable": true},
+        {"id": 2, "summary": "center-weighted nav with softer CTA", "builderEditable": true},
+        {"id": 3, "summary": "brand plus tagline emphasis", "builderEditable": true},
+        {"id": 4, "summary": "centered desktop footer navigation", "builderEditable": true},
+        {"id": 5, "summary": "editorial split with right-aligned nav", "builderEditable": true},
+        {"id": 6, "summary": "centered stacked footer with prominent actions", "builderEditable": true},
+        {"id": 7, "summary": "structured call-to-action footer", "builderEditable": true},
+        {"id": 8, "summary": "centered credits rail with optional heading", "builderEditable": true}
+      ]
+    }
+  }
+}

@@ -1,0 +1,1155 @@
+{
+  "version": "1.0",
+  "source": {
+    "platform": "showit",
+    "sourceUrls": [
+      "https://fitzgerald.tonicsiteshop.com/"
+    ],
+    "baseUrl": "https://fitzgerald.tonicsiteshop.com/",
+    "extractionMode": "live-dom",
+    "artifacts": [
+      {
+        "type": "html",
+        "path": "scrapes/fitzgerald-tonicsiteshop-com/home/html/rendered.html"
+      },
+      {
+        "type": "screenshot",
+        "path": "scrapes/fitzgerald-tonicsiteshop-com/home/screenshots/full/desktop.png"
+      },
+      {
+        "type": "screenshot",
+        "path": "scrapes/fitzgerald-tonicsiteshop-com/home/screenshots/full/mobile.png"
+      }
+    ]
+  },
+  "globals": {
+    "header": {
+      "id": "top-menu-black",
+      "kind": "section",
+      "role": "header",
+      "sourcePattern": {
+        "family": "editorial-header-nav",
+        "label": "Editorial Header Nav",
+        "confidence": 0.99,
+        "cues": [
+          "header/menu block slug"
+        ]
+      },
+      "targetBlock": {
+        "type": "header",
+        "variant": 6,
+        "navLayout": "split-brand-center"
+      },
+      "content": {
+        "heading": "",
+        "subheading": "fitzgerald",
+        "paragraphs": [
+          "fitzgerald"
+        ],
+        "buttons": [
+          {
+            "label": "fitzgerald",
+            "url": "https://fitzgerald.tonicsiteshop.com/#/"
+          },
+          {
+            "label": "Home",
+            "url": "https://fitzgerald.tonicsiteshop.com/#/"
+          },
+          {
+            "label": "About",
+            "url": "https://fitzgerald.tonicsiteshop.com/about"
+          }
+        ]
+      },
+      "media": [],
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "copyAlignment": "split",
+        "backgroundImage": true
+      },
+      "notes": [
+        "Generated from the Python foundation pipeline.",
+        "Validate this mapper before final PHP bridge export."
+      ]
+    },
+    "footer": {
+      "id": "footer",
+      "kind": "section",
+      "role": "footer",
+      "sourcePattern": {
+        "family": "editorial-footer-nav",
+        "label": "Editorial Footer Nav",
+        "confidence": 0.99,
+        "cues": [
+          "footer block slug"
+        ]
+      },
+      "targetBlock": {
+        "type": "footer",
+        "variant": 8
+      },
+      "content": {
+        "heading": "© Tonic Site Shop 2024 | Site Credit",
+        "subheading": "p",
+        "paragraphs": [
+          "p",
+          "F",
+          "Home",
+          "About"
+        ],
+        "buttons": [
+          {
+            "label": "Site Credit",
+            "url": "https://fitzgerald.tonicsiteshop.com/site-credit"
+          },
+          {
+            "label": "Home",
+            "url": "https://fitzgerald.tonicsiteshop.com/#/"
+          },
+          {
+            "label": "About",
+            "url": "https://fitzgerald.tonicsiteshop.com/about"
+          }
+        ]
+      },
+      "media": [
+        {
+          "slot": "primary",
+          "url": "https://static.showit.co/270/aBHZ0eelQTy7oSYokVU4Pw/51489/tec_petaja_photography_lecollectif-21.jpg",
+          "alt": "",
+          "source": "showit"
+        },
+        {
+          "slot": "image-2",
+          "url": "https://static.showit.co/270/VHsjzl9XTNqByPPe0h_T6g/51489/tec_petaja_photography_lecollectif-28.jpg",
+          "alt": "",
+          "source": "showit"
+        },
+        {
+          "slot": "image-3",
+          "url": "https://static.showit.co/270/4D8sTbmRThqSpqHi3fC9Gw/51489/tec_petaja_photography_lecollectif-5.jpg",
+          "alt": "",
+          "source": "showit"
+        },
+        {
+          "slot": "image-4",
+          "url": "https://static.showit.co/270/7bvmLOGoQimD9sUGjKsxLw/51489/screen_shot_2024-04-17_at_10_55_19_am.png",
+          "alt": "",
+          "source": "showit"
+        },
+        {
+          "slot": "image-5",
+          "url": "https://static.showit.co/270/5HGF1XZ8S5K8taOe0J7ICw/51489/tec_petaja_photography_lecollectif-36.jpg",
+          "alt": "",
+          "source": "showit"
+        },
+        {
+          "slot": "image-6",
+          "url": "https://static.showit.co/270/ayYOwBu7TpizP6lwgDbnPQ/51489/tec_petaja_photography_lecollectif-18.jpg",
+          "alt": "",
+          "source": "showit"
+        },
+        {
+          "slot": "image-7",
+          "url": "https://static.showit.co/270/1sm11aFRTjuCjzgHvwLYpA/51489/6.jpg",
+          "alt": "",
+          "source": "showit"
+        }
+      ],
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "copyAlignment": "split",
+        "backgroundImage": true
+      },
+      "notes": [
+        "Generated from the Python foundation pipeline.",
+        "Validate this mapper before final PHP bridge export."
+      ]
+    }
+  },
+  "pages": [
+    {
+      "id": "home",
+      "title": "TONIC's Fitzgerald Showit Website Template",
+      "slug": "home",
+      "sourceUrl": "https://fitzgerald.tonicsiteshop.com/",
+      "sections": [
+        {
+          "id": "hero-with-alt-options",
+          "kind": "section",
+          "role": "hero",
+          "sourcePattern": {
+            "family": "editorial-hero-overlay",
+            "label": "Editorial Hero Overlay",
+            "confidence": 0.88,
+            "cues": [
+              "showit hero block slug"
+            ]
+          },
+          "targetBlock": {
+            "type": "hero",
+            "variant": 5
+          },
+          "content": {
+            "heading": "the NEW",
+            "subheading": "Acclaimed international wedding film photography for the new romantics.",
+            "paragraphs": [
+              "Acclaimed international wedding film photography for the new romantics.",
+              "Explore the Work",
+              "Acclaimed International wedding film photography for the new romantics. For images as timeless as your story.",
+              "F"
+            ],
+            "buttons": [
+              {
+                "label": "Explore the Work",
+                "url": "https://fitzgerald.tonicsiteshop.com/portfolio"
+              },
+              {
+                "label": "Explore the Work",
+                "url": "https://fitzgerald.tonicsiteshop.com/portfolio"
+              }
+            ]
+          },
+          "media": [
+            {
+              "slot": "primary",
+              "url": "https://static.showit.co/1600/RRr87m7tT3qx49LSSfitsg/51489/lecollectif-34_cropped.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-2",
+              "url": "https://static.showit.co/1200/RRr87m7tT3qx49LSSfitsg/51489/lecollectif-34_cropped.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-3",
+              "url": "https://static.showit.co/800/FJ8egnj1T1ygGKDm15XPsA/51489/lecollectif-48.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-4",
+              "url": "https://static.showit.co/800/gWuMW6Q_QHaPRtMdTCa7sw/51489/lecollectif-102.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-5",
+              "url": "https://static.showit.co/1200/KDUW18L7SBSEsMn8VFQW6A/51489/lecollectif-100.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-6",
+              "url": "https://static.showit.co/1200/aBHZ0eelQTy7oSYokVU4Pw/51489/tec_petaja_photography_lecollectif-21.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-7",
+              "url": "https://static.showit.co/1200/gkppDZWmR865guF6T_BY1g/51489/lecollectif-31.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-8",
+              "url": "https://static.showit.co/file/nhA0kU9aRASa3Mckb9X9eg/51489/fp_mark_frame_white.svg",
+              "alt": "",
+              "source": "showit"
+            }
+          ],
+          "style": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "copyAlignment": "split",
+            "backgroundImage": true
+          },
+          "notes": [
+            "Generated from the Python foundation pipeline.",
+            "Validate this mapper before final PHP bridge export."
+          ]
+        },
+        {
+          "id": "brand-bio",
+          "kind": "section",
+          "role": "content",
+          "sourcePattern": {
+            "family": "bio-band-with-portrait",
+            "label": "Bio Band With Portrait",
+            "confidence": 0.72,
+            "cues": [
+              "showit bio/about block slug"
+            ]
+          },
+          "targetBlock": {
+            "type": "content",
+            "variant": 2
+          },
+          "content": {
+            "heading": "We make timeless images for brides and grooms with classic style.",
+            "subheading": "F",
+            "paragraphs": [
+              "F",
+              "P",
+              "Welcome to wedding photography done differently. Ut tbh nostrud succulents cillum waistcoat neutra labore reprehenderit gatekeep non readymade.",
+              "Fitzgerald Weddings"
+            ],
+            "buttons": [
+              {
+                "label": "F",
+                "url": "https://fitzgerald.tonicsiteshop.com/#/"
+              },
+              {
+                "label": "P",
+                "url": "https://fitzgerald.tonicsiteshop.com/#/"
+              },
+              {
+                "label": "Fitzgerald Weddings",
+                "url": "https://fitzgerald.tonicsiteshop.com/portfolio"
+              }
+            ]
+          },
+          "media": [
+            {
+              "slot": "primary",
+              "url": "https://static.showit.co/800/WP0WEuu9RJOS9Elo46sqqg/51489/lecollectif-198.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-2",
+              "url": "https://static.showit.co/800/XFf2xojyTz-P7a3A6YasQQ/51489/lecollectif-178.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-3",
+              "url": "https://static.showit.co/800/vFumcml5RXaVy74Gr_YLsA/51489/lecollectif-46.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-4",
+              "url": "https://static.showit.co/800/1xB9gyc4RiSv-3eXypBPlA/51489/lecollectif-101.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-5",
+              "url": "https://static.showit.co/800/EgGKDcLjSu2enWXfNzolQQ/51489/lecollectif-83.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-6",
+              "url": "https://static.showit.co/800/HaacQPO-RC-6HPpGa8AsFg/51489/lecollectif-109.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-7",
+              "url": "https://static.showit.co/800/XmFeL3LGQc-c0-ZfNMoAIA/51489/lecollectif-123.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-8",
+              "url": "https://static.showit.co/file/RNDYiLclRy2z3g_twERQtw/51489/fp_mark_frame.svg",
+              "alt": "",
+              "source": "showit"
+            }
+          ],
+          "style": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "copyAlignment": "split",
+            "backgroundImage": true
+          },
+          "notes": [
+            "Generated from the Python foundation pipeline.",
+            "Validate this mapper before final PHP bridge export."
+          ]
+        },
+        {
+          "id": "our-offerings",
+          "kind": "section",
+          "role": "services",
+          "sourcePattern": {
+            "family": "oversized-services-list",
+            "label": "Oversized Services List",
+            "confidence": 0.72,
+            "cues": [
+              "showit offerings/services block slug"
+            ]
+          },
+          "targetBlock": {
+            "type": "services",
+            "variant": 8
+          },
+          "content": {
+            "heading": "OUR offerings",
+            "subheading": "Weddings",
+            "paragraphs": [
+              "Weddings",
+              "Portraits",
+              "editorial",
+              "BRANDS"
+            ],
+            "buttons": [
+              {
+                "label": "Weddings",
+                "url": "https://fitzgerald.tonicsiteshop.com/specific-service"
+              },
+              {
+                "label": "Portraits",
+                "url": "https://fitzgerald.tonicsiteshop.com/specific-service"
+              },
+              {
+                "label": "editorial",
+                "url": "https://fitzgerald.tonicsiteshop.com/specific-service"
+              }
+            ]
+          },
+          "media": [
+            {
+              "slot": "primary",
+              "url": "https://static.showit.co/400/ai5XdUBZSeKvWPT60PoGjA/51489/tec_petaja_photography_lecollectif-30.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-2",
+              "url": "https://static.showit.co/200/_ttrTLbCS_ONrxTdIN_bPQ/51489/lecollectif-29.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-3",
+              "url": "https://static.showit.co/400/s4zL7cyjQN6c9C_gtJJyYg/51489/tec_petaja_photography_lecollectif-22.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-4",
+              "url": "https://static.showit.co/200/LqTKfpEOS-WLwD-766FUCA/51489/highlights010_websize.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-5",
+              "url": "https://static.showit.co/200/d7nSywn8Q_2E9grRcCkrXA/51489/order014.jpg",
+              "alt": "",
+              "source": "showit"
+            }
+          ],
+          "style": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "copyAlignment": "split",
+            "backgroundImage": true
+          },
+          "notes": [
+            "Generated from the Python foundation pipeline.",
+            "Validate this mapper before final PHP bridge export."
+          ]
+        },
+        {
+          "id": "images-hide-top-image-to-edit",
+          "kind": "section",
+          "role": "gallery",
+          "sourcePattern": {
+            "family": "instagram-grid",
+            "label": "Instagram Grid",
+            "confidence": 0.72,
+            "cues": [
+              "image-heavy section"
+            ]
+          },
+          "targetBlock": {
+            "type": "gallery",
+            "variant": 8,
+            "layoutMode": "social-grid"
+          },
+          "content": {
+            "heading": "Explore Services",
+            "subheading": "01",
+            "paragraphs": [
+              "01",
+              "02",
+              "03"
+            ],
+            "buttons": [
+              {
+                "label": "01",
+                "url": "https://fitzgerald.tonicsiteshop.com/about"
+              },
+              {
+                "label": "02",
+                "url": "https://fitzgerald.tonicsiteshop.com/about"
+              },
+              {
+                "label": "03",
+                "url": "https://fitzgerald.tonicsiteshop.com/about"
+              }
+            ]
+          },
+          "media": [
+            {
+              "slot": "primary",
+              "url": "https://static.showit.co/400/FQDDJzcRS_aj86Po6Sadhw/51489/lecollectif-94.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-2",
+              "url": "https://static.showit.co/400/U0URIksYQ1G3enbxIOm0aQ/51489/lecollectif-127.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-3",
+              "url": "https://static.showit.co/400/mf6AuTSaRre1OO0wOlHnJQ/51489/lecollectif-147.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-4",
+              "url": "https://static.showit.co/800/FQDDJzcRS_aj86Po6Sadhw/51489/lecollectif-94.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-5",
+              "url": "https://static.showit.co/800/U0URIksYQ1G3enbxIOm0aQ/51489/lecollectif-127.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-6",
+              "url": "https://static.showit.co/800/mf6AuTSaRre1OO0wOlHnJQ/51489/lecollectif-147.jpg",
+              "alt": "",
+              "source": "showit"
+            }
+          ],
+          "style": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "copyAlignment": "split",
+            "backgroundImage": true
+          },
+          "notes": [
+            "Generated from the Python foundation pipeline.",
+            "Validate this mapper before final PHP bridge export."
+          ]
+        },
+        {
+          "id": "offerings",
+          "kind": "section",
+          "role": "services",
+          "sourcePattern": {
+            "family": "oversized-services-list",
+            "label": "Oversized Services List",
+            "confidence": 0.72,
+            "cues": [
+              "showit offerings/services block slug"
+            ]
+          },
+          "targetBlock": {
+            "type": "services",
+            "variant": 8
+          },
+          "content": {
+            "heading": "TOGETHER",
+            "subheading": "ways to work",
+            "paragraphs": [
+              "ways to work",
+              "We're known for professional, timely communication *and* stunning imagery, because you shouldn't have to choose.",
+              "Fitzgerald Weddings",
+              "The Experience"
+            ],
+            "buttons": [
+              {
+                "label": "Fitzgerald Weddings",
+                "url": "https://fitzgerald.tonicsiteshop.com/specific-service"
+              },
+              {
+                "label": "The Experience",
+                "url": "https://fitzgerald.tonicsiteshop.com/experience"
+              }
+            ]
+          },
+          "media": [],
+          "style": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "copyAlignment": "split",
+            "backgroundImage": true
+          },
+          "notes": [
+            "Generated from the Python foundation pipeline.",
+            "Validate this mapper before final PHP bridge export."
+          ]
+        },
+        {
+          "id": "about",
+          "kind": "section",
+          "role": "content",
+          "sourcePattern": {
+            "family": "split-intro-story",
+            "label": "Split Intro Story",
+            "confidence": 0.72,
+            "cues": [
+              "showit bio/about block slug"
+            ]
+          },
+          "targetBlock": {
+            "type": "cta",
+            "variant": 6,
+            "layoutMode": "overlay-card"
+          },
+          "content": {
+            "heading": "Roselyn Fitzgerald",
+            "subheading": "F",
+            "paragraphs": [
+              "F",
+              "P",
+              "BEHIND THE LENS",
+              "As an internationally-lauded wedding photographer with decades of experience, Roselyn (Rose, for short) brings her signature timeless, editorial style and classic, romantic aesthetic to modern love stories."
+            ],
+            "buttons": [
+              {
+                "label": "BEHIND THE LENS",
+                "url": "https://fitzgerald.tonicsiteshop.com/about"
+              },
+              {
+                "label": "Roselyn Fitzgerald",
+                "url": "https://fitzgerald.tonicsiteshop.com/about"
+              },
+              {
+                "label": "Learn More",
+                "url": "https://fitzgerald.tonicsiteshop.com/about"
+              }
+            ]
+          },
+          "media": [
+            {
+              "slot": "primary",
+              "url": "https://static.showit.co/800/aBHZ0eelQTy7oSYokVU4Pw/51489/tec_petaja_photography_lecollectif-21.jpg",
+              "alt": "",
+              "source": "showit"
+            }
+          ],
+          "style": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "copyAlignment": "split",
+            "backgroundImage": true
+          },
+          "notes": [
+            "Generated from the Python foundation pipeline.",
+            "Validate this mapper before final PHP bridge export."
+          ]
+        },
+        {
+          "id": "our-mission-sticky",
+          "kind": "section",
+          "role": "content",
+          "sourcePattern": {
+            "family": "split-intro-story",
+            "label": "Split Intro Story",
+            "confidence": 0.72,
+            "cues": [
+              "showit bio/about block slug"
+            ]
+          },
+          "targetBlock": {
+            "type": "cta",
+            "variant": 3
+          },
+          "content": {
+            "heading": "WE MAKE STUNNING IMAGES of YOUR MOST TIMELESS MOMENTS",
+            "subheading": "our approach",
+            "paragraphs": [
+              "our approach",
+              "Talk a little about what makes you different right here. Ut tbh nostrud DSA succulents cillum waistcoat neutra labore reprehenderit gatekeep."
+            ],
+            "buttons": []
+          },
+          "media": [],
+          "style": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "copyAlignment": "split",
+            "backgroundImage": true
+          },
+          "notes": [
+            "Generated from the Python foundation pipeline.",
+            "Validate this mapper before final PHP bridge export."
+          ]
+        },
+        {
+          "id": "our-mission-top",
+          "kind": "section",
+          "role": "content",
+          "sourcePattern": {
+            "family": "split-intro-story",
+            "label": "Split Intro Story",
+            "confidence": 0.72,
+            "cues": [
+              "showit bio/about block slug"
+            ]
+          },
+          "targetBlock": {
+            "type": "content",
+            "variant": 2
+          },
+          "content": {
+            "heading": "",
+            "subheading": "",
+            "paragraphs": [],
+            "buttons": []
+          },
+          "media": [
+            {
+              "slot": "primary",
+              "url": "https://static.showit.co/800/_ttrTLbCS_ONrxTdIN_bPQ/51489/lecollectif-29.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-2",
+              "url": "https://static.showit.co/400/tRFDKZpRRmmwwMFuvdu6Gg/51489/lecollectif-74.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-3",
+              "url": "https://static.showit.co/800/s4zL7cyjQN6c9C_gtJJyYg/51489/tec_petaja_photography_lecollectif-22.jpg",
+              "alt": "",
+              "source": "showit"
+            }
+          ],
+          "style": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "copyAlignment": "split",
+            "backgroundImage": true
+          },
+          "notes": [
+            "Generated from the Python foundation pipeline.",
+            "Validate this mapper before final PHP bridge export."
+          ]
+        },
+        {
+          "id": "reviews",
+          "kind": "section",
+          "role": "testimonial",
+          "sourcePattern": {
+            "family": "client-praise-band",
+            "label": "Client Praise Band",
+            "confidence": 0.72,
+            "cues": [
+              "showit review/testimonial block slug"
+            ]
+          },
+          "targetBlock": {
+            "type": "testimonials",
+            "variant": 8
+          },
+          "content": {
+            "heading": "",
+            "subheading": "“No one sees light or captures a fleeting moment like Fitzgerald. I can’t imagine someone truly seeing our our day like they did.”",
+            "paragraphs": [
+              "“No one sees light or captures a fleeting moment like Fitzgerald. I can’t imagine someone truly seeing our our day like they did.”",
+              "Kind words from",
+              "Jen & Aaron, past clients",
+              "“We hired Roselyn to shoot our latest campaign and were honestly blown away by what she delivered. Easily the best money we’ve spent!”"
+            ],
+            "buttons": []
+          },
+          "media": [
+            {
+              "slot": "primary",
+              "url": "https://static.showit.co/200/guUp-icfQsiY_sHn93_VyQ/51489/lecollectif-32.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-2",
+              "url": "https://static.showit.co/200/1KWYjfdKSIO54eCPES6zQQ/51489/425811293_18414625309027946_6623878183257840776_n.jpg",
+              "alt": "",
+              "source": "showit"
+            }
+          ],
+          "style": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "copyAlignment": "split",
+            "backgroundImage": true
+          },
+          "notes": [
+            "Generated from the Python foundation pipeline.",
+            "Validate this mapper before final PHP bridge export."
+          ]
+        },
+        {
+          "id": "portfolio",
+          "kind": "section",
+          "role": "gallery",
+          "sourcePattern": {
+            "family": "portfolio-feature-list",
+            "label": "Portfolio Feature List",
+            "confidence": 0.72,
+            "cues": [
+              "showit portfolio/gallery block slug"
+            ]
+          },
+          "targetBlock": {
+            "type": "carousel",
+            "variant": 2
+          },
+          "content": {
+            "heading": "Explore FITZGERALD WEDDINGS",
+            "subheading": "Talk a little about what makes you different right here. Ut tbh nostrud DSA succulents cillum waistcoat neutra labore reprehenderit gatekeep.",
+            "paragraphs": [
+              "Talk a little about what makes you different right here. Ut tbh nostrud DSA succulents cillum waistcoat neutra labore reprehenderit gatekeep."
+            ],
+            "buttons": [
+              {
+                "label": "Browse the Work",
+                "url": "https://fitzgerald.tonicsiteshop.com/portfolio"
+              }
+            ]
+          },
+          "media": [
+            {
+              "slot": "primary",
+              "url": "https://static.showit.co/2400/ai5XdUBZSeKvWPT60PoGjA/51489/tec_petaja_photography_lecollectif-30.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-2",
+              "url": "https://static.showit.co/2400/1EUFZnqYRM28QCoKhxwUwA/51489/tec_petaja_photography_lecollectif-20.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-3",
+              "url": "https://static.showit.co/2400/L6WKgP5OSMKcFH_HJ8VD3Q/51489/tec_petaja_photography_lecollectif-31.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-4",
+              "url": "https://static.showit.co/2400/i1E689XkRiO_1lAy5xkWpg/51489/tec_petaja_photography_lecollectif-24.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-5",
+              "url": "https://static.showit.co/2400/aBHZ0eelQTy7oSYokVU4Pw/51489/tec_petaja_photography_lecollectif-21.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-6",
+              "url": "https://static.showit.co/2400/V7SGFYwbRtSQScDvwOdgfQ/51489/tec_petaja_photography_lecollectif-10.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-7",
+              "url": "https://static.showit.co/2400/lSkMqVV8R9O4pcq6uySnuA/51489/tec_petaja_photography_lecollectif-19.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-8",
+              "url": "https://static.showit.co/2400/IDY737hxToW7fEfYkcwUpQ/51489/amanda-tom-10.jpg",
+              "alt": "",
+              "source": "showit"
+            }
+          ],
+          "style": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "copyAlignment": "split",
+            "backgroundImage": true
+          },
+          "notes": [
+            "Generated from the Python foundation pipeline.",
+            "Validate this mapper before final PHP bridge export."
+          ]
+        },
+        {
+          "id": "featured-projects",
+          "kind": "section",
+          "role": "cards",
+          "sourcePattern": {
+            "family": "portfolio-feature-list",
+            "label": "Portfolio Feature List",
+            "confidence": 0.72,
+            "cues": [
+              "showit project/resource block slug"
+            ]
+          },
+          "targetBlock": {
+            "type": "cards",
+            "variant": 8
+          },
+          "content": {
+            "heading": "Projects",
+            "subheading": "featured",
+            "paragraphs": [
+              "featured",
+              "View More"
+            ],
+            "buttons": [
+              {
+                "label": "Ben & Rachel's Modern Wedding at Blackberry Farm",
+                "url": "https://fitzgerald.tonicsiteshop.com/single-post-demo-delete"
+              },
+              {
+                "label": "View More",
+                "url": "https://fitzgerald.tonicsiteshop.com/single-post-demo-delete"
+              },
+              {
+                "label": "These Could Also Be Blog Post Titles If Preferred",
+                "url": "https://fitzgerald.tonicsiteshop.com/single-post-demo-delete"
+              }
+            ]
+          },
+          "media": [
+            {
+              "slot": "primary",
+              "url": "https://static.showit.co/400/gWuMW6Q_QHaPRtMdTCa7sw/51489/lecollectif-102.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-2",
+              "url": "https://static.showit.co/400/IDY737hxToW7fEfYkcwUpQ/51489/amanda-tom-10.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-3",
+              "url": "https://static.showit.co/400/Ssf15OkOT9iGIy-KhdElcQ/51489/lecollectif-126.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-4",
+              "url": "https://static.showit.co/400/WRYETvHvTaSAY8IKwCVXJQ/51489/amanda-tom-51.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-5",
+              "url": "https://static.showit.co/400/tKMzEwdiRLur9lsbeWrmSA/51489/amanda-tom-28.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-6",
+              "url": "https://static.showit.co/200/uMFlGgjhRb-hOql5HIsWEQ/51489/vogue_logo.png",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-7",
+              "url": "https://static.showit.co/200/KEEAQ5t4QN2AMsJGiYE9FQ/51489/brides.png",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-8",
+              "url": "https://static.showit.co/400/OWQREOycRV2uT6LkJzevzQ/51489/martha-stewart-weddings.png",
+              "alt": "",
+              "source": "showit"
+            }
+          ],
+          "style": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "copyAlignment": "split",
+            "backgroundImage": true
+          },
+          "notes": [
+            "Generated from the Python foundation pipeline.",
+            "Validate this mapper before final PHP bridge export."
+          ]
+        },
+        {
+          "id": "newsletter-opt-in",
+          "kind": "section",
+          "role": "cta",
+          "sourcePattern": {
+            "family": "newsletter-split",
+            "label": "Newsletter Split",
+            "confidence": 0.72,
+            "cues": [
+              "showit newsletter block slug"
+            ]
+          },
+          "targetBlock": {
+            "type": "cta",
+            "variant": 6,
+            "layoutMode": "overlay-card"
+          },
+          "content": {
+            "heading": "",
+            "subheading": "Your inbox just got much, much prettier",
+            "paragraphs": [
+              "Your inbox just got much, much prettier",
+              "First Name",
+              "Email Address",
+              "Free download"
+            ],
+            "buttons": [
+              {
+                "label": "Free download",
+                "url": "https://fitzgerald.tonicsiteshop.com/long-form-freebie"
+              }
+            ]
+          },
+          "media": [
+            {
+              "slot": "primary",
+              "url": "https://static.showit.co/1600/yRAnEeoeS_uZfll9ORlubQ/51489/lecollectif-67.jpg",
+              "alt": "",
+              "source": "showit"
+            }
+          ],
+          "style": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "copyAlignment": "split",
+            "backgroundImage": true
+          },
+          "notes": [
+            "Generated from the Python foundation pipeline.",
+            "Validate this mapper before final PHP bridge export."
+          ]
+        },
+        {
+          "id": "more-to-explore",
+          "kind": "section",
+          "role": "cards",
+          "sourcePattern": {
+            "family": "portfolio-feature-list",
+            "label": "Portfolio Feature List",
+            "confidence": 0.72,
+            "cues": [
+              "showit project/resource block slug"
+            ]
+          },
+          "targetBlock": {
+            "type": "cards",
+            "variant": 1
+          },
+          "content": {
+            "heading": "MORE TO EXPLORE",
+            "subheading": "Read on the Blog",
+            "paragraphs": [
+              "Read on the Blog",
+              "My 5 Favorite Venues in Southern Tennessee",
+              "You Don't Need *This* $$$ Wedding Vendor"
+            ],
+            "buttons": [
+              {
+                "label": "My 5 Favorite Venues in Southern Tennessee",
+                "url": "https://fitzgerald.tonicsiteshop.com/single-post-demo-delete"
+              },
+              {
+                "label": "Read on the Blog",
+                "url": "https://fitzgerald.tonicsiteshop.com/single-post-demo-delete"
+              },
+              {
+                "label": "You Don't Need *This* $$$ Wedding Vendor",
+                "url": "https://fitzgerald.tonicsiteshop.com/single-post-demo-delete"
+              }
+            ]
+          },
+          "media": [
+            {
+              "slot": "primary",
+              "url": "https://static.showit.co/file/7Hj3x5JQRmiLPMwwFFNV-A/51489/lecollectif-44.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-2",
+              "url": "https://static.showit.co/file/51qKNGppTOiUb9bbsUpy6w/51489/lecollectif-77.jpg",
+              "alt": "",
+              "source": "showit"
+            }
+          ],
+          "style": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "copyAlignment": "split",
+            "backgroundImage": true
+          },
+          "notes": [
+            "Generated from the Python foundation pipeline.",
+            "Validate this mapper before final PHP bridge export."
+          ]
+        },
+        {
+          "id": "newsletter-opt-in-2",
+          "kind": "section",
+          "role": "cta",
+          "sourcePattern": {
+            "family": "newsletter-split",
+            "label": "Newsletter Split",
+            "confidence": 0.72,
+            "cues": [
+              "showit newsletter block slug"
+            ]
+          },
+          "targetBlock": {
+            "type": "cta",
+            "variant": 6,
+            "layoutMode": "overlay-card"
+          },
+          "content": {
+            "heading": "",
+            "subheading": "ROMANCE isn’t DEAD",
+            "paragraphs": [
+              "ROMANCE isn’t DEAD",
+              "let's make magic",
+              "We'd love to work with you. In order to create from a place of inspiration, we accept a limited number of commissions each year. Inquire for collections and to reserve your date.",
+              "ROMANCE isn’t DEAD / ROMANCE isn’t DEAD"
+            ],
+            "buttons": [
+              {
+                "label": "Let's Do This",
+                "url": "https://fitzgerald.tonicsiteshop.com/contact"
+              }
+            ]
+          },
+          "media": [
+            {
+              "slot": "primary",
+              "url": "https://static.showit.co/1200/51Y0sHxQQDudXJPm8KgVBQ/51489/lecollectif-150.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-2",
+              "url": "https://static.showit.co/400/d5o6aviTTTSkMrRnZB_46g/51489/lecollectif-138.jpg",
+              "alt": "",
+              "source": "showit"
+            },
+            {
+              "slot": "image-3",
+              "url": "https://static.showit.co/2400/51Y0sHxQQDudXJPm8KgVBQ/51489/lecollectif-150.jpg",
+              "alt": "",
+              "source": "showit"
+            }
+          ],
+          "style": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "copyAlignment": "split",
+            "backgroundImage": true
+          },
+          "notes": [
+            "Generated from the Python foundation pipeline.",
+            "Validate this mapper before final PHP bridge export."
+          ]
+        }
+      ]
+    }
+  ]
+}

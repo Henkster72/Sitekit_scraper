@@ -1,0 +1,498 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sitekit.local/specs/skit-spec-v1.schema.json",
+  "title": "SiteKit .skit Spec v1",
+  "description": "Structural schema for SiteKit spec v1 transport envelopes, project payloads, and theme-only imports.",
+  "anyOf": [
+    {
+      "$ref": "#/$defs/skitEnvelope"
+    },
+    {
+      "$ref": "#/$defs/projectPayload"
+    },
+    {
+      "$ref": "#/$defs/themeOnlyImport"
+    }
+  ],
+  "$defs": {
+    "skitEnvelope": {
+      "type": "object",
+      "required": ["format", "version", "encoding", "payload"],
+      "properties": {
+        "format": {
+          "const": "sitekit.skit"
+        },
+        "version": {
+          "type": "string",
+          "maxLength": 32
+        },
+        "encoding": {
+          "const": "gzip+base64"
+        },
+        "payload": {
+          "type": "string",
+          "minLength": 1
+        },
+        "createdAt": {
+          "type": "string",
+          "maxLength": 64
+        }
+      },
+      "additionalProperties": true
+    },
+    "projectPayload": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "maxLength": 32
+        },
+        "theme": {
+          "$ref": "#/$defs/freeformObject",
+          "description": "Normalized theme payload. For full theme imports, also include top-level palette/typography."
+        },
+        "palette": {
+          "$ref": "#/$defs/freeformObject",
+          "description": "Top-level palette token set (recommended for theme imports)."
+        },
+        "typography": {
+          "$ref": "#/$defs/freeformObject",
+          "description": "Top-level typography token set (recommended for theme imports)."
+        },
+        "gradient": {
+          "$ref": "#/$defs/freeformObject"
+        },
+        "elements": {
+          "$ref": "#/$defs/freeformObject"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/freeformObject"
+          }
+        },
+        "metadata": {
+          "$ref": "#/$defs/freeformObject"
+        },
+        "site": {
+          "$ref": "#/$defs/site"
+        },
+        "page": {
+          "$ref": "#/$defs/page"
+        }
+      },
+      "anyOf": [
+        {
+          "required": ["page"]
+        },
+        {
+          "properties": {
+            "site": {
+              "type": "object",
+              "required": ["pages"]
+            }
+          },
+          "required": ["site"]
+        }
+      ],
+      "additionalProperties": true
+    },
+    "themeOnlyImport": {
+      "type": "object",
+      "properties": {
+        "theme": {
+          "$ref": "#/$defs/freeformObject"
+        },
+        "palette": {
+          "$ref": "#/$defs/freeformObject"
+        },
+        "typography": {
+          "$ref": "#/$defs/freeformObject"
+        },
+        "defaults": {
+          "$ref": "#/$defs/freeformObject"
+        },
+        "colors": {
+          "$ref": "#/$defs/freeformObject"
+        },
+        "effects": {
+          "$ref": "#/$defs/freeformObject"
+        },
+        "shapes": {
+          "$ref": "#/$defs/freeformObject"
+        }
+      },
+      "anyOf": [
+        {
+          "required": ["theme", "palette", "typography"]
+        },
+        {
+          "required": ["typography"]
+        }
+      ],
+      "additionalProperties": true
+    },
+    "site": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "typeId": {
+          "type": "string",
+          "maxLength": 120
+        },
+        "activePageId": {
+          "type": "string",
+          "maxLength": 120
+        },
+        "baseUrl": {
+          "type": "string",
+          "maxLength": 2048,
+          "description": "Optional base URL for resolving relative asset and link URLs. Can be absolute, root-relative, or relative."
+        },
+        "canvas": {
+          "$ref": "#/$defs/freeformObject"
+        },
+        "assets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/asset"
+          }
+        },
+        "sharedBlocks": {
+          "type": "object",
+          "properties": {
+            "header": {
+              "$ref": "#/$defs/block"
+            },
+            "footer": {
+              "$ref": "#/$defs/block"
+            }
+          },
+          "additionalProperties": true
+        },
+        "pages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/page"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "page": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "menuLabel": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "slug": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "locale": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "showInHeaderNav": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            }
+          ]
+        },
+        "showInFooterNav": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            }
+          ]
+        },
+        "sharedContact": {
+          "$ref": "#/$defs/freeformObject"
+        },
+        "presetId": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "canvas": {
+          "$ref": "#/$defs/freeformObject"
+        },
+        "blocks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/block"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "block": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "uid": {
+          "type": "string",
+          "maxLength": 120
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "variant": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            }
+          ]
+        },
+        "widthPercent": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "backgroundColor": {
+          "type": "string"
+        },
+        "backgroundOpacity": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "foregroundOpacity": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "fontScale": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "verticalPaddingScale": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "cardColor": {
+          "type": "string"
+        },
+        "cardBorderColor": {
+          "type": "string"
+        },
+        "cardBorderStyle": {
+          "type": "string"
+        },
+        "cardBorderWidth": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "cardBackgroundOpacity": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "animation": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/$defs/freeformObject"
+        }
+      },
+      "additionalProperties": true
+    },
+    "asset": {
+      "type": "object",
+      "required": ["id", "dataUrl"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "filename": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "mime": {
+          "type": "string",
+          "maxLength": 120
+        },
+        "dataUrl": {
+          "type": "string",
+          "pattern": "^data:image/[a-zA-Z0-9.+-]+;base64,"
+        },
+        "size": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "width": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "height": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "createdAt": {
+          "type": "string",
+          "maxLength": 64
+        }
+      },
+      "additionalProperties": true
+    },
+    "freeformObject": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/freeformValue"
+            }
+          },
+          {
+            "$ref": "#/$defs/freeformObject"
+          }
+        ]
+      }
+    },
+    "freeformValue": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "integer"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/freeformValue"
+          }
+        },
+        {
+          "$ref": "#/$defs/freeformObject"
+        }
+      ]
+    }
+  }
+}
