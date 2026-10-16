@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 from typing import Any
+from urllib.request import Request, urlopen
 
 from PIL import Image
 from playwright.sync_api import sync_playwright
@@ -194,15 +195,15 @@ DISCOVERY_SCRIPT = """
       width: window.innerWidth,
       height: window.innerHeight,
       pageWidth: Math.max(
-        document.body.scrollWidth,
+        document.body?.scrollWidth || 0,
         document.documentElement.scrollWidth,
-        document.body.offsetWidth,
+        document.body?.offsetWidth || 0,
         document.documentElement.offsetWidth
       ),
       pageHeight: Math.max(
-        document.body.scrollHeight,
+        document.body?.scrollHeight || 0,
         document.documentElement.scrollHeight,
-        document.body.offsetHeight,
+        document.body?.offsetHeight || 0,
         document.documentElement.offsetHeight
       ),
     },
@@ -310,12 +311,30 @@ def discover_viewport(
             is_mobile=mobile,
             device_scale_factor=1,
         )
-        page.goto(url, wait_until="networkidle", timeout=60_000)
+        page.goto(url, wait_until="commit", timeout=60_000)
+        page.wait_for_selector("html", state="attached", timeout=60_000)
         page.wait_for_timeout(1200)
         if not keep_overlays:
             dismiss_basic_overlays(page)
             page.wait_for_timeout(300)
         reveal_page_for_analysis(page)
+        if not page.evaluate("() => Boolean(document.body)"):
+            page.close()
+            request = Request(url, headers={"User-Agent": "Mozilla/5.0 SiteKitScraper/1.0"})
+            with urlopen(request, timeout=60) as response:
+                html = response.read().decode(response.headers.get_content_charset() or "utf-8", errors="replace")
+            page = browser.new_page(
+                viewport={"width": viewport["width"], "height": viewport["height"]},
+                is_mobile=mobile,
+                device_scale_factor=1,
+                java_script_enabled=False,
+            )
+            page.set_content(html, wait_until="commit", timeout=60_000)
+            page.wait_for_timeout(300)
+            if not keep_overlays:
+                dismiss_basic_overlays(page)
+                page.wait_for_timeout(300)
+            reveal_page_for_analysis(page)
         discovery = page.evaluate(
             DISCOVERY_SCRIPT,
             {"selectors": selectors, "minHeight": min_height, "minWidth": min_width},

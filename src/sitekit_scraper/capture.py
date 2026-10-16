@@ -3,8 +3,9 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 from typing import Any
+from urllib.request import Request, urlopen
 
-from playwright.sync_api import Browser, Page, sync_playwright
+from playwright.sync_api import Browser, Page, TimeoutError as PlaywrightTimeoutError, sync_playwright
 
 from .utils import build_scrape_paths, ensure_scrape_paths, utc_timestamp, write_json, write_text
 
@@ -61,9 +62,9 @@ def reveal_page_for_analysis(page: Page) -> None:
     page_height = int(
         page.evaluate(
             """() => Math.max(
-                document.body.scrollHeight,
+                document.body?.scrollHeight || 0,
                 document.documentElement.scrollHeight,
-                document.body.offsetHeight,
+                document.body?.offsetHeight || 0,
                 document.documentElement.offsetHeight
             )"""
         )
@@ -78,6 +79,40 @@ def reveal_page_for_analysis(page: Page) -> None:
     page.wait_for_timeout(350)
 
 
+def capture_static_fallback(
+    browser: Browser,
+    url: str,
+    screenshot_path: Path,
+    width: int,
+    height: int,
+    *,
+    mobile: bool,
+    timeout_ms: int,
+) -> dict[str, Any]:
+    request = Request(url, headers={"User-Agent": "Mozilla/5.0 SiteKitScraper/1.0"})
+    with urlopen(request, timeout=max(1, timeout_ms // 1000)) as response:
+        html = response.read().decode(response.headers.get_content_charset() or "utf-8", errors="replace")
+        final_url = response.geturl()
+
+    page = browser.new_page(
+        viewport={"width": width, "height": height},
+        is_mobile=mobile,
+        device_scale_factor=1,
+        java_script_enabled=False,
+    )
+    page.set_content(html, wait_until="commit", timeout=timeout_ms)
+    page.wait_for_timeout(300)
+    page.screenshot(path=str(screenshot_path), full_page=True, timeout=timeout_ms)
+    metadata = {
+        "title": page.title(),
+        "finalUrl": final_url,
+        "viewport": {"width": width, "height": height},
+        "html": page.content(),
+    }
+    page.close()
+    return metadata
+
+
 def capture_view(
     browser: Browser,
     url: str,
@@ -90,22 +125,36 @@ def capture_view(
     timeout_ms: int = DEFAULT_TIMEOUT_MS,
 ) -> dict[str, Any]:
     page = new_page(browser, width, height, mobile=mobile)
-    page.goto(url, wait_until="networkidle", timeout=timeout_ms)
+    # Third-party analytics, embeds, and font loaders can keep a page from
+    # reaching network-idle even after the rendered document is usable.
+    page.goto(url, wait_until="commit", timeout=timeout_ms)
+    page.wait_for_selector("html", state="attached", timeout=timeout_ms)
     page.wait_for_timeout(1200)
     if dismiss_overlays:
         dismiss_basic_overlays(page)
         page.wait_for_timeout(300)
     reveal_page_for_analysis(page)
-    page.screenshot(path=str(screenshot_path), full_page=True)
-    html = page.content()
-    metadata = {
-        "title": page.title(),
-        "finalUrl": page.url,
-        "viewport": {"width": width, "height": height},
-        "html": html,
-    }
-    page.close()
-    return metadata
+    try:
+        page.screenshot(path=str(screenshot_path), full_page=True)
+        metadata = {
+            "title": page.title(),
+            "finalUrl": page.url,
+            "viewport": {"width": width, "height": height},
+            "html": page.content(),
+        }
+        page.close()
+        return metadata
+    except PlaywrightTimeoutError:
+        page.close()
+        return capture_static_fallback(
+            browser,
+            url,
+            screenshot_path,
+            width,
+            height,
+            mobile=mobile,
+            timeout_ms=timeout_ms,
+        )
 
 
 def parse_args() -> argparse.Namespace:
