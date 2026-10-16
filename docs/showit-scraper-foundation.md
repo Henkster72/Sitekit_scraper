@@ -32,6 +32,7 @@ Within that page folder the scaffold uses:
 - `sections/` for segmentation and extraction JSON
 - `mapper/` for mapper outputs
 - `sitekit/` for draft SiteKit outputs
+- `evidence/` for the `visual-evidence.v1` handoff to Main SiteKit
 - `logs/` for run logs
 
 ## Command Flow
@@ -74,9 +75,30 @@ python bin/showit_match_variant.py --url https://fitzgerald.tonicsiteshop.com/
 python bin/showit_export_sitekit.py --url https://fitzgerald.tonicsiteshop.com/
 ```
 
+### 7. Export visual evidence for Main SiteKit
+
+```bash
+python bin/showit_export_visual_evidence.py --url https://fitzgerald.tonicsiteshop.com/ --source-type showit
+```
+
+This is the canonical scraper handoff. It includes desktop/mobile geometry,
+visibility, source locators, text/media/actions, measured style evidence,
+responsive observations, and confidence. Main SiteKit owns interpretation into
+OpenSite and its pattern catalog; the scraper does not emit canonical
+OpenSite or numeric renderer variants.
+
+For the normal evidence-only workflow, use the convenience command:
+
+```bash
+python bin/sitekit_scrape_visual.py https://example.test/ --output /tmp/example-evidence --source-type showit
+```
+
+It runs capture, desktop/mobile segmentation, extraction, and visual-evidence
+export while leaving the individual stage commands available for debugging.
+
 ## Notes
 
-- The current Python export stage writes a valid mapper-shaped JSON document and a conservative SiteKit draft shell for inspection.
+- The visual-evidence export is the canonical scraper handoff. The Python mapper/draft export remains a compatibility artifact for existing inspection workflows.
 - The existing PHP bridge remains the target for real normalization and final export.
 - `reference_library/variants.json` and `reference_library/section_index.json` are placeholder catalogs for later screenshot and embedding-based matching.
 - The current scaffold does not import `sentence-transformers` yet, so the base install stays smaller while capture, segmentation, extraction, and rule-based matching settle down.

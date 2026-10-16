@@ -21,6 +21,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--url", required=True, help="Public URL used for capture.")
     parser.add_argument("--site-slug", help="Override site slug.")
     parser.add_argument("--page-slug", help="Override page slug.")
+    parser.add_argument("--output", help="Override the page artifact directory.")
     return parser.parse_args()
 
 
@@ -151,6 +152,15 @@ def extract_section(section: dict[str, Any], base_url: str) -> dict[str, Any]:
 
     plain_text = normalise_whitespace(" ".join(tree.xpath("//text()")))
     form_fields = len(soup.select("input, select, textarea"))
+    form_field_evidence = [
+        {
+            "tag": node.name,
+            "inputType": node.get("type", ""),
+            "name": node.get("name", ""),
+            "placeholder": node.get("placeholder", ""),
+        }
+        for node in soup.select("input, select, textarea")
+    ]
     repeated_item_count = estimate_repeated_items(soup)
 
     return {
@@ -158,15 +168,17 @@ def extract_section(section: dict[str, Any], base_url: str) -> dict[str, Any]:
         "sectionIndex": section["sectionIndex"],
         "tag": section["tag"],
         "blockSlug": section.get("blockSlug", ""),
+        "classes": section.get("classes", []),
         "selector": section["selector"],
         "domPath": section["domPath"],
         "bbox": section["bbox"],
-        "cropPath": section["cropPath"],
+        "cropPath": section.get("cropPath", ""),
         "headings": headings,
         "paragraphs": paragraphs,
         "buttons": buttons,
         "links": links,
         "imageUrls": dedupe_strings(images),
+        "mediaEvidence": section.get("mediaEvidence", []),
         "stats": {
             "textLength": len(plain_text),
             "headingCount": len(headings),
@@ -177,11 +189,14 @@ def extract_section(section: dict[str, Any], base_url: str) -> dict[str, Any]:
             "formFieldCount": form_fields,
             "repeatedItemCount": repeated_item_count,
         },
-        "visual": visual_stats_for_crop(section["cropPath"]),
+        "forms": {"fieldCount": form_fields, "fields": form_field_evidence},
+        "visual": visual_stats_for_crop(section.get("cropPath", "")),
         "style": {
             "backgroundColor": section.get("backgroundColor", ""),
             "backgroundImage": section.get("backgroundImage", ""),
+            "computed": section.get("computedStyle", {}),
         },
+        "visibility": section.get("visibility", {}),
         "textSample": section.get("textSample", ""),
         "rawText": plain_text[:4000],
     }
@@ -189,7 +204,7 @@ def extract_section(section: dict[str, Any], base_url: str) -> dict[str, Any]:
 
 def main() -> int:
     args = parse_args()
-    paths, capture_metadata = load_capture_metadata(args.url, site_slug=args.site_slug, page_slug=args.page_slug)
+    paths, capture_metadata = load_capture_metadata(args.url, site_slug=args.site_slug, page_slug=args.page_slug, output_dir=args.output)
     segmented = read_json(paths.sections_dir / "sections.segmented.json")
     sections = [extract_section(section, capture_metadata["desktop"]["finalUrl"]) for section in segmented["sections"]]
     payload = {

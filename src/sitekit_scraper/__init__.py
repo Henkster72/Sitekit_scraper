@@ -7,5 +7,6 @@ __all__ = [
     "classify",
     "match_variant",
     "export_sitekit",
+    "visual_evidence",
     "utils",
 ]

@@ -52,12 +52,18 @@ class ScrapePaths:
     mapper_dir: Path
     sitekit_dir: Path
     logs_dir: Path
+    evidence_dir: Path
 
 
-def build_scrape_paths(url: str, site_slug: str | None = None, page_slug: str | None = None) -> ScrapePaths:
+def build_scrape_paths(
+    url: str,
+    site_slug: str | None = None,
+    page_slug: str | None = None,
+    output_dir: str | Path | None = None,
+) -> ScrapePaths:
     resolved_site_slug = slugify(site_slug or site_slug_from_url(url), default="site")
     resolved_page_slug = slugify(page_slug or page_slug_from_url(url), default="page")
-    page_dir = SCRAPES_DIR / resolved_site_slug / resolved_page_slug
+    page_dir = Path(output_dir).expanduser().resolve() if output_dir else SCRAPES_DIR / resolved_site_slug / resolved_page_slug
     return ScrapePaths(
         site_slug=resolved_site_slug,
         page_slug=resolved_page_slug,
@@ -70,6 +76,7 @@ def build_scrape_paths(url: str, site_slug: str | None = None, page_slug: str | 
         mapper_dir=page_dir / "mapper",
         sitekit_dir=page_dir / "sitekit",
         logs_dir=page_dir / "logs",
+        evidence_dir=page_dir / "evidence",
     )
 
 
@@ -84,6 +91,7 @@ def ensure_scrape_paths(paths: ScrapePaths) -> None:
         paths.mapper_dir,
         paths.sitekit_dir,
         paths.logs_dir,
+        paths.evidence_dir,
     ):
         directory.mkdir(parents=True, exist_ok=True)
 
@@ -147,8 +155,13 @@ def load_block_guide() -> dict[str, Any]:
     return read_json(BLOCK_GUIDE_PATH)
 
 
-def load_capture_metadata(url: str, site_slug: str | None = None, page_slug: str | None = None) -> tuple[ScrapePaths, dict[str, Any]]:
-    paths = build_scrape_paths(url, site_slug=site_slug, page_slug=page_slug)
+def load_capture_metadata(
+    url: str,
+    site_slug: str | None = None,
+    page_slug: str | None = None,
+    output_dir: str | Path | None = None,
+) -> tuple[ScrapePaths, dict[str, Any]]:
+    paths = build_scrape_paths(url, site_slug=site_slug, page_slug=page_slug, output_dir=output_dir)
     metadata_path = paths.capture_dir / "capture.json"
     if not metadata_path.is_file():
         raise FileNotFoundError(f"Capture metadata not found: {metadata_path}")

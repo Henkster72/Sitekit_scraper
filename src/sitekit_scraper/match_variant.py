@@ -474,6 +474,7 @@ def score_candidate(section: dict[str, Any], candidate: dict[str, Any], section_
     result = {
         "type": candidate["type"],
         "variant": candidate["variant"],
+        "label": candidate.get("summary") or candidate.get("layoutMode") or "visual layout candidate",
         "score": round(max(score, 0.0), 4),
         "matchedGuideTerms": matched_terms,
         "evidence": evidence,
@@ -507,6 +508,21 @@ def rank_matches(section: dict[str, Any], guide: dict[str, Any]) -> list[dict[st
     return scored[:3]
 
 
+def pattern_candidates(matches: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Expose matcher evidence without exporting renderer-owned numeric identity."""
+    output: list[dict[str, Any]] = []
+    for match in matches:
+        label = match.get("label") or match.get("layoutMode") or match.get("reason") or "visual layout candidate"
+        candidate = {
+            "label": str(label),
+            "confidence": float(match.get("confidence", 0.0)),
+            "evidence": list(match.get("evidence", [])),
+        }
+        if candidate["label"] not in {item["label"] for item in output}:
+            output.append(candidate)
+    return output
+
+
 def main() -> int:
     args = parse_args()
     paths, capture_metadata = load_capture_metadata(args.url, site_slug=args.site_slug, page_slug=args.page_slug)
@@ -515,9 +531,11 @@ def main() -> int:
     sections = []
     for section in classified["sections"]:
         enriched = dict(section)
-        enriched["variantMatches"] = rank_matches(section, guide)
+        runtime_candidates = rank_matches(section, guide)
+        enriched["patternCandidates"] = pattern_candidates(runtime_candidates)
+        enriched["legacyRuntimeCandidates"] = runtime_candidates
         enriched["sliders"] = slider_hints(section)
-        enriched["referenceLibraryVariantCount"] = library_variant_count()
+        enriched["referenceLibraryCandidateCount"] = library_variant_count()
         sections.append(enriched)
 
     payload = {

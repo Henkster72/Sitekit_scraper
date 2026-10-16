@@ -7,7 +7,7 @@ from typing import Any
 from PIL import Image
 from playwright.sync_api import sync_playwright
 
-from .capture import dismiss_basic_overlays
+from .capture import dismiss_basic_overlays, reveal_page_for_analysis
 from .utils import ensure_scrape_paths, load_capture_metadata, slugify, write_json
 
 
@@ -41,6 +41,70 @@ DISCOVERY_SCRIPT = """
     return parts.join(" > ");
   };
 
+  const unique = (values) => Array.from(new Set(values.filter(Boolean))).slice(0, 32);
+  const styleEvidence = (element) => {
+    const root = window.getComputedStyle(element);
+    const descendants = [element, ...element.querySelectorAll("h1,h2,h3,h4,h5,h6,p,a,button,img")].slice(0, 80);
+    const styles = descendants.map((node) => window.getComputedStyle(node));
+    const headings = Array.from(element.querySelectorAll("h1,h2,h3,h4,h5,h6")).slice(0, 24).map((node) => window.getComputedStyle(node));
+    const body = Array.from(element.querySelectorAll("p,a,button")).slice(0, 48).map((node) => window.getComputedStyle(node));
+    return {
+      display: root.display,
+      position: root.position,
+      visibility: root.visibility,
+      opacity: Number(root.opacity || "1"),
+      color: root.color || "",
+      backgroundColor: root.backgroundColor || "",
+      backgroundImage: root.backgroundImage || "",
+      fontFamilies: unique(styles.map((style) => style.fontFamily)),
+      fontSizes: unique(styles.map((style) => style.fontSize)),
+      headingFontFamilies: unique(headings.map((style) => style.fontFamily)),
+      headingFontSizes: unique(headings.map((style) => style.fontSize)),
+      bodyFontFamilies: unique(body.map((style) => style.fontFamily)),
+      bodyFontSizes: unique(body.map((style) => style.fontSize)),
+      lineHeights: unique(styles.map((style) => style.lineHeight)),
+      fontWeights: unique(styles.map((style) => style.fontWeight)),
+      letterSpacings: unique(styles.map((style) => style.letterSpacing)),
+      textAlignments: unique(styles.map((style) => style.textAlign)),
+      borderRadii: unique(styles.flatMap((style) => [style.borderTopLeftRadius, style.borderTopRightRadius, style.borderBottomRightRadius, style.borderBottomLeftRadius])),
+      borderWidths: unique(styles.flatMap((style) => [style.borderTopWidth, style.borderRightWidth, style.borderBottomWidth, style.borderLeftWidth])),
+      borderStyles: unique(styles.flatMap((style) => [style.borderTopStyle, style.borderRightStyle, style.borderBottomStyle, style.borderLeftStyle])),
+      padding: [root.paddingTop, root.paddingRight, root.paddingBottom, root.paddingLeft],
+      gap: root.gap || "",
+      flexDirection: root.flexDirection || "",
+      gridTemplateColumns: root.gridTemplateColumns || "",
+      alignItems: root.alignItems || "",
+      justifyContent: root.justifyContent || "",
+    };
+  };
+
+  const documentStyles = () => {
+    const root = window.getComputedStyle(document.documentElement);
+    const cssVariables = {};
+    for (const name of Array.from(document.styleSheets).flatMap((sheet) => {
+      try {
+        return Array.from(sheet.cssRules || []).flatMap((rule) =>
+          rule.style ? Array.from(rule.style).filter((property) => property.startsWith("--")) : []
+        );
+      } catch (error) {
+        return [];
+      }
+    })) {
+      const value = root.getPropertyValue(name).trim();
+      if (value) cssVariables[name] = value;
+    }
+    return {
+      cssVariables,
+      root: {
+        color: root.color || "",
+        backgroundColor: root.backgroundColor || "",
+        fontFamily: root.fontFamily || "",
+        fontSize: root.fontSize || "",
+        lineHeight: root.lineHeight || "",
+      },
+    };
+  };
+
   const gather = (element, selector) => {
     if (!element || seen.has(element)) {
       return;
@@ -52,11 +116,12 @@ DISCOVERY_SCRIPT = """
       return;
     }
     const compactShowitChrome = /menu|header|footer/i.test(dataBid);
-    if (rect.width < minWidth || (rect.height < minHeight && !compactShowitChrome)) {
+    const semanticChrome = ["header", "footer"].includes(element.tagName.toLowerCase());
+    if (rect.width < minWidth || (rect.height < minHeight && !compactShowitChrome && !semanticChrome)) {
       return;
     }
     const style = window.getComputedStyle(element);
-    if (style.display === "none" || style.visibility === "hidden" || Number(style.opacity || "1") === 0) {
+    if (style.display === "none" || style.visibility === "hidden") {
       return;
     }
     const top = rect.top + window.scrollY;
@@ -84,8 +149,35 @@ DISCOVERY_SCRIPT = """
       buttonCount: element.querySelectorAll("button,a[role='button'],input[type='submit']").length,
       imageCount: element.querySelectorAll("img").length,
       formFieldCount: element.querySelectorAll("input,select,textarea").length,
+      mediaEvidence: Array.from(element.querySelectorAll("img,video")).slice(0, 40).map((node) => {
+        const mediaRect = node.getBoundingClientRect();
+        const mediaStyle = window.getComputedStyle(node);
+        return {
+          kind: node.tagName.toLowerCase() === "video" ? "video" : "image",
+          url: node.currentSrc || node.getAttribute("src") || "",
+          alt: node.getAttribute("alt") || "",
+          bbox: {
+            x: Math.max(0, Math.round(mediaRect.left + window.scrollX)),
+            y: Math.max(0, Math.round(mediaRect.top + window.scrollY)),
+            width: Math.round(mediaRect.width),
+            height: Math.round(mediaRect.height),
+          },
+          naturalWidth: node.naturalWidth || 0,
+          naturalHeight: node.naturalHeight || 0,
+          objectFit: mediaStyle.objectFit || "",
+          objectPosition: mediaStyle.objectPosition || "",
+        };
+      }),
       backgroundColor: style.backgroundColor || "",
       backgroundImage: style.backgroundImage || "",
+      computedStyle: styleEvidence(element),
+      visibility: {
+        display: style.display,
+        visibility: style.visibility,
+        opacity: Number(style.opacity || "1"),
+        hiddenByAnimation: Number(style.opacity || "1") === 0,
+        availableForAnalysis: true,
+      },
       outerHtml,
     };
     candidates.push(item);
@@ -101,6 +193,12 @@ DISCOVERY_SCRIPT = """
     viewport: {
       width: window.innerWidth,
       height: window.innerHeight,
+      pageWidth: Math.max(
+        document.body.scrollWidth,
+        document.documentElement.scrollWidth,
+        document.body.offsetWidth,
+        document.documentElement.offsetWidth
+      ),
       pageHeight: Math.max(
         document.body.scrollHeight,
         document.documentElement.scrollHeight,
@@ -109,6 +207,7 @@ DISCOVERY_SCRIPT = """
       ),
     },
     candidates,
+    documentStyles: documentStyles(),
   };
 }
 """
@@ -119,6 +218,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--url", required=True, help="Public URL used for capture.")
     parser.add_argument("--site-slug", help="Override site slug.")
     parser.add_argument("--page-slug", help="Override page slug.")
+    parser.add_argument("--output", help="Override the page artifact directory.")
     parser.add_argument("--min-height", type=int, default=140)
     parser.add_argument("--min-width", type=int, default=320)
     parser.add_argument("--keep-overlays", action="store_true", help="Skip the basic overlay dismissal step.")
@@ -131,7 +231,9 @@ def selector_priority(item: dict[str, Any]) -> tuple[int, int]:
     semantic_score = 0
     if item.get("blockSlug"):
         semantic_score += 5
-    if tag in {"header", "footer", "section"}:
+    if tag in {"header", "footer"}:
+        semantic_score += 8
+    elif tag == "section":
         semantic_score += 4
     if selector.startswith("main > section"):
         semantic_score += 3
@@ -162,7 +264,7 @@ def dedupe_candidates(candidates: list[dict[str, Any]]) -> list[dict[str, Any]]:
             continue
         if selector_priority(candidate) > selector_priority(output[match_index]):
             output[match_index] = candidate
-    return sorted(output, key=lambda item: item["bbox"]["y"])
+    return sorted(output, key=lambda item: (item["bbox"]["y"], -selector_priority(item)[0], -selector_priority(item)[1]))
 
 
 def crop_sections(
@@ -191,9 +293,42 @@ def crop_sections(
         candidate["cropPath"] = str(output_path.relative_to(relative_root))
 
 
+def discover_viewport(
+    url: str,
+    viewport: dict[str, int],
+    selectors: list[str],
+    min_height: int,
+    min_width: int,
+    *,
+    mobile: bool = False,
+    keep_overlays: bool = False,
+) -> dict[str, Any]:
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(headless=True)
+        page = browser.new_page(
+            viewport={"width": viewport["width"], "height": viewport["height"]},
+            is_mobile=mobile,
+            device_scale_factor=1,
+        )
+        page.goto(url, wait_until="networkidle", timeout=60_000)
+        page.wait_for_timeout(1200)
+        if not keep_overlays:
+            dismiss_basic_overlays(page)
+            page.wait_for_timeout(300)
+        reveal_page_for_analysis(page)
+        discovery = page.evaluate(
+            DISCOVERY_SCRIPT,
+            {"selectors": selectors, "minHeight": min_height, "minWidth": min_width},
+        )
+        browser.close()
+    discovery["sections"] = dedupe_candidates(discovery.pop("candidates"))
+    discovery["viewport"]["mobile"] = mobile
+    return discovery
+
+
 def main() -> int:
     args = parse_args()
-    paths, capture_metadata = load_capture_metadata(args.url, site_slug=args.site_slug, page_slug=args.page_slug)
+    paths, capture_metadata = load_capture_metadata(args.url, site_slug=args.site_slug, page_slug=args.page_slug, output_dir=args.output)
     ensure_scrape_paths(paths)
     desktop_viewport = capture_metadata["desktop"]["viewport"]
 
@@ -209,31 +344,28 @@ def main() -> int:
         "main > div",
     ]
 
-    with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=True)
-        page = browser.new_page(
-            viewport={
-                "width": desktop_viewport["width"],
-                "height": desktop_viewport["height"],
-            },
-            device_scale_factor=1,
-        )
-        page.goto(capture_metadata["desktop"]["finalUrl"], wait_until="networkidle", timeout=60_000)
-        page.wait_for_timeout(1200)
-        if not args.keep_overlays:
-            dismiss_basic_overlays(page)
-            page.wait_for_timeout(300)
-        discovery = page.evaluate(
-            DISCOVERY_SCRIPT,
-            {
-                "selectors": selectors,
-                "minHeight": args.min_height,
-                "minWidth": args.min_width,
-            },
-        )
-        browser.close()
-
-    candidates = dedupe_candidates(discovery["candidates"])
+    discovery = discover_viewport(
+        capture_metadata["desktop"]["finalUrl"],
+        desktop_viewport,
+        selectors,
+        args.min_height,
+        args.min_width,
+        keep_overlays=args.keep_overlays,
+    )
+    mobile_viewport = capture_metadata["mobile"]["viewport"]
+    mobile_discovery = discover_viewport(
+        capture_metadata["mobile"]["finalUrl"],
+        mobile_viewport,
+        selectors,
+        args.min_height,
+        args.min_width,
+        mobile=True,
+        keep_overlays=args.keep_overlays,
+    )
+    for index, section in enumerate(mobile_discovery["sections"], start=1):
+        section["sectionIndex"] = index
+        section["sectionId"] = slugify(section.get("blockSlug") or f"section-{index:02d}", default=f"section-{index:02d}")
+    candidates = discovery["sections"]
     crop_sections(
         paths.screenshots_full_dir / "desktop.png",
         candidates,
@@ -249,9 +381,22 @@ def main() -> int:
         "pageSlug": paths.page_slug,
         "viewport": discovery["viewport"],
         "sections": candidates,
+        "documentStyles": discovery.get("documentStyles", {}),
     }
     output_path = paths.sections_dir / "sections.segmented.json"
     write_json(output_path, payload)
+    mobile_payload = {
+        "version": "0.1",
+        "sourceUrl": capture_metadata["sourceUrl"],
+        "finalUrl": capture_metadata["mobile"]["finalUrl"],
+        "siteSlug": paths.site_slug,
+        "pageSlug": paths.page_slug,
+        "viewport": mobile_discovery["viewport"],
+        "sections": mobile_discovery["sections"],
+        "documentStyles": mobile_discovery.get("documentStyles", {}),
+    }
+    mobile_output_path = paths.sections_dir / "sections.segmented.mobile.json"
+    write_json(mobile_output_path, mobile_payload)
     print(output_path)
     return 0
 

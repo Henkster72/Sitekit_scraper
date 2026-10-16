@@ -54,6 +54,30 @@ def new_page(browser: Browser, width: int, height: int, mobile: bool = False) ->
     )
 
 
+def reveal_page_for_analysis(page: Page) -> None:
+    """Trigger ordinary viewport-bound animations before evidence is captured."""
+    page.evaluate("window.scrollTo(0, 0)")
+    page.wait_for_timeout(150)
+    page_height = int(
+        page.evaluate(
+            """() => Math.max(
+                document.body.scrollHeight,
+                document.documentElement.scrollHeight,
+                document.body.offsetHeight,
+                document.documentElement.offsetHeight
+            )"""
+        )
+        or 0
+    )
+    viewport_height = int(page.evaluate("() => window.innerHeight") or 800)
+    step = max(320, int(viewport_height * 0.8))
+    for top in range(0, max(page_height, viewport_height), step):
+        page.evaluate("(value) => window.scrollTo(0, value)", top)
+        page.wait_for_timeout(120)
+    page.evaluate("window.scrollTo(0, 0)")
+    page.wait_for_timeout(350)
+
+
 def capture_view(
     browser: Browser,
     url: str,
@@ -71,6 +95,7 @@ def capture_view(
     if dismiss_overlays:
         dismiss_basic_overlays(page)
         page.wait_for_timeout(300)
+    reveal_page_for_analysis(page)
     page.screenshot(path=str(screenshot_path), full_page=True)
     html = page.content()
     metadata = {
@@ -88,6 +113,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--url", required=True, help="Public URL to capture.")
     parser.add_argument("--site-slug", help="Override site slug.")
     parser.add_argument("--page-slug", help="Override page slug.")
+    parser.add_argument("--output", help="Override the page artifact directory.")
     parser.add_argument("--desktop-width", type=int, default=1440)
     parser.add_argument("--desktop-height", type=int, default=2200)
     parser.add_argument("--mobile-width", type=int, default=430)
@@ -99,12 +125,13 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
-    paths = build_scrape_paths(args.url, site_slug=args.site_slug, page_slug=args.page_slug)
+    paths = build_scrape_paths(args.url, site_slug=args.site_slug, page_slug=args.page_slug, output_dir=args.output)
     ensure_scrape_paths(paths)
 
     desktop_png = paths.screenshots_full_dir / "desktop.png"
     mobile_png = paths.screenshots_full_dir / "mobile.png"
     html_path = paths.html_dir / "rendered.html"
+    mobile_html_path = paths.html_dir / "rendered-mobile.html"
     capture_metadata_path = paths.capture_dir / "capture.json"
 
     with sync_playwright() as playwright:
@@ -131,7 +158,7 @@ def main() -> int:
         browser.close()
 
     write_text(html_path, desktop.pop("html"))
-    mobile.pop("html")
+    write_text(mobile_html_path, mobile.pop("html"))
 
     payload = {
         "version": "0.1",
@@ -141,6 +168,7 @@ def main() -> int:
         "pageSlug": paths.page_slug,
         "artifacts": {
             "html": str(html_path.relative_to(paths.page_dir.parent.parent.parent)),
+            "mobileHtml": str(mobile_html_path.relative_to(paths.page_dir.parent.parent.parent)),
             "desktopScreenshot": str(desktop_png.relative_to(paths.page_dir.parent.parent.parent)),
             "mobileScreenshot": str(mobile_png.relative_to(paths.page_dir.parent.parent.parent)),
         },
