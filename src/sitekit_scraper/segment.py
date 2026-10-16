@@ -123,15 +123,189 @@ DISCOVERY_SCRIPT = """
       element.getAttribute("aria-modal") === "true" ||
       /cookie|consent|modal|popup|overlay|dialog/.test(identity);
     const fixed = style.position === "fixed";
+    const floating = fixed || style.position === "sticky";
     const zIndex = Number.parseInt(style.zIndex || "", 10);
     const coversViewport = rect.width >= window.innerWidth * 0.7 && rect.height >= window.innerHeight * 0.35;
-    if (fixed && (semantic || (coversViewport && (Number.isNaN(zIndex) || zIndex >= 0)))) {
+    const highZFloatingPanel = floating && !Number.isNaN(zIndex) && zIndex >= 10 &&
+      rect.width >= window.innerWidth * 0.2 && rect.height >= window.innerHeight * 0.25 &&
+      rect.width < window.innerWidth * 0.85 &&
+      rect.left > 4 && rect.top > 4 &&
+      rect.right < window.innerWidth - 4 && rect.bottom < window.innerHeight - 4;
+    if (floating && (semantic || (coversViewport && (Number.isNaN(zIndex) || zIndex >= 0)) || highZFloatingPanel)) {
       return {
         sectionKind: "overlay",
-        overlayReason: semantic ? "fixed-overlay-semantics" : "fixed-viewport-cover",
+        overlayReason: semantic ? "fixed-overlay-semantics" : highZFloatingPanel ? "floating-panel" : "fixed-viewport-cover",
       };
     }
     return { sectionKind: "page", overlayReason: "" };
+  };
+
+  const stateClass = (element) => {
+    const values = Array.from(element.classList || []).filter((value) =>
+      /(^|[-_])(active|current|selected|visible|shown|hidden|open|closed|in|out)([-_]|$)/i.test(value)
+    );
+    return values[0] || "";
+  };
+
+  const pageRect = (rect) => ({
+    x: Math.round(rect.left + window.scrollX),
+    y: Math.round(rect.top + window.scrollY),
+    width: Math.round(rect.width),
+    height: Math.round(rect.height),
+  });
+
+  const intersectionArea = (first, second) => {
+    const left = Math.max(first.left, second.left);
+    const top = Math.max(first.top, second.top);
+    const right = Math.min(first.right, second.right);
+    const bottom = Math.min(first.bottom, second.bottom);
+    return Math.max(0, right - left) * Math.max(0, bottom - top);
+  };
+
+  const itemState = (element, style, rect, rootRect) => {
+    const state = String(element.getAttribute("data-state") || element.getAttribute("aria-current") || stateClass(element) || "").toLowerCase();
+    const explicitActive = /active|current|selected|open|visible|shown/.test(state);
+    const explicitInactive = /hidden|closed|inactive|out/.test(state) || element.getAttribute("aria-hidden") === "true";
+    const clipped = intersectionArea(rect, rootRect) <= 0;
+    const hidden = style.display === "none" || style.visibility === "hidden" || Number(style.opacity || "1") === 0;
+    return {
+      state,
+      active: explicitActive || (!explicitInactive && !hidden && !clipped),
+      visibility: hidden ? "hidden" : clipped ? "clipped" : "visible",
+      hiddenByAnimation: Number(style.opacity || "1") === 0,
+    };
+  };
+
+  const itemSignature = (element) => {
+    const children = Array.from(element.children || []).slice(0, 6).map((child) => child.tagName.toLowerCase()).join(",");
+    const media = element.querySelectorAll("img,video").length ? "media" : "";
+    const link = element.matches("a[href]") || element.querySelector("a[href]") ? "link" : "";
+    return [element.tagName.toLowerCase(), children, media, link].join("|");
+  };
+
+  const itemEvidence = (element, rootRect) => {
+    const rect = element.getBoundingClientRect();
+    const style = window.getComputedStyle(element);
+    const media = Array.from(element.querySelectorAll("img,video")).slice(0, 8).map((node) => {
+      const mediaRect = node.getBoundingClientRect();
+      const mediaStyle = window.getComputedStyle(node);
+      return {
+        kind: node.tagName.toLowerCase() === "video" ? "video" : "image",
+        url: node.currentSrc || node.getAttribute("src") || "",
+        alt: node.getAttribute("alt") || "",
+        bbox: pageRect(mediaRect),
+        naturalWidth: node.naturalWidth || 0,
+        naturalHeight: node.naturalHeight || 0,
+        objectFit: mediaStyle.objectFit || "",
+        objectPosition: mediaStyle.objectPosition || "",
+      };
+    }).filter((item) => item.url || item.kind === "video");
+    const actions = Array.from(element.matches("a[href]") ? [element] : element.querySelectorAll("a[href],button")).slice(0, 4).map((node) => ({
+      label: (node.innerText || node.textContent || node.getAttribute("aria-label") || "").replace(/\\s+/g, " ").trim(),
+      url: node.href || "",
+    })).filter((item) => item.label || item.url);
+    const state = itemState(element, style, rect, rootRect);
+    return {
+      locator: {
+        tag: element.tagName.toLowerCase(),
+        classes: Array.from(element.classList || []).slice(0, 8),
+        href: element.href || "",
+      },
+      bbox: pageRect(rect),
+      text: (element.innerText || element.textContent || "").replace(/\\s+/g, " ").trim().slice(0, 500),
+      title: (element.innerText || element.textContent || element.getAttribute("aria-label") || media[0]?.alt || "").replace(/\\s+/g, " ").trim().slice(0, 180),
+      media,
+      actions,
+      visibility: state.visibility,
+      active: state.active,
+      state: state.state,
+      hiddenByAnimation: state.hiddenByAnimation,
+      opacity: Number(style.opacity || "1"),
+      position: style.position,
+      transform: style.transform || "none",
+    };
+  };
+
+  const repeatedItemEvidence = (element, rootRect) => {
+    const groups = [];
+    for (const container of [element, ...element.querySelectorAll("*")]) {
+      const children = Array.from(container.children || []).filter((child) => {
+        const rect = child.getBoundingClientRect();
+        const style = window.getComputedStyle(child);
+        return rect.width >= 24 && rect.height >= 24 && style.display !== "none" && style.visibility !== "hidden";
+      });
+      if (children.length < 2 || children.length > 80) continue;
+      const bySignature = new Map();
+      for (const child of children) {
+        const signature = itemSignature(child);
+        if (!bySignature.has(signature)) bySignature.set(signature, []);
+        bySignature.get(signature).push(child);
+      }
+      for (const [signature, peers] of bySignature.entries()) {
+        if (peers.length < 2) continue;
+        const records = peers.map((peer) => itemEvidence(peer, rootRect));
+        const mediaCount = records.reduce((total, item) => total + item.media.length, 0);
+        const actionCount = records.reduce((total, item) => total + item.actions.length, 0);
+        const textLength = records.reduce((total, item) => total + item.text.length, 0);
+        if (mediaCount === 0 && actionCount < 2 && textLength < 24) continue;
+        const containerStyle = window.getComputedStyle(container);
+        const interactive = records.some((item) => item.hiddenByAnimation || item.visibility === "clipped" || item.transform !== "none" || item.position === "absolute" || item.position === "fixed") ||
+          containerStyle.overflow !== "visible" || containerStyle.overflowX !== "visible" || containerStyle.overflowY !== "visible";
+        groups.push({
+          container,
+          signature,
+          records,
+          score: peers.length * 2 + mediaCount * 2 + actionCount + (interactive ? 4 : 0),
+          interactive,
+        });
+      }
+    }
+    groups.sort((first, second) => second.score - first.score);
+    const best = groups[0];
+    if (!best) return {count: 0, evidence: [], items: [], interactive: false};
+    return {
+      count: best.records.length,
+      evidence: ["repeated peer DOM shape", "media/text/action ownership retained", ...(best.interactive ? ["interactive peer state retained"] : [])],
+      items: best.records,
+      interactive: best.interactive,
+      collection: {
+        locator: {
+          tag: best.container.tagName.toLowerCase(),
+          classes: Array.from(best.container.classList || []).slice(0, 8),
+        },
+        signature: best.signature,
+      },
+    };
+  };
+
+  const navigationEvidence = (element, rootRect) => {
+    const candidates = [];
+    const explicit = [...element.querySelectorAll("nav,[role='navigation'],[aria-label*='navigation' i]")];
+    for (const group of explicit) {
+      const rect = group.getBoundingClientRect();
+      const links = Array.from(group.querySelectorAll("a[href]")).filter((node) => {
+        const label = (node.innerText || node.getAttribute("aria-label") || "").replace(/\\s+/g, " ").trim();
+        return Boolean(label) && label.length <= 80;
+      });
+      if (links.length >= 2 && links.length <= 12 && rect.top <= rootRect.top + Math.max(220, rootRect.height * 0.3)) {
+        candidates.push({group, rect, links, score: links.length + (group.matches("nav,[role='navigation'],[aria-label*='navigation' i]") ? 8 : 0)});
+      }
+    }
+    for (const group of element.querySelectorAll("*")) {
+      const directLinks = Array.from(group.children || []).filter((node) => node.matches && node.matches("a[href]"));
+      const rect = group.getBoundingClientRect();
+      if (directLinks.length < 2 || directLinks.length > 12 || rect.top > rootRect.top + Math.max(220, rootRect.height * 0.3)) continue;
+      candidates.push({group, rect, links: directLinks, score: directLinks.length});
+    }
+    candidates.sort((first, second) => second.score - first.score);
+    const best = candidates[0];
+    if (!best) return [];
+    return best.links.map((node) => ({
+      label: (node.innerText || node.getAttribute("aria-label") || "").replace(/\\s+/g, " ").trim(),
+      url: node.href || "",
+      bbox: pageRect(node.getBoundingClientRect()),
+      locator: {tag: node.tagName.toLowerCase(), classes: Array.from(node.classList || []).slice(0, 8)},
+    })).filter((item) => item.label || item.url);
   };
 
   const isTransparentColor = (value) => !value || value === "transparent" ||
@@ -314,6 +488,8 @@ DISCOVERY_SCRIPT = """
       descendantBoundaryCount: element.querySelectorAll("section,header,footer,[data-bid]").length,
       sectionKind: overlay.sectionKind,
       overlayReason: overlay.overlayReason,
+      navItems: navigationEvidence(element, rect),
+      repeatedItems: repeatedItemEvidence(element, rect),
       surfaceCandidates: surfaceCandidates(element, rect),
       accentCandidates: accentCandidates(element, rect),
       underlyingSurface: backgroundIsVisible(style) ? null : underlyingSurface(element),

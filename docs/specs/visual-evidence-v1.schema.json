@@ -87,6 +87,7 @@
         "media": {"type": "array", "items": {"type": "object"}},
         "forms": {"type": "object"},
         "repeatedItems": {"type": "object"},
+        "navItems": {"type": "array", "items": {"type": "object"}},
         "background": {"type": "object"},
         "dominantSurfaces": {"type": "array", "items": {"$ref": "#/$defs/surface"}},
         "underlyingSurface": {"anyOf": [{"$ref": "#/$defs/surface"}, {"type": "null"}]},

@@ -161,7 +161,8 @@ def extract_section(section: dict[str, Any], base_url: str) -> dict[str, Any]:
         }
         for node in soup.select("input, select, textarea")
     ]
-    repeated_item_count = estimate_repeated_items(soup)
+    repeated_items = section.get("repeatedItems") if isinstance(section.get("repeatedItems"), dict) else {}
+    repeated_item_count = int(repeated_items.get("count") or estimate_repeated_items(soup))
 
     return {
         "sectionId": section["sectionId"],
@@ -192,6 +193,12 @@ def extract_section(section: dict[str, Any], base_url: str) -> dict[str, Any]:
             "formFieldCount": form_fields,
             "repeatedItemCount": repeated_item_count,
         },
+        "repeatedItems": repeated_items or {
+            "count": repeated_item_count,
+            "evidence": ["repeated DOM child signature"] if repeated_item_count else [],
+            "items": [],
+        },
+        "navItems": section.get("navItems", []),
         "forms": {"fieldCount": form_fields, "fields": form_field_evidence},
         "visual": visual_stats_for_crop(section.get("cropPath", "")),
         "style": {

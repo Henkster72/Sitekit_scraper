@@ -111,6 +111,16 @@ def section_evidence(section: dict[str, Any], viewport: str, evidence_id: str, o
         ]
     confidence = float(classification.get("confidence", 0.0))
     visibility = section.get("visibility", {})
+    repeated_items = section.get("repeatedItems") if isinstance(section.get("repeatedItems"), dict) else {}
+    repeated_count = int(repeated_items.get("count") or section.get("stats", {}).get("repeatedItemCount", 0) or 0)
+    repeated_observation = {
+        "count": repeated_count,
+        "evidence": list(repeated_items.get("evidence") or (["repeated DOM child signature"] if repeated_count else [])),
+        "items": list(repeated_items.get("items") or []),
+    }
+    for key in ("interactive", "collection"):
+        if key in repeated_items:
+            repeated_observation[key] = repeated_items[key]
     return {
         "evidenceId": evidence_id,
         "order": order,
@@ -135,14 +145,8 @@ def section_evidence(section: dict[str, Any], viewport: str, evidence_id: str, o
             "fieldCount": int(section.get("forms", {}).get("fieldCount", section.get("stats", {}).get("formFieldCount", 0))),
             "fields": section.get("forms", {}).get("fields", []),
         },
-        "repeatedItems": {
-            "count": int(section.get("stats", {}).get("repeatedItemCount", 0)),
-            "evidence": (
-                ["repeated DOM child signature"]
-                if int(section.get("stats", {}).get("repeatedItemCount", 0)) > 0
-                else []
-            ),
-        },
+        "repeatedItems": repeated_observation,
+        "navItems": list(section.get("navItems") or []),
         "background": {
             "color": section.get("style", {}).get("backgroundColor", ""),
             "image": section.get("style", {}).get("backgroundImage", ""),

@@ -5,12 +5,15 @@ from pathlib import Path
 from PIL import Image
 
 from src.sitekit_scraper.segment import (
+    DISCOVERY_SCRIPT,
     crop_sections,
+    dedupe_candidates,
     normalize_crop_bbox,
     select_dominant_surfaces,
     select_visual_candidates,
 )
 from src.sitekit_scraper.visual_evidence import section_evidence
+from playwright.sync_api import sync_playwright
 
 
 class CropNormalizationTests(unittest.TestCase):
@@ -78,6 +81,117 @@ class CropSectionTests(unittest.TestCase):
             self.assertEqual(candidates[1]["cropStatus"], "written")
             self.assertTrue(candidates[1]["cropPath"])
             self.assertEqual(len(list(output.glob("*.png"))), 1)
+
+
+class InteractiveEvidenceTests(unittest.TestCase):
+    def test_browser_discovery_keeps_peer_items_and_filters_floating_ui(self):
+        html = """
+        <style>
+          html, body { margin: 0; }
+          .page-wrapper { position: relative; width: 100%; height: 1000px; }
+          main section { height: 700px; position: relative; background: #eee; }
+          .track { position: absolute; left: 20px; top: 100px; width: 350px; height: 500px; overflow: hidden; }
+          .item { position: absolute; width: 300px; height: 220px; }
+          .item img { width: 200px; height: 150px; }
+          .preview { position: fixed; z-index: 9999; left: 300px; top: 200px; width: 400px; height: 250px; background: red; }
+        </style>
+        <div class="page-wrapper">
+          <main>
+            <section class="stage">
+              <h1>Gallery</h1>
+              <div class="track">
+                <a class="item" href="/one"><img src="https://example.test/one.jpg"><span>One</span></a>
+                <a class="item" href="/two" style="top:230px"><img src="https://example.test/two.jpg"><span>Two</span></a>
+                <a class="item" href="/three" style="top:460px;opacity:0"><img src="https://example.test/three.jpg"><span>Three</span></a>
+              </div>
+              <div class="item-internal"><span>Not an item</span></div>
+            </section>
+          </main>
+        </div>
+        <div class="preview">Preview chrome</div>
+        """
+        with sync_playwright() as playwright:
+            browser = playwright.chromium.launch()
+            page = browser.new_page(viewport={"width": 800, "height": 600})
+            page.set_content(html)
+            discovery = page.evaluate(
+                DISCOVERY_SCRIPT,
+                {"selectors": ["main > section", "section", "body > div"], "minHeight": 140, "minWidth": 320},
+            )
+            browser.close()
+
+        candidates = dedupe_candidates(discovery["candidates"])
+        selected, overlays, _ = select_visual_candidates(candidates, discovery["viewport"])
+        stage = next(item for item in selected if item.get("tag") == "section")
+        repeated = stage["repeatedItems"]
+
+        self.assertEqual(repeated["count"], 3)
+        self.assertEqual(len(repeated["items"]), 3)
+        self.assertTrue(repeated["interactive"])
+        self.assertEqual([item["media"][0]["url"] for item in repeated["items"]], [
+            "https://example.test/one.jpg",
+            "https://example.test/two.jpg",
+            "https://example.test/three.jpg",
+        ])
+        self.assertEqual(repeated["items"][2]["visibility"], "hidden")
+        self.assertEqual(len(overlays), 1)
+        self.assertEqual(overlays[0]["overlayReason"], "floating-panel")
+
+    def test_repeated_items_and_navigation_are_preserved_as_evidence(self):
+        result = section_evidence(
+            {
+                "sectionId": "gallery-stage",
+                "style": {"backgroundColor": "#f4f4f2", "backgroundImage": "none"},
+                "stats": {"repeatedItemCount": 2},
+                "repeatedItems": {
+                    "count": 2,
+                    "interactive": True,
+                    "evidence": ["repeated peer DOM shape"],
+                    "items": [
+                        {"title": "One", "media": [{"url": "https://example.test/one.jpg"}], "visibility": "visible"},
+                        {"title": "Two", "media": [{"url": "https://example.test/two.jpg"}], "visibility": "clipped"},
+                    ],
+                },
+                "navItems": [{"label": "Work", "url": "https://example.test/work"}],
+            },
+            "desktop",
+            "section-gallery-stage",
+            1,
+        )
+
+        self.assertEqual(result["repeatedItems"]["count"], 2)
+        self.assertTrue(result["repeatedItems"]["interactive"])
+        self.assertEqual(result["repeatedItems"]["items"][1]["visibility"], "clipped")
+        self.assertEqual(result["navItems"][0]["label"], "Work")
+
+    def test_floating_panel_is_kept_out_of_page_selection(self):
+        page = {
+            "domPath": "section.main-stage",
+            "tag": "section",
+            "bbox": {"x": 0, "y": 0, "width": 1440, "height": 900},
+            "sectionKind": "page",
+            "localTextLength": 200,
+            "textLength": 200,
+            "localHeadingCount": 1,
+            "localParagraphCount": 1,
+            "localMediaCount": 4,
+            "localLinkCount": 4,
+            "localButtonCount": 0,
+            "backgroundColor": "rgb(244, 244, 242)",
+        }
+        floating = {
+            "domPath": "div.floating-template-panel",
+            "tag": "div",
+            "bbox": {"x": 940, "y": 325, "width": 480, "height": 555},
+            "sectionKind": "overlay",
+            "overlayReason": "floating-panel",
+        }
+
+        selected, overlays, diagnostics = select_visual_candidates([page, floating], {"width": 1440, "height": 900, "pageWidth": 1440, "pageHeight": 900})
+
+        self.assertEqual([item["domPath"] for item in selected], ["section.main-stage"])
+        self.assertEqual([item["domPath"] for item in overlays], ["div.floating-template-panel"])
+        self.assertEqual(diagnostics["overlayCount"], 1)
 
 
 def surface(
