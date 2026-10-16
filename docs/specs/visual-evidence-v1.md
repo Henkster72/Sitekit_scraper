@@ -18,12 +18,15 @@ renderer mapping.
 - `sections`: merged section observations with stable evidence IDs, locators,
   viewport-linked bounding boxes and visibility, text, actions, media, forms,
   repeated-item signals, backgrounds, computed visual observations, image
-  statistics, crop status, candidate labels, and confidence/evidence. A
+  statistics, optional dominant descendant surfaces, optional underlying
+  document surfaces, crop status, candidate labels, and confidence/evidence. A
   section remains evidence even when its screenshot crop is skipped because
   the DOM geometry is outside or invalid for the captured image.
+- `documentSurfaces`: optional rendered html/body/underlying document surface
+  observations, kept separate from transparent section roots.
 - `themeEvidence`: measured palette and exposed CSS variables, observed
-  typography, geometry, density/rhythm, surface order, imagery character, and
-  contrast
+  typography, geometry, density/rhythm, surface order, imagery character,
+  contrast, and optional spatial surface evidence
 
 `roleCandidates` and `patternCandidates` are observations or classifier hints.
 Their labels are not canonical catalog identities. Numeric `type` and `variant`
@@ -41,9 +44,19 @@ fields are deliberately absent from this contract.
     "mobile": {"width": 390, "height": 844, "sections": []}
   },
   "sections": [],
+  "documentSurfaces": {},
   "themeEvidence": {"palette": {}, "typography": {}, "geometry": {}}
 }
 ```
+
+`dominantSurfaces` is additive evidence, not a flattened site palette. It is
+limited to visible geometrically significant CSS/vector/gradient surfaces and
+records source kind, coverage relative to its section, and browser bbox.
+The current generic significance thresholds are at least 3% visible area, or
+at least 55% of the section width with an 80px visible height, with both
+effective dimensions at least 24px. Coverage is visible element area divided
+by section area; overlapping layers may therefore sum above `1.0`. Media
+pixels are not sampled into this field.
 
 The normal downstream command is the Main SiteKit mapper. The scraper's
 legacy mapper/draft exporter remains only as a compatibility artifact until

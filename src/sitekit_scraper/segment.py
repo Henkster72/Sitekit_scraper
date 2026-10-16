@@ -134,6 +134,99 @@ DISCOVERY_SCRIPT = """
     return { sectionKind: "page", overlayReason: "" };
   };
 
+  const isTransparentColor = (value) => !value || value === "transparent" ||
+    value === "rgba(0, 0, 0, 0)" || value === "rgba(0,0,0,0)";
+
+  const colorHex = (value) => {
+    const match = String(value || "").match(/^rgba?\\(\\s*(\\d+)\\s*,\\s*(\\d+)\\s*,\\s*(\\d+)(?:\\s*,\\s*([0-9.]+))?\\s*\\)$/i);
+    if (!match || (match[4] !== undefined && Number(match[4]) === 0)) return value || "";
+    return "#" + [match[1], match[2], match[3]].map((part) => Number(part).toString(16).padStart(2, "0")).join("");
+  };
+
+  const gradientStops = (backgroundImage) => {
+    if (!backgroundImage || !/gradient\\(/i.test(backgroundImage)) return [];
+    return Array.from(backgroundImage.matchAll(/(#[0-9a-f]{3,8}|rgba?\\([^)]*\\)|hsla?\\([^)]*\\))/gi)).map((match) => colorHex(match[1]));
+  };
+
+  const surfaceRecord = (element, style, rect, sourceKind) => ({
+    color: colorHex(isTransparentColor(style.backgroundColor) ? "" : style.backgroundColor),
+    sourceKind,
+    bbox: {
+      x: Math.round(rect.left + window.scrollX),
+      y: Math.round(rect.top + window.scrollY),
+      width: Math.round(rect.width),
+      height: Math.round(rect.height),
+    },
+    backgroundImage: style.backgroundImage && style.backgroundImage !== "none" ? style.backgroundImage : "",
+    gradientStops: gradientStops(style.backgroundImage),
+    locator: {
+      tag: element.tagName.toLowerCase(),
+      classes: Array.from(element.classList || []).slice(0, 8),
+      position: style.position,
+    },
+  });
+
+  const backgroundIsVisible = (style) => !isTransparentColor(style.backgroundColor) ||
+    (style.backgroundImage && style.backgroundImage !== "none");
+
+  const surfaceCandidates = (element, rootRect) => Array.from(element.querySelectorAll("*"))
+    .map((node) => {
+      const rect = node.getBoundingClientRect();
+      const style = window.getComputedStyle(node);
+      if (!rect.width || !rect.height || style.display === "none" || style.visibility === "hidden" || Number(style.opacity || "1") === 0) return null;
+      if (["IMG", "VIDEO", "PICTURE", "SOURCE"].includes(node.tagName)) return null;
+      if (!backgroundIsVisible(style)) return null;
+      const hasGradient = /gradient\\(/i.test(style.backgroundImage || "");
+      const hasUrlImage = /url\\(/i.test(style.backgroundImage || "");
+      const sourceKind = hasGradient
+        ? "gradient"
+        : (hasUrlImage && isTransparentColor(style.backgroundColor)
+          ? "media-background"
+          : (style.position === "absolute" || style.position === "fixed" || style.transform !== "none" ? "decorative-layer" : "descendant-background"));
+      return surfaceRecord(node, style, rect, sourceKind);
+    })
+    .filter(Boolean);
+
+  const accentCandidates = (element, rootRect) => Array.from(element.querySelectorAll("h1,h2,h3,h4,h5,h6"))
+    .map((node) => {
+      const rect = node.getBoundingClientRect();
+      const style = window.getComputedStyle(node);
+      const fontSize = Number.parseFloat(style.fontSize || "0");
+      if (!rect.width || !rect.height || fontSize < 32 || style.display === "none" || style.visibility === "hidden" || Number(style.opacity || "1") === 0) return null;
+      const color = colorHex(style.color);
+      if (!color || !node.innerText.trim()) return null;
+      if (color === colorHex(getComputedStyle(element).color)) return null;
+      return {
+        color,
+        sourceKind: "text-accent",
+        bbox: {
+          x: Math.round(rect.left + window.scrollX),
+          y: Math.round(rect.top + window.scrollY),
+          width: Math.round(rect.width),
+          height: Math.round(rect.height),
+        },
+        locator: { tag: node.tagName.toLowerCase(), classes: Array.from(node.classList || []).slice(0, 8) },
+      };
+    })
+    .filter(Boolean);
+
+  const documentSurface = (element, sourceKind) => {
+    if (!element) return null;
+    const style = window.getComputedStyle(element);
+    const rect = element.getBoundingClientRect();
+    return surfaceRecord(element, style, rect, sourceKind);
+  };
+
+  const underlyingSurface = (element) => {
+    let parent = element.parentElement;
+    while (parent) {
+      const style = window.getComputedStyle(parent);
+      if (backgroundIsVisible(style)) return documentSurface(parent, parent === document.body || parent === document.documentElement ? "document-background" : "parent-background");
+      parent = parent.parentElement;
+    }
+    return null;
+  };
+
   const documentStyles = () => {
     const root = window.getComputedStyle(document.documentElement);
     const cssVariables = {};
@@ -221,6 +314,9 @@ DISCOVERY_SCRIPT = """
       descendantBoundaryCount: element.querySelectorAll("section,header,footer,[data-bid]").length,
       sectionKind: overlay.sectionKind,
       overlayReason: overlay.overlayReason,
+      surfaceCandidates: surfaceCandidates(element, rect),
+      accentCandidates: accentCandidates(element, rect),
+      underlyingSurface: backgroundIsVisible(style) ? null : underlyingSurface(element),
       mediaEvidence: Array.from(element.querySelectorAll("img,video")).slice(0, 40).map((node) => {
         const mediaRect = node.getBoundingClientRect();
         const mediaStyle = window.getComputedStyle(node);
@@ -279,6 +375,11 @@ DISCOVERY_SCRIPT = """
       ),
     },
     candidates,
+    documentSurfaces: {
+      html: documentSurface(document.documentElement, "document-root"),
+      body: documentSurface(document.body, "document-background"),
+      visible: underlyingSurface(document.body) || documentSurface(document.body, "document-background"),
+    },
     documentStyles: documentStyles(),
   };
 }
@@ -488,6 +589,102 @@ def select_visual_candidates(
 
 MIN_EFFECTIVE_CROP_PIXELS = 2
 
+SURFACE_MIN_AREA_RATIO = 0.03
+SURFACE_MIN_WIDTH_RATIO = 0.55
+SURFACE_MIN_HEIGHT_PX = 80
+SURFACE_MIN_DIMENSION_PX = 24
+
+
+def _intersection_area(first: dict[str, Any], second: dict[str, Any]) -> float:
+    left = max(first["x"], second["x"])
+    top = max(first["y"], second["y"])
+    right = min(first["x"] + first["width"], second["x"] + second["width"])
+    bottom = min(first["y"] + first["height"], second["y"] + second["height"])
+    return max(0, right - left) * max(0, bottom - top)
+
+
+def _surface_signature(surface: dict[str, Any]) -> tuple[str, tuple[str, ...], str]:
+    return (
+        str(surface.get("color", "")),
+        tuple(str(value) for value in surface.get("gradientStops", [])),
+        str(surface.get("backgroundImage", "")),
+    )
+
+
+def _surface_is_significant(surface: dict[str, Any], section_bbox: dict[str, Any]) -> bool:
+    section_area = max(1, section_bbox.get("width", 0) * section_bbox.get("height", 0))
+    visible_area = _intersection_area(surface.get("bbox", {}), section_bbox)
+    if visible_area <= 0:
+        return False
+    coverage = visible_area / section_area
+    visible_width = min(
+        surface["bbox"]["x"] + surface["bbox"]["width"],
+        section_bbox["x"] + section_bbox["width"],
+    ) - max(surface["bbox"]["x"], section_bbox["x"])
+    visible_height = min(
+        surface["bbox"]["y"] + surface["bbox"]["height"],
+        section_bbox["y"] + section_bbox["height"],
+    ) - max(surface["bbox"]["y"], section_bbox["y"])
+    if visible_width < SURFACE_MIN_DIMENSION_PX or visible_height < SURFACE_MIN_DIMENSION_PX:
+        return False
+    return (
+        coverage >= SURFACE_MIN_AREA_RATIO
+        or (visible_width >= section_bbox["width"] * SURFACE_MIN_WIDTH_RATIO and visible_height >= SURFACE_MIN_HEIGHT_PX)
+    )
+
+
+def select_dominant_surfaces(
+    surfaces: list[dict[str, Any]],
+    section_bbox: dict[str, Any],
+) -> list[dict[str, Any]]:
+    """Keep visible, geometrically meaningful CSS surfaces without palette soup."""
+    candidates: list[dict[str, Any]] = []
+    section_area = max(1, section_bbox.get("width", 0) * section_bbox.get("height", 0))
+    for surface in surfaces:
+        if (
+            surface.get("visible", True) is False
+            or surface.get("sourceKind") in {"media", "media-background"}
+            or not _surface_is_significant(surface, section_bbox)
+        ):
+            continue
+        visible_area = _intersection_area(surface["bbox"], section_bbox)
+        item = dict(surface)
+        item["coverage"] = round(visible_area / section_area, 4)
+        candidates.append(item)
+
+    output: list[dict[str, Any]] = []
+    for candidate in sorted(candidates, key=lambda item: item["coverage"], reverse=True):
+        signature = _surface_signature(candidate)
+        duplicate = False
+        for existing in output:
+            if _surface_signature(existing) != signature:
+                continue
+            intersection = _intersection_area(candidate["bbox"], existing["bbox"])
+            candidate_area = max(1, candidate["bbox"]["width"] * candidate["bbox"]["height"])
+            if intersection / candidate_area >= 0.85:
+                duplicate = True
+                break
+        if not duplicate:
+            output.append(candidate)
+    return output
+
+
+def select_accent_evidence(accents: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    grouped: dict[str, dict[str, Any]] = {}
+    for accent in accents:
+        color = str(accent.get("color", ""))
+        if not color:
+            continue
+        existing = grouped.setdefault(
+            color,
+            {"color": color, "sourceKind": "text-accent", "usageCount": 0, "bboxes": [], "locators": []},
+        )
+        existing["usageCount"] += 1
+        existing["bboxes"].append(accent.get("bbox", {}))
+        if accent.get("locator"):
+            existing["locators"].append(accent["locator"])
+    return list(grouped.values())
+
 
 def _coordinate(value: Any) -> float | None:
     try:
@@ -632,6 +829,13 @@ def discover_viewport(
         )
         browser.close()
     candidates = dedupe_candidates(discovery.pop("candidates"))
+    for candidate in candidates:
+        raw_surfaces = candidate.pop("surfaceCandidates", [])
+        candidate["dominantSurfaces"] = select_dominant_surfaces(raw_surfaces, candidate["bbox"])
+        candidate["accentColors"] = select_accent_evidence(candidate.pop("accentCandidates", []))
+        if candidate.get("underlyingSurface"):
+            underlying = select_dominant_surfaces([candidate["underlyingSurface"]], candidate["bbox"])
+            candidate["underlyingSurface"] = underlying[0] if underlying else None
     sections, overlays, selection_diagnostics = select_visual_candidates(candidates, discovery["viewport"])
     discovery["sections"] = sections
     discovery["overlays"] = overlays
@@ -696,6 +900,7 @@ def main() -> int:
         "pageSlug": paths.page_slug,
         "viewport": discovery["viewport"],
         "sections": candidates,
+        "documentSurfaces": discovery.get("documentSurfaces", {}),
         "documentStyles": discovery.get("documentStyles", {}),
         "overlays": discovery.get("overlays", []),
         "selectionDiagnostics": discovery.get("selectionDiagnostics", {}),
@@ -710,6 +915,7 @@ def main() -> int:
         "pageSlug": paths.page_slug,
         "viewport": mobile_discovery["viewport"],
         "sections": mobile_discovery["sections"],
+        "documentSurfaces": mobile_discovery.get("documentSurfaces", {}),
         "documentStyles": mobile_discovery.get("documentStyles", {}),
         "overlays": mobile_discovery.get("overlays", []),
         "selectionDiagnostics": mobile_discovery.get("selectionDiagnostics", {}),

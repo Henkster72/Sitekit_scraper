@@ -147,6 +147,9 @@ def section_evidence(section: dict[str, Any], viewport: str, evidence_id: str, o
             "color": section.get("style", {}).get("backgroundColor", ""),
             "image": section.get("style", {}).get("backgroundImage", ""),
         },
+        "dominantSurfaces": section.get("dominantSurfaces", []),
+        "underlyingSurface": section.get("underlyingSurface"),
+        "accentColors": section.get("accentColors", []),
         "computedVisual": section.get("style", {}).get("computed", {}),
         "visual": section.get("visual", {}),
         "cropStatus": section.get("cropStatus", "not-captured"),
@@ -177,11 +180,35 @@ def aggregate_theme(
     desktop: list[dict[str, Any]],
     mobile: list[dict[str, Any]],
     document_styles: list[dict[str, Any]],
+    document_surfaces: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     all_sections = desktop + mobile
     computed = [section.get("style", {}).get("computed", {}) for section in all_sections]
     background_values = [section.get("style", {}).get("backgroundColor", "") for section in all_sections]
     background_values.extend(style.get("root", {}).get("backgroundColor", "") for style in document_styles)
+    surface_records: list[dict[str, Any]] = []
+    for viewport_name, sections in (("desktop", desktop), ("mobile", mobile)):
+        for section in sections:
+            surface_records.append(
+                {
+                    "viewport": viewport_name,
+                    "evidenceId": section.get("sectionId", ""),
+                    "rootSurface": section.get("style", {}).get("backgroundColor", ""),
+                    "underlyingSurface": section.get("underlyingSurface"),
+                    "dominantSurfaces": section.get("dominantSurfaces", []),
+                    "accentColors": section.get("accentColors", []),
+                }
+            )
+            background_values.extend(item.get("color", "") for item in section.get("dominantSurfaces", []))
+            if section.get("underlyingSurface"):
+                background_values.append(section["underlyingSurface"].get("color", ""))
+            background_values.extend(item.get("color", "") for item in section.get("accentColors", []))
+    document_surfaces = document_surfaces or {}
+    for viewport_surface in document_surfaces.values():
+        if isinstance(viewport_surface, dict):
+            for surface in viewport_surface.values():
+                if isinstance(surface, dict):
+                    background_values.append(surface.get("color", ""))
     colors = colors_from_values(background_values + [item.get("color", "") for item in computed])
     families = list(dict.fromkeys(value for item in computed for value in item.get("fontFamilies", []) if value))
     heading_families = list(dict.fromkeys(value for item in computed for value in item.get("headingFontFamilies", []) if value))
@@ -199,6 +226,10 @@ def aggregate_theme(
         "palette": {
             "measuredColors": colors[:32],
             "cssVariables": {key: value for style in document_styles for key, value in style.get("cssVariables", {}).items()},
+        },
+        "surfaceEvidence": {
+            "document": document_surfaces,
+            "sections": surface_records,
         },
         "typography": {
             "observedFontFamilies": families[:32],
@@ -303,6 +334,27 @@ def build_evidence(paths: Any, capture: dict[str, Any], source_type: str) -> dic
                     merged["bboxes"][other_viewport] = other.get("bbox", {})
                     merged["visibility"][other_viewport] = other.get("visibility", {})
             merged.pop("bbox", None)
+            merged["dominantSurfacesByViewport"] = {
+                name: next(
+                    (item.get("dominantSurfaces", []) for item in viewport_records[name]["sections"] if item["evidenceId"] == record["evidenceId"]),
+                    [],
+                )
+                for name in ("desktop", "mobile")
+            }
+            merged["underlyingSurfaceByViewport"] = {
+                name: next(
+                    (item.get("underlyingSurface") for item in viewport_records[name]["sections"] if item["evidenceId"] == record["evidenceId"]),
+                    None,
+                )
+                for name in ("desktop", "mobile")
+            }
+            merged["accentColorsByViewport"] = {
+                name: next(
+                    (item.get("accentColors", []) for item in viewport_records[name]["sections"] if item["evidenceId"] == record["evidenceId"]),
+                    [],
+                )
+                for name in ("desktop", "mobile")
+            }
             merged_sections.append(merged)
 
     return {
@@ -317,10 +369,18 @@ def build_evidence(paths: Any, capture: dict[str, Any], source_type: str) -> dic
         },
         "viewports": viewport_records,
         "sections": merged_sections,
+        "documentSurfaces": {
+            "desktop": segmented.get("documentSurfaces", {}),
+            "mobile": mobile_segmented.get("documentSurfaces", {}),
+        },
         "themeEvidence": aggregate_theme(
             desktop_sections,
             mobile_sections,
             [segmented.get("documentStyles", {}), mobile_segmented.get("documentStyles", {})],
+            {
+                "desktop": segmented.get("documentSurfaces", {}),
+                "mobile": mobile_segmented.get("documentSurfaces", {}),
+            },
         ),
         "semanticAuthority": "main-sitekit",
         "notes": [

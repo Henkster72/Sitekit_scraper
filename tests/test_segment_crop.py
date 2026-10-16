@@ -4,7 +4,13 @@ from pathlib import Path
 
 from PIL import Image
 
-from src.sitekit_scraper.segment import crop_sections, normalize_crop_bbox, select_visual_candidates
+from src.sitekit_scraper.segment import (
+    crop_sections,
+    normalize_crop_bbox,
+    select_dominant_surfaces,
+    select_visual_candidates,
+)
+from src.sitekit_scraper.visual_evidence import section_evidence
 
 
 class CropNormalizationTests(unittest.TestCase):
@@ -72,6 +78,109 @@ class CropSectionTests(unittest.TestCase):
             self.assertEqual(candidates[1]["cropStatus"], "written")
             self.assertTrue(candidates[1]["cropPath"])
             self.assertEqual(len(list(output.glob("*.png"))), 1)
+
+
+def surface(
+    color: str,
+    x: int,
+    y: int,
+    width: int,
+    height: int,
+    *,
+    source_kind: str = "descendant-background",
+    visible: bool = True,
+) -> dict:
+    return {
+        "color": color,
+        "sourceKind": source_kind,
+        "bbox": {"x": x, "y": y, "width": width, "height": height},
+        "backgroundImage": "",
+        "gradientStops": [],
+        "visible": visible,
+    }
+
+
+class DominantSurfaceTests(unittest.TestCase):
+    section = {"x": 0, "y": 0, "width": 1200, "height": 900}
+
+    def test_large_colored_child_is_kept(self):
+        result = select_dominant_surfaces([surface("#2a0831", 0, 0, 400, 900)], self.section)
+        self.assertEqual([item["color"] for item in result], ["#2a0831"])
+        self.assertEqual(result[0]["coverage"], 0.3333)
+
+    def test_sequential_peer_surfaces_are_kept_separately(self):
+        candidates = [
+            surface("#2a0831", 0, 0, 400, 900),
+            surface("#003500", 400, 0, 400, 900),
+            surface("#1a1423", 800, 0, 400, 900),
+        ]
+        self.assertEqual(
+            [item["color"] for item in select_dominant_surfaces(candidates, self.section)],
+            ["#2a0831", "#003500", "#1a1423"],
+        )
+
+    def test_tiny_colored_control_is_excluded(self):
+        self.assertEqual(select_dominant_surfaces([surface("#ffbd89", 20, 20, 120, 40)], self.section), [])
+
+    def test_thin_separator_is_excluded(self):
+        self.assertEqual(select_dominant_surfaces([surface("#ffffff", 0, 0, 1200, 1)], self.section), [])
+
+    def test_hidden_colored_surface_is_excluded(self):
+        self.assertEqual(
+            select_dominant_surfaces([surface("#ffbd89", 0, 0, 1200, 900, visible=False)], self.section),
+            [],
+        )
+
+    def test_nested_same_color_wrappers_are_deduplicated(self):
+        candidates = [
+            surface("#003500", 0, 0, 600, 900),
+            surface("#003500", 20, 20, 560, 860),
+        ]
+        result = select_dominant_surfaces(candidates, self.section)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]["bbox"]["width"], 600)
+
+    def test_absolute_colored_layer_is_kept(self):
+        result = select_dominant_surfaces(
+            [surface("#8ce3e2", 0, 0, 1200, 900, source_kind="decorative-layer")], self.section
+        )
+        self.assertEqual(result[0]["sourceKind"], "decorative-layer")
+
+    def test_overlapping_different_color_layers_are_both_kept(self):
+        candidates = [
+            surface("#8ce3e2", 0, 0, 1200, 900, source_kind="decorative-layer"),
+            surface("#ffd3f2", 0, 0, 1200, 900, source_kind="decorative-layer"),
+        ]
+        self.assertEqual(
+            [item["color"] for item in select_dominant_surfaces(candidates, self.section)],
+            ["#8ce3e2", "#ffd3f2"],
+        )
+
+    def test_media_surfaces_are_excluded(self):
+        self.assertEqual(
+            select_dominant_surfaces([surface("#203886", 0, 0, 1200, 900, source_kind="media")], self.section),
+            [],
+        )
+        self.assertEqual(
+            select_dominant_surfaces(
+                [surface("", 0, 0, 1200, 900, source_kind="media-background")], self.section
+            ),
+            [],
+        )
+
+    def test_transparent_root_keeps_underlying_surface_separate(self):
+        evidence = section_evidence(
+            {
+                "sectionId": "work",
+                "style": {"backgroundColor": "rgba(0, 0, 0, 0)", "backgroundImage": "none"},
+                "underlyingSurface": surface("#203886", 0, 0, 1200, 900, source_kind="document-background"),
+            },
+            "desktop",
+            "section-work",
+            1,
+        )
+        self.assertEqual(evidence["background"]["color"], "rgba(0, 0, 0, 0)")
+        self.assertEqual(evidence["underlyingSurface"]["color"], "#203886")
 
 
 def stage_candidate(
