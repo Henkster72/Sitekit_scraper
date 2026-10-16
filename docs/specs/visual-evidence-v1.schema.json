@@ -89,6 +89,14 @@
         "background": {"type": "object"},
         "computedVisual": {"type": "object"},
         "visual": {"type": "object"},
+        "cropStatus": {"type": "string", "enum": ["written", "skipped", "not-captured"]},
+        "cropReason": {"type": "string"},
+        "cropRect": {
+          "type": ["array", "null"],
+          "items": {"type": "integer"},
+          "minItems": 4,
+          "maxItems": 4
+        },
         "roleCandidates": {"type": "array", "items": {"$ref": "#/$defs/candidate"}},
         "patternCandidates": {"type": "array", "items": {"$ref": "#/$defs/candidate"}},
         "confidence": {"type": "number", "minimum": 0, "maximum": 1},

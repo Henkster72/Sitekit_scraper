@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import math
 from pathlib import Path
 from typing import Any
 from urllib.request import Request, urlopen
@@ -268,6 +269,63 @@ def dedupe_candidates(candidates: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return sorted(output, key=lambda item: (item["bbox"]["y"], -selector_priority(item)[0], -selector_priority(item)[1]))
 
 
+MIN_EFFECTIVE_CROP_PIXELS = 2
+
+
+def _coordinate(value: Any) -> float | None:
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return None
+    return number if math.isfinite(number) else None
+
+
+def _bbox_edges(bbox: dict[str, Any], start: str, size: str, end: str) -> tuple[float, float] | None:
+    explicit_start = "left" if start == "x" else "top"
+    start_value = _coordinate(bbox.get(explicit_start if explicit_start in bbox else start))
+    if start_value is None:
+        return None
+    end_value = _coordinate(bbox.get(end)) if end in bbox else None
+    if end_value is None:
+        size_value = _coordinate(bbox.get(size))
+        if size_value is None:
+            return None
+        end_value = start_value + size_value
+    if not math.isfinite(end_value):
+        return None
+    return (min(start_value, end_value), max(start_value, end_value))
+
+
+def normalize_crop_bbox(
+    bbox: dict[str, Any],
+    image_size: tuple[int, int],
+) -> tuple[tuple[int, int, int, int] | None, str]:
+    """Return a safe pixel crop rectangle and a structured skip reason."""
+    image_width, image_height = image_size
+    horizontal = _bbox_edges(bbox, "x", "width", "right")
+    vertical = _bbox_edges(bbox, "y", "height", "bottom")
+    if horizontal is None or vertical is None:
+        return None, "missing-or-non-finite-coordinate"
+
+    left_edge, right_edge = horizontal
+    top_edge, bottom_edge = vertical
+    if right_edge <= left_edge:
+        return None, "zero-width"
+    if bottom_edge <= top_edge:
+        return None, "zero-height"
+
+    left = max(0, min(image_width, math.floor(left_edge)))
+    top = max(0, min(image_height, math.floor(top_edge)))
+    right = max(0, min(image_width, math.ceil(right_edge)))
+    bottom = max(0, min(image_height, math.ceil(bottom_edge)))
+
+    if right <= left or bottom <= top:
+        return None, "outside-screenshot"
+    if right - left < MIN_EFFECTIVE_CROP_PIXELS or bottom - top < MIN_EFFECTIVE_CROP_PIXELS:
+        return None, "too-small-after-clamping"
+    return (left, top, right, bottom), ""
+
+
 def crop_sections(
     screenshot_path: Path,
     candidates: list[dict[str, Any]],
@@ -279,18 +337,32 @@ def crop_sections(
     image = Image.open(screenshot_path)
     width, height = image.size
     for index, candidate in enumerate(candidates, start=1):
+        candidate["sectionIndex"] = index
+        candidate["sectionId"] = slugify(candidate.get("blockSlug") or f"section-{index:02d}", default=f"section-{index:02d}")
+        candidate["cropPath"] = ""
+        candidate["cropStatus"] = "skipped"
+        candidate["cropReason"] = ""
+        candidate["cropRect"] = None
         bbox = candidate["bbox"]
-        left = max(0, int(bbox["x"]))
-        top = max(0, int(bbox["y"]))
-        right = min(width, left + max(1, int(bbox["width"])))
-        bottom = min(height, top + max(1, int(bbox["height"])))
-        crop = image.crop((left, top, right, bottom))
+        crop_rect, reason = normalize_crop_bbox(bbox, (width, height))
+        if crop_rect is None:
+            candidate["cropReason"] = reason
+            continue
+        try:
+            crop = image.crop(crop_rect)
+        except (OSError, ValueError) as error:
+            candidate["cropReason"] = f"crop-failed:{error.__class__.__name__}"
+            continue
         slug_basis = candidate.get("blockSlug") or candidate.get("tag") or f"section-{index:02d}"
         filename = f"{index:02d}-{slugify(slug_basis, default='section')}.png"
         output_path = output_dir / filename
-        crop.save(output_path)
-        candidate["sectionIndex"] = index
-        candidate["sectionId"] = slugify(candidate.get("blockSlug") or f"section-{index:02d}", default=f"section-{index:02d}")
+        try:
+            crop.save(output_path)
+        except OSError as error:
+            candidate["cropReason"] = f"save-failed:{error.__class__.__name__}"
+            continue
+        candidate["cropStatus"] = "written"
+        candidate["cropRect"] = list(crop_rect)
         candidate["cropPath"] = str(output_path.relative_to(relative_root))
 
 

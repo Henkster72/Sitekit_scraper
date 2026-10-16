@@ -18,7 +18,9 @@ renderer mapping.
 - `sections`: merged section observations with stable evidence IDs, locators,
   viewport-linked bounding boxes and visibility, text, actions, media, forms,
   repeated-item signals, backgrounds, computed visual observations, image
-  statistics, candidate labels, and confidence/evidence
+  statistics, crop status, candidate labels, and confidence/evidence. A
+  section remains evidence even when its screenshot crop is skipped because
+  the DOM geometry is outside or invalid for the captured image.
 - `themeEvidence`: measured palette and exposed CSS variables, observed
   typography, geometry, density/rhythm, surface order, imagery character, and
   contrast

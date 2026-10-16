@@ -149,6 +149,9 @@ def section_evidence(section: dict[str, Any], viewport: str, evidence_id: str, o
         },
         "computedVisual": section.get("style", {}).get("computed", {}),
         "visual": section.get("visual", {}),
+        "cropStatus": section.get("cropStatus", "not-captured"),
+        "cropReason": section.get("cropReason", ""),
+        "cropRect": section.get("cropRect"),
         "roleCandidates": (
             [{"label": classification["role"], "confidence": confidence, "evidence": list(classification.get("cues", []))}]
             if classification.get("role")
