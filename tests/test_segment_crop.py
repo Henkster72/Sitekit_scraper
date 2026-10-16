@@ -4,7 +4,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from src.sitekit_scraper.segment import crop_sections, normalize_crop_bbox
+from src.sitekit_scraper.segment import crop_sections, normalize_crop_bbox, select_visual_candidates
 
 
 class CropNormalizationTests(unittest.TestCase):
@@ -72,6 +72,119 @@ class CropSectionTests(unittest.TestCase):
             self.assertEqual(candidates[1]["cropStatus"], "written")
             self.assertTrue(candidates[1]["cropPath"])
             self.assertEqual(len(list(output.glob("*.png"))), 1)
+
+
+def stage_candidate(
+    name: str,
+    tag: str,
+    x: int,
+    y: int,
+    width: int,
+    height: int,
+    *,
+    local_text: int = 120,
+    headings: int = 1,
+    media: int = 0,
+    background: str = "rgb(240, 240, 240)",
+    section_kind: str = "page",
+) -> dict:
+    return {
+        "domPath": name,
+        "tag": tag,
+        "bbox": {"x": x, "y": y, "width": width, "height": height},
+        "textLength": local_text,
+        "localTextLength": local_text,
+        "localHeadingCount": headings,
+        "localParagraphCount": 1 if local_text else 0,
+        "localLinkCount": 1 if local_text else 0,
+        "localButtonCount": 0,
+        "localMediaCount": media,
+        "backgroundColor": background,
+        "backgroundImage": "none",
+        "sectionKind": section_kind,
+        "overlayReason": "" if section_kind == "page" else "fixed-overlay-semantics",
+    }
+
+
+class CandidateSelectionTests(unittest.TestCase):
+    viewport = {"width": 1440, "height": 900, "pageWidth": 1440, "pageHeight": 3000}
+
+    def test_full_page_wrapper_is_replaced_by_meaningful_child_stages(self):
+        wrapper = stage_candidate("div.page-wrapper", "div", 0, 0, 1440, 3000, local_text=0, headings=0)
+        children = [
+            stage_candidate(f"section.stage-{index}", "section", 0, index * 600, 1440, 600, media=1)
+            for index in range(5)
+        ]
+
+        selected, overlays, diagnostics = select_visual_candidates([wrapper, *children], self.viewport)
+
+        self.assertEqual([candidate["domPath"] for candidate in selected], [candidate["domPath"] for candidate in children])
+        self.assertFalse(overlays)
+        self.assertEqual(len(diagnostics["suppressedWrappers"]), 1)
+        self.assertEqual(diagnostics["suppressedWrappers"][0]["domPath"], "div.page-wrapper")
+
+    def test_single_hero_with_layout_children_is_not_decomposed(self):
+        hero = stage_candidate("section.hero", "section", 0, 0, 1440, 900, local_text=180, headings=1, media=1)
+        selected, overlays, diagnostics = select_visual_candidates([hero], self.viewport)
+
+        self.assertEqual([candidate["domPath"] for candidate in selected], ["section.hero"])
+        self.assertFalse(overlays)
+        self.assertFalse(diagnostics["suppressedWrappers"])
+
+    def test_card_grid_candidate_remains_one_stage(self):
+        grid = stage_candidate("section.cards", "section", 0, 0, 1440, 600, local_text=120, headings=1, media=6)
+        cards = [
+            stage_candidate(f"div.card-{index}", "div", index * 240, 120, 220, 280, local_text=50, headings=1, media=1)
+            for index in range(3)
+        ]
+
+        selected, overlays, diagnostics = select_visual_candidates([grid, *cards], self.viewport)
+
+        self.assertIn("section.cards", [candidate["domPath"] for candidate in selected])
+        self.assertFalse(diagnostics["suppressedWrappers"])
+
+    def test_fixed_overlay_is_not_a_primary_page_section(self):
+        page = stage_candidate("section.page", "section", 0, 0, 1440, 1200, media=1)
+        overlay = stage_candidate(
+            "div.consent-dialog",
+            "div",
+            0,
+            0,
+            1440,
+            900,
+            local_text=180,
+            headings=1,
+            section_kind="overlay",
+        )
+
+        selected, overlays, diagnostics = select_visual_candidates([page, overlay], self.viewport)
+
+        self.assertEqual([candidate["domPath"] for candidate in selected], ["section.page"])
+        self.assertEqual([candidate["domPath"] for candidate in overlays], ["div.consent-dialog"])
+        self.assertEqual(diagnostics["overlayCount"], 1)
+
+    def test_nested_footer_duplicate_is_suppressed(self):
+        footer = stage_candidate("footer#site", "footer", 0, 2700, 1440, 300, local_text=120)
+        nested = stage_candidate("footer#site > section", "section", 0, 2700, 1400, 180, local_text=80)
+
+        selected, overlays, diagnostics = select_visual_candidates([footer, nested], self.viewport)
+
+        self.assertEqual([candidate["domPath"] for candidate in selected], ["footer#site"])
+        self.assertEqual(len(diagnostics["suppressedContainedDuplicates"]), 1)
+
+    def test_header_and_footer_survive_wrapper_suppression(self):
+        wrapper = stage_candidate("div.builder-wrapper", "div", 0, 0, 1440, 3000, local_text=0, headings=0)
+        header = stage_candidate("header#site", "header", 0, 0, 1440, 120, local_text=80)
+        body = stage_candidate("section.body", "section", 0, 120, 1440, 2700, local_text=600, headings=2, media=2)
+        footer = stage_candidate("footer#site", "footer", 0, 2820, 1440, 180, local_text=80)
+
+        selected, overlays, diagnostics = select_visual_candidates([wrapper, header, body, footer], self.viewport)
+
+        self.assertEqual(
+            [candidate["domPath"] for candidate in selected],
+            ["header#site", "section.body", "footer#site"],
+        )
+        self.assertEqual(len(diagnostics["suppressedWrappers"]), 1)
 
 
 if __name__ == "__main__":

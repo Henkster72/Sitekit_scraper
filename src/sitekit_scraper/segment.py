@@ -9,7 +9,7 @@ from urllib.request import Request, urlopen
 from PIL import Image
 from playwright.sync_api import sync_playwright
 
-from .capture import dismiss_basic_overlays, reveal_page_for_analysis
+from .capture import dismiss_basic_overlays, reveal_page_for_analysis, wait_for_render_ready
 from .utils import ensure_scrape_paths, load_capture_metadata, slugify, write_json
 
 
@@ -80,6 +80,60 @@ DISCOVERY_SCRIPT = """
     };
   };
 
+  const isStageBoundary = (node) => {
+    if (!node || node === document.body) return false;
+    const tag = node.tagName.toLowerCase();
+    return ["section", "header", "footer"].includes(tag) || Boolean(node.getAttribute("data-bid"));
+  };
+
+  const ownedElements = (element, selector) => Array.from(element.querySelectorAll(selector)).filter((node) => {
+    let parent = node.parentElement;
+    while (parent && parent !== element) {
+      if (isStageBoundary(parent)) return false;
+      parent = parent.parentElement;
+    }
+    return true;
+  });
+
+  const ownedTextLength = (element) => {
+    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+    let length = 0;
+    let node;
+    while ((node = walker.nextNode())) {
+      let parent = node.parentElement;
+      let owned = true;
+      while (parent && parent !== element) {
+        const style = window.getComputedStyle(parent);
+        if (isStageBoundary(parent) || parent.tagName.toLowerCase() === "script" ||
+            parent.tagName.toLowerCase() === "style" || style.display === "none" ||
+            style.visibility === "hidden" || Number(style.opacity || "1") === 0) {
+          owned = false;
+          break;
+        }
+        parent = parent.parentElement;
+      }
+      if (owned) length += (node.textContent || "").replace(/\\s+/g, " ").trim().length;
+    }
+    return length;
+  };
+
+  const overlayEvidence = (element, style, rect) => {
+    const identity = `${element.id || ""} ${element.className || ""}`.toLowerCase();
+    const semantic = element.getAttribute("role") === "dialog" ||
+      element.getAttribute("aria-modal") === "true" ||
+      /cookie|consent|modal|popup|overlay|dialog/.test(identity);
+    const fixed = style.position === "fixed";
+    const zIndex = Number.parseInt(style.zIndex || "", 10);
+    const coversViewport = rect.width >= window.innerWidth * 0.7 && rect.height >= window.innerHeight * 0.35;
+    if (fixed && (semantic || (coversViewport && (Number.isNaN(zIndex) || zIndex >= 0)))) {
+      return {
+        sectionKind: "overlay",
+        overlayReason: semantic ? "fixed-overlay-semantics" : "fixed-viewport-cover",
+      };
+    }
+    return { sectionKind: "page", overlayReason: "" };
+  };
+
   const documentStyles = () => {
     const root = window.getComputedStyle(document.documentElement);
     const cssVariables = {};
@@ -130,6 +184,12 @@ DISCOVERY_SCRIPT = """
     const left = rect.left + window.scrollX;
     const outerHtml = (element.outerHTML || "").slice(0, 30000);
     const text = (element.innerText || "").replace(/\\s+/g, " ").trim();
+    const ownedHeadings = ownedElements(element, "h1,h2,h3,h4,h5,h6");
+    const ownedParagraphs = ownedElements(element, "p");
+    const ownedLinks = ownedElements(element, "a[href]");
+    const ownedButtons = ownedElements(element, "button,a[role='button'],input[type='submit']");
+    const ownedMedia = ownedElements(element, "img,video");
+    const overlay = overlayEvidence(element, style, rect);
     const item = {
       selector,
       domPath: cssPath(element),
@@ -151,6 +211,16 @@ DISCOVERY_SCRIPT = """
       buttonCount: element.querySelectorAll("button,a[role='button'],input[type='submit']").length,
       imageCount: element.querySelectorAll("img").length,
       formFieldCount: element.querySelectorAll("input,select,textarea").length,
+      localTextLength: ownedTextLength(element),
+      localHeadingCount: ownedHeadings.length,
+      localParagraphCount: ownedParagraphs.length,
+      localLinkCount: ownedLinks.length,
+      localButtonCount: ownedButtons.length,
+      localMediaCount: ownedMedia.length,
+      localFormFieldCount: ownedElements(element, "input,select,textarea").length,
+      descendantBoundaryCount: element.querySelectorAll("section,header,footer,[data-bid]").length,
+      sectionKind: overlay.sectionKind,
+      overlayReason: overlay.overlayReason,
       mediaEvidence: Array.from(element.querySelectorAll("img,video")).slice(0, 40).map((node) => {
         const mediaRect = node.getBoundingClientRect();
         const mediaStyle = window.getComputedStyle(node);
@@ -269,6 +339,153 @@ def dedupe_candidates(candidates: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return sorted(output, key=lambda item: (item["bbox"]["y"], -selector_priority(item)[0], -selector_priority(item)[1]))
 
 
+def _contains_bbox(parent: dict[str, Any], child: dict[str, Any], tolerance: int = 8) -> bool:
+    parent_bbox = parent["bbox"]
+    child_bbox = child["bbox"]
+    return (
+        child_bbox["x"] >= parent_bbox["x"] - tolerance
+        and child_bbox["y"] >= parent_bbox["y"] - tolerance
+        and child_bbox["x"] + child_bbox["width"] <= parent_bbox["x"] + parent_bbox["width"] + tolerance
+        and child_bbox["y"] + child_bbox["height"] <= parent_bbox["y"] + parent_bbox["height"] + tolerance
+    )
+
+
+def _vertical_coverage(parent: dict[str, Any], children: list[dict[str, Any]]) -> float:
+    parent_top = parent["bbox"]["y"]
+    parent_bottom = parent_top + parent["bbox"]["height"]
+    intervals = sorted(
+        (
+            max(parent_top, child["bbox"]["y"]),
+            min(parent_bottom, child["bbox"]["y"] + child["bbox"]["height"]),
+        )
+        for child in children
+    )
+    merged: list[list[int]] = []
+    for start, end in intervals:
+        if end <= start:
+            continue
+        if merged and start <= merged[-1][1]:
+            merged[-1][1] = max(merged[-1][1], end)
+        else:
+            merged.append([start, end])
+    covered = sum(end - start for start, end in merged)
+    return covered / max(1, parent["bbox"]["height"])
+
+
+def _stage_score(candidate: dict[str, Any], viewport: dict[str, Any]) -> float:
+    bbox = candidate["bbox"]
+    width = max(1, int(viewport.get("pageWidth") or viewport.get("width") or 1))
+    height = max(1, int(viewport.get("pageHeight") or viewport.get("height") or 1))
+    score = 0.0
+    if candidate.get("tag") in {"section", "header", "footer"}:
+        score += 3.0
+    if bbox["width"] >= width * 0.65:
+        score += 1.0
+    if bbox["height"] >= max(120, viewport.get("height", 0) * 0.25):
+        score += 1.0
+    if candidate.get("localTextLength", 0) >= 32:
+        score += 2.0
+    if candidate.get("localHeadingCount", 0):
+        score += 1.5
+    if candidate.get("localParagraphCount", 0):
+        score += 0.5
+    if candidate.get("localMediaCount", 0):
+        score += 1.0
+    if candidate.get("localLinkCount", 0) or candidate.get("localButtonCount", 0):
+        score += 0.5
+    background = str(candidate.get("backgroundColor", ""))
+    if background and "rgba(0, 0, 0, 0)" not in background:
+        score += 1.0
+    if candidate.get("backgroundImage") and candidate["backgroundImage"] != "none":
+        score += 1.0
+    return score
+
+
+def select_visual_candidates(
+    candidates: list[dict[str, Any]],
+    viewport: dict[str, Any],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
+    """Select page stages without allowing structural parents to win by size."""
+    overlays = [candidate for candidate in candidates if candidate.get("sectionKind") == "overlay"]
+    page_candidates = [candidate for candidate in candidates if candidate.get("sectionKind") != "overlay"]
+    for candidate in page_candidates:
+        candidate["wrapperScore"] = 0.0
+        candidate["sectionSelectionReason"] = "independent-candidate"
+
+    suppressed: list[dict[str, Any]] = []
+    for parent in page_candidates:
+        children = [
+            child
+            for child in page_candidates
+            if child is not parent
+            and _contains_bbox(parent, child)
+            and child["bbox"]["height"] >= 120
+            and _stage_score(child, viewport) >= 4.0
+        ]
+        if len(children) < 2:
+            continue
+        coverage = _vertical_coverage(parent, children)
+        aggregate_text = max(1, int(parent.get("textLength", 0)))
+        local_text = int(parent.get("localTextLength", 0))
+        wrapper_score = min(1.0, coverage) * 0.55
+        wrapper_score += min(1.0, len(children) / 6) * 0.25
+        wrapper_score += 0.20 if local_text <= max(80, aggregate_text * 0.25) else 0.0
+        parent["wrapperScore"] = round(wrapper_score, 3)
+        if coverage < 0.55 or local_text > max(80, aggregate_text * 0.25):
+            continue
+        if parent["bbox"]["height"] < max(viewport.get("height", 0) * 1.5, viewport.get("pageHeight", 0) * 0.4):
+            continue
+        parent["sectionSelectionReason"] = "suppressed-structural-wrapper"
+        parent["selectionChildren"] = [child.get("domPath", "") for child in sorted(children, key=lambda item: item["bbox"]["y"])]
+        suppressed.append(parent)
+
+    suppressed_ids = {id(candidate) for candidate in suppressed}
+    selected = [candidate for candidate in page_candidates if id(candidate) not in suppressed_ids]
+
+    # A footer/header element and a contained section at the same terminal/top
+    # boundary are usually one visual stage, not two semantic stages.
+    duplicate_ids: set[int] = set()
+    for parent in selected:
+        if parent.get("tag") not in {"header", "footer"}:
+            continue
+        for child in selected:
+            if child is parent or id(child) in duplicate_ids or not _contains_bbox(parent, child):
+                continue
+            same_boundary = abs(parent["bbox"]["y"] - child["bbox"]["y"]) <= 32
+            broad_child = child["bbox"]["width"] >= parent["bbox"]["width"] * 0.8
+            if same_boundary and broad_child:
+                child["sectionSelectionReason"] = "suppressed-contained-duplicate"
+                child["parentCandidate"] = parent.get("domPath", "")
+                duplicate_ids.add(id(child))
+    selected = [candidate for candidate in selected if id(candidate) not in duplicate_ids]
+
+    diagnostics = {
+        "candidateCount": len(candidates),
+        "pageCandidateCount": len(page_candidates),
+        "selectedCount": len(selected),
+        "overlayCount": len(overlays),
+        "suppressedWrappers": [
+            {
+                "domPath": candidate.get("domPath", ""),
+                "bbox": candidate.get("bbox", {}),
+                "wrapperScore": candidate.get("wrapperScore", 0.0),
+                "children": candidate.get("selectionChildren", []),
+            }
+            for candidate in suppressed
+        ],
+        "suppressedContainedDuplicates": [
+            {
+                "domPath": candidate.get("domPath", ""),
+                "parentCandidate": candidate.get("parentCandidate", ""),
+                "bbox": candidate.get("bbox", {}),
+            }
+            for candidate in candidates
+            if candidate.get("sectionSelectionReason") == "suppressed-contained-duplicate"
+        ],
+    }
+    return sorted(selected, key=lambda item: (item["bbox"]["y"], -selector_priority(item)[0])), overlays, diagnostics
+
+
 MIN_EFFECTIVE_CROP_PIXELS = 2
 
 
@@ -385,11 +602,12 @@ def discover_viewport(
         )
         page.goto(url, wait_until="commit", timeout=60_000)
         page.wait_for_selector("html", state="attached", timeout=60_000)
-        page.wait_for_timeout(1200)
+        wait_for_render_ready(page)
         if not keep_overlays:
             dismiss_basic_overlays(page)
             page.wait_for_timeout(300)
         reveal_page_for_analysis(page)
+        wait_for_render_ready(page)
         if not page.evaluate("() => Boolean(document.body)"):
             page.close()
             request = Request(url, headers={"User-Agent": "Mozilla/5.0 SiteKitScraper/1.0"})
@@ -402,17 +620,22 @@ def discover_viewport(
                 java_script_enabled=False,
             )
             page.set_content(html, wait_until="commit", timeout=60_000)
-            page.wait_for_timeout(300)
+            wait_for_render_ready(page)
             if not keep_overlays:
                 dismiss_basic_overlays(page)
                 page.wait_for_timeout(300)
             reveal_page_for_analysis(page)
+            wait_for_render_ready(page)
         discovery = page.evaluate(
             DISCOVERY_SCRIPT,
             {"selectors": selectors, "minHeight": min_height, "minWidth": min_width},
         )
         browser.close()
-    discovery["sections"] = dedupe_candidates(discovery.pop("candidates"))
+    candidates = dedupe_candidates(discovery.pop("candidates"))
+    sections, overlays, selection_diagnostics = select_visual_candidates(candidates, discovery["viewport"])
+    discovery["sections"] = sections
+    discovery["overlays"] = overlays
+    discovery["selectionDiagnostics"] = selection_diagnostics
     discovery["viewport"]["mobile"] = mobile
     return discovery
 
@@ -430,6 +653,7 @@ def main() -> int:
         "body > section",
         "main > section",
         "main section",
+        "section",
         "footer",
         "body > div",
         "main > div",
@@ -473,6 +697,8 @@ def main() -> int:
         "viewport": discovery["viewport"],
         "sections": candidates,
         "documentStyles": discovery.get("documentStyles", {}),
+        "overlays": discovery.get("overlays", []),
+        "selectionDiagnostics": discovery.get("selectionDiagnostics", {}),
     }
     output_path = paths.sections_dir / "sections.segmented.json"
     write_json(output_path, payload)
@@ -485,6 +711,8 @@ def main() -> int:
         "viewport": mobile_discovery["viewport"],
         "sections": mobile_discovery["sections"],
         "documentStyles": mobile_discovery.get("documentStyles", {}),
+        "overlays": mobile_discovery.get("overlays", []),
+        "selectionDiagnostics": mobile_discovery.get("selectionDiagnostics", {}),
     }
     mobile_output_path = paths.sections_dir / "sections.segmented.mobile.json"
     write_json(mobile_output_path, mobile_payload)

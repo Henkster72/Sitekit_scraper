@@ -13,6 +13,55 @@ from .utils import build_scrape_paths, ensure_scrape_paths, utc_timestamp, write
 DEFAULT_TIMEOUT_MS = 60_000
 
 
+def wait_for_render_ready(page: Page, timeout_ms: int = 5_000) -> None:
+    """Wait briefly for the rendered layout to become usable for evidence."""
+    bounded_timeout = max(500, min(timeout_ms, 5_000))
+    try:
+        page.wait_for_function("() => document.readyState === 'complete'", timeout=bounded_timeout)
+    except Exception:
+        pass
+    try:
+        page.wait_for_function(
+            """() => Array.from(document.querySelectorAll('link[rel="stylesheet"]')).every((link) =>
+                link.disabled || Boolean(link.sheet) || !link.href
+            )""",
+            timeout=bounded_timeout,
+        )
+    except Exception:
+        pass
+    try:
+        page.evaluate(
+            """() => Promise.race([
+                document.fonts?.ready || Promise.resolve(),
+                new Promise((resolve) => setTimeout(resolve, 1500)),
+            ])"""
+        )
+    except Exception:
+        pass
+    page.wait_for_timeout(250)
+    try:
+        page.wait_for_function(
+            """() => {
+                const body = document.body;
+                const root = document.documentElement;
+                const current = [
+                    body?.scrollWidth || 0,
+                    body?.scrollHeight || 0,
+                    root.scrollWidth || 0,
+                    root.scrollHeight || 0,
+                ].join(':');
+                window.__sitekitLayoutSamples = window.__sitekitLayoutSamples || [];
+                window.__sitekitLayoutSamples.push(current);
+                if (window.__sitekitLayoutSamples.length > 3) window.__sitekitLayoutSamples.shift();
+                return window.__sitekitLayoutSamples.length >= 3 &&
+                    new Set(window.__sitekitLayoutSamples).size === 1;
+            }""",
+            timeout=bounded_timeout,
+        )
+    except Exception:
+        pass
+
+
 def dismiss_basic_overlays(page: Page) -> None:
     selectors = [
         '[aria-label="Close"]',
@@ -34,10 +83,16 @@ def dismiss_basic_overlays(page: Page) -> None:
     page.evaluate(
         """
         () => {
-          const nodes = document.querySelectorAll('[id*="cookie"], [class*="cookie"], [class*="popup"], [class*="modal"]');
+          const nodes = document.querySelectorAll('body *');
           for (const node of nodes) {
             const style = window.getComputedStyle(node);
-            if (style.position === 'fixed' || style.position === 'sticky') {
+            const identity = `${node.id || ''} ${node.className || ''}`.toLowerCase();
+            const semanticOverlay = node.getAttribute('role') === 'dialog' ||
+              node.getAttribute('aria-modal') === 'true' ||
+              /cookie|consent|modal|popup|overlay|dialog/.test(identity);
+            const fixed = style.position === 'fixed';
+            const zIndex = Number.parseInt(style.zIndex || '', 10);
+            if (fixed && semanticOverlay && (Number.isNaN(zIndex) || zIndex >= 0)) {
               node.setAttribute('data-sitekit-hidden-overlay', 'true');
               node.style.display = 'none';
             }
@@ -129,11 +184,12 @@ def capture_view(
     # reaching network-idle even after the rendered document is usable.
     page.goto(url, wait_until="commit", timeout=timeout_ms)
     page.wait_for_selector("html", state="attached", timeout=timeout_ms)
-    page.wait_for_timeout(1200)
+    wait_for_render_ready(page, timeout_ms)
     if dismiss_overlays:
         dismiss_basic_overlays(page)
         page.wait_for_timeout(300)
     reveal_page_for_analysis(page)
+    wait_for_render_ready(page, timeout_ms)
     try:
         page.screenshot(path=str(screenshot_path), full_page=True)
         metadata = {
