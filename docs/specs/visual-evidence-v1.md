@@ -33,10 +33,11 @@ Their labels are not canonical catalog identities. Numeric `type` and `variant`
 fields are deliberately absent from this contract.
 
 `repeatedItems` may contain peer item records for an interactive or repeated
-visual collection. Item records retain observed bbox, media, text/actions, and
-diagnostic visibility/state without assigning a SiteKit role. `navItems` is
-similarly limited to observed compact navigation links; Main SiteKit decides
-whether and how those links become canonical navigation.
+visual collection. Item records retain observed bbox, media, text evidence,
+actions, and diagnostic visibility/state; strongly evidenced inactive peers may
+remain present even when their current CSS state is hidden. No SiteKit role is
+assigned. `navItems` is similarly limited to observed compact navigation links;
+Main SiteKit decides whether and how those links become canonical navigation.
 
 ## Example handoff
 

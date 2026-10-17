@@ -183,6 +183,13 @@ DISCOVERY_SCRIPT = """
     return [element.tagName.toLowerCase(), children, media, link].join("|");
   };
 
+  const textValue = (element) => (element.innerText || element.textContent || "").replace(/\\s+/g, " ").trim();
+
+  const itemTextEvidence = (element) => ({
+    headings: unique(Array.from(element.querySelectorAll("h1,h2,h3,h4,h5,h6")).map(textValue)),
+    paragraphs: unique(Array.from(element.querySelectorAll("p")).map(textValue)),
+  });
+
   const itemEvidence = (element, rootRect) => {
     const rect = element.getBoundingClientRect();
     const style = window.getComputedStyle(element);
@@ -212,8 +219,9 @@ DISCOVERY_SCRIPT = """
         href: element.href || "",
       },
       bbox: pageRect(rect),
-      text: (element.innerText || element.textContent || "").replace(/\\s+/g, " ").trim().slice(0, 500),
-      title: (element.innerText || element.textContent || element.getAttribute("aria-label") || media[0]?.alt || "").replace(/\\s+/g, " ").trim().slice(0, 180),
+      text: textValue(element).slice(0, 500),
+      title: (textValue(element) || element.getAttribute("aria-label") || media[0]?.alt || "").slice(0, 180),
+      textEvidence: itemTextEvidence(element),
       media,
       actions,
       visibility: state.visibility,
@@ -232,7 +240,9 @@ DISCOVERY_SCRIPT = """
       const children = Array.from(container.children || []).filter((child) => {
         const rect = child.getBoundingClientRect();
         const style = window.getComputedStyle(child);
-        return rect.width >= 24 && rect.height >= 24 && style.display !== "none" && style.visibility !== "hidden";
+        const hasEvidence = Boolean(child.querySelector("img,video,a[href],button,h1,h2,h3,h4,h5,h6,p")) || Boolean(textValue(child));
+        const visible = rect.width >= 24 && rect.height >= 24 && style.display !== "none" && style.visibility !== "hidden";
+        return visible || (hasEvidence && (style.display === "none" || style.visibility === "hidden"));
       });
       if (children.length < 2 || children.length > 80) continue;
       const bySignature = new Map();
@@ -243,13 +253,24 @@ DISCOVERY_SCRIPT = """
       }
       for (const [signature, peers] of bySignature.entries()) {
         if (peers.length < 2) continue;
+        const visiblePeers = peers.filter((peer) => {
+          const style = window.getComputedStyle(peer);
+          const rect = peer.getBoundingClientRect();
+          return style.display !== "none" && style.visibility !== "hidden" && rect.width >= 24 && rect.height >= 24;
+        });
+        const hiddenPeers = peers.length - visiblePeers.length;
+        if (hiddenPeers && visiblePeers.length === 0) continue;
         const records = peers.map((peer) => itemEvidence(peer, rootRect));
         const mediaCount = records.reduce((total, item) => total + item.media.length, 0);
         const actionCount = records.reduce((total, item) => total + item.actions.length, 0);
         const textLength = records.reduce((total, item) => total + item.text.length, 0);
         if (mediaCount === 0 && actionCount < 2 && textLength < 24) continue;
         const containerStyle = window.getComputedStyle(container);
-        const interactive = records.some((item) => item.hiddenByAnimation || item.visibility === "clipped" || item.transform !== "none" || item.position === "absolute" || item.position === "fixed") ||
+        const collectionSignal = container.getAttribute("role") === "list" || container.getAttribute("role") === "tablist" ||
+          container.getAttribute("aria-roledescription") || containerStyle.overflow !== "visible" ||
+          containerStyle.overflowX !== "visible" || containerStyle.overflowY !== "visible" || containerStyle.transform !== "none";
+        if (hiddenPeers && !collectionSignal) continue;
+        const interactive = hiddenPeers > 0 || records.some((item) => item.hiddenByAnimation || item.visibility === "clipped" || item.transform !== "none" || item.position === "absolute" || item.position === "fixed") ||
           containerStyle.overflow !== "visible" || containerStyle.overflowX !== "visible" || containerStyle.overflowY !== "visible";
         groups.push({
           container,

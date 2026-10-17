@@ -100,9 +100,11 @@ class InteractiveEvidenceTests(unittest.TestCase):
             <section class="stage">
               <h1>Gallery</h1>
               <div class="track">
-                <a class="item" href="/one"><img src="https://example.test/one.jpg"><span>One</span></a>
-                <a class="item" href="/two" style="top:230px"><img src="https://example.test/two.jpg"><span>Two</span></a>
-                <a class="item" href="/three" style="top:460px;opacity:0"><img src="https://example.test/three.jpg"><span>Three</span></a>
+                <a class="item" href="/one"><img src="https://example.test/one.jpg"><p>One</p><p>Architecture</p></a>
+                <a class="item" href="/two" style="top:230px"><img src="https://example.test/two.jpg"><p>Two</p><p>Interactive</p></a>
+                <a class="item" href="/three" style="top:460px;opacity:0"><img src="https://example.test/three.jpg"><p>Three</p><p>Product</p></a>
+                <a class="item" href="/four" style="display:none"><img src="https://example.test/four.jpg"><p>Four</p><p>Motion</p></a>
+                <div class="hidden-junk" style="display:none">Do not resurrect this</div>
               </div>
               <div class="item-internal"><span>Not an item</span></div>
             </section>
@@ -125,15 +127,18 @@ class InteractiveEvidenceTests(unittest.TestCase):
         stage = next(item for item in selected if item.get("tag") == "section")
         repeated = stage["repeatedItems"]
 
-        self.assertEqual(repeated["count"], 3)
-        self.assertEqual(len(repeated["items"]), 3)
+        self.assertEqual(repeated["count"], 4)
+        self.assertEqual(len(repeated["items"]), 4)
         self.assertTrue(repeated["interactive"])
         self.assertEqual([item["media"][0]["url"] for item in repeated["items"]], [
             "https://example.test/one.jpg",
             "https://example.test/two.jpg",
             "https://example.test/three.jpg",
+            "https://example.test/four.jpg",
         ])
         self.assertEqual(repeated["items"][2]["visibility"], "hidden")
+        self.assertEqual(repeated["items"][3]["visibility"], "hidden")
+        self.assertEqual(repeated["items"][0]["textEvidence"]["paragraphs"], ["One", "Architecture"])
         self.assertEqual(len(overlays), 1)
         self.assertEqual(overlays[0]["overlayReason"], "floating-panel")
 
